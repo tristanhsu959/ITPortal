@@ -26,12 +26,12 @@
 	
 	<form action="{{ route('auth') }}" method="post" id="signinForm">
 		@csrf
-		<div class="input-field field-blue">
+		<div class="input-field field-blue dark">
 			<input type="text" class="form-control valid" id="ad_account" name="ad_account" maxlength="20" placeholder=" " required>
 			<label for="ad_account" class="form-label">Account</label>
 			<span class="domain-text">@8way.com.tw</span>
 		</div>
-		<div class="input-field field-blue">
+		<div class="input-field field-blue dark">
 			<input type="password" class="form-control" id="ad_password" name="ad_password" placeholder=" " maxlength="20" required>
 			<label for="ad_password" class="form-label">Password</label>
 		</div>

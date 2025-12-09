@@ -6,9 +6,9 @@ body {
 	
 	font-family: 'Roboto', 'Orbitron', sans-serif;
 	font-size: 16px;
-	background-color: #fff;
-	background: linear-gradient(135deg, var(--primary-bg-color), var(--primary-bg-color)
-			, var(--secondary-bg-color), var(--secondary-bg-color), var(--secondary-bg-color));
+	background-color: #e1f5fe;
+	/* background: linear-gradient(135deg, #cfd8dc, #cfd8dc */
+			/* , #eceff1, #eceff1, #cfd8dc); */
 	margin: 0;
 	display: flex; 
 	

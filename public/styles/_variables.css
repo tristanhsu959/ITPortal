@@ -1,10 +1,10 @@
 /* Variables Define */
 
 :root {
-	/* --primary-bg-color: #f0f4c3;  */
-	/* --secondary-bg-color: #f9fbe7;  */
-	--primary-bg-color: #263238; 
-	--secondary-bg-color: #37474f; 
+	--primary-bg-color: #f0f4c3; 
+	--secondary-bg-color: #f9fbe7; 
+	--dark-bg-color: #263238; 
+	--light-bg-color: #607d8b; 
 	
 	/* Action Bar */
 	--actionbar-bg-color: #bbdefb; 
@@ -14,9 +14,9 @@
 	
 	/* Menu */
 	--menu-logo-bg-color: #f0f4c3;
-	--menu-bg-color: #f0f4c3;
-	--menu-text-color: #d50000; /*accent4*/
-	--menu-hover-color: #d50000;
+	--menu-bg-color: #4fc3f7;
+	--menu-text-color: #01579b; /*accent4*/
+	--menu-hover-color: #fff;
 	
 	/* Dark Table */
 	--table-head-bg-color: #263238;
@@ -24,4 +24,8 @@
 	--table-row-border-color: #607d8b;
 	--table-col-color: #859AA4;
 	--table-col-odd-color: #40525B;
+	
+	/* Other Colors */
+	--primary-red-color: #cb1a19;
+	--red-color: #e53935;
 }

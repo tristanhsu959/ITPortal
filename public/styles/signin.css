@@ -1,9 +1,12 @@
 /* Main Style */
 
 body {
+	--signin-dark-bg-color: #242424;
+	--signin-light-color: #78909c;
+	
 	font-family: 'Roboto', 'Orbitron', sans-serif;
 	font-size: 16px;
-	background-color: #fff;
+	background-color: var(--signin-dark-bg-color);
 	margin: 0;
 	display: flex;
 	
@@ -14,13 +17,14 @@ body {
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		// background-color: rgba(0, 50, 50, .75);
 		
 		.v-divider {
 			width: 2px;
 			height: 40%;
 			border: 4px solide red;
 			margin: 0 1rem;
-			background-color: #eceff1;
+			background-color: var(--light-bg-color);
 		}
 		
 		.left-content, .right-content {
@@ -46,12 +50,13 @@ body {
 				font-family: 'Orbitron';
 				font-size: .75rem;
 				font-weight: bold;
+				color: var(--red-color);
 				
 				i {
 					font-family: 'Roboto';
 					font-style: normal;
 					font-size: .875rem;
-					color: var(--bg-primary-color);
+					color: #ffc107;
 				}
 			}
 		}
@@ -70,9 +75,10 @@ body {
 				.title {
 					font-family: 'Orbitron';
 					font-size: 1.4rem;
+					color: #fff;
 				}
 				h6 {
-					color: #666; 
+					color: var(--light-bg-color);
 					font-weight: normal;
 					font-size: .875rem;
 					padding-top: .5rem;
@@ -82,6 +88,15 @@ body {
 			
 			.input-field {
 				margin: 1rem 0;
+				
+				&.dark {
+					input:focus {
+						background-color: var(--signin-dark-bg-color);
+					}
+					input:focus ~ label, input:not(:placeholder-shown) ~ label {
+						background-color: var(--signin-dark-bg-color);
+					}
+				}
 				
 				.group-text {
 					width: 110px;
