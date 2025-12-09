@@ -1,12 +1,11 @@
 /* Role list */
+/* body { */
+	/* background-color: var(--dark-bg-color); */
+/* } */
 
-body {
-	background-color: #37474f;
-}
 .role-list.section-wrapper {
 	/* box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.3); */
 	padding: 1rem;
-	background-color: var(--bg-page-dark-color);
 	
 	.list-data {
 		.row {
@@ -22,6 +21,7 @@ body {
 			
 			&:not(.head) {
 				color: var(--table-col-color);
+				background-color:var(--table-col-even-color);
 				
 				&:nth-child(odd) {
 					background-color:var(--table-col-odd-color);
@@ -53,7 +53,7 @@ body {
 						}
 						
 						&.btn-edit {
-							background-color: var(--bg-btn-update-color);
+							background-color: var(--btn-update-bg-color);
 							color: #fff;
 							
 							&:hover {
@@ -62,7 +62,7 @@ body {
 						}
 						
 						&.btn-del {
-							background-color: var(--bg-btn-delete-color);
+							background-color: var(--btn-delete-bg-color);
 							color: #fff;
 							
 							&:hover {
@@ -71,18 +71,6 @@ body {
 						}
 					}
 				}
-			}
-		}
-	}
-	
-	.empty-list {
-		.row {
-			border-bottom-width: 0;
-			background-color: rgba(229, 115, 115, .4); /*#e57373; */
-			
-			.col {
-				padding: .5rem;
-				color: #fff;
 			}
 		}
 	}

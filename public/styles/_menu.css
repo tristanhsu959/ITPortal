@@ -1,37 +1,48 @@
 /* Aside Menu */
 .aside.menu {
+	--menu-bg-color: #000; 
+	
 	position: sticky;
 	top: 0;
 	left: 0;
-	width: 200px;
+	width: 256px;
 	height: 100vh;
+	background-color: var(--menu-bg-color);
+	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	
 	.logo {
 		height: 64px;
-		padding-top: 1rem;
 		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: transparent;
+		background: linear-gradient(125deg, var(--primary-red-color), var(--primary-red-color), var(--primary-orange-color), var(--primary-orange-color));
 		
 		img {
 			width: auto;
 			height: 48px;
+			/* mix-blend-mode: soft-light;/* soft-light  luminosity ; */
 		}
 	}
 	
 	.container-fluid {
+		--menu-text-color: #00b8d4; 
+		--menu-hover-color: #84ffff; /*#18ffff;*/
+		
 		width: 100%;
+		height: calc(100vh - 64px);
 		padding-left: 0;
 		padding-right: 0;
+		border-right: 1px solid #263238;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--menu-text-color) #263238; 
+		/* Two valid colors. The first applies to the thumb of the scrollbar, the second to the track. */
 		
+	
 		.menu-group {
-			background-color: var(--menu-bg-color);
-			border-radius: .5rem;
-			margin: 1rem;
 			
 			&:first-child {
 				margin-top: 1rem;
@@ -49,10 +60,10 @@
 					margin-right: .5rem;
 				}
 				
-				&:hover, &[aria-expanded='true'] {
-					color: #01579b;
+				&:hover, &.active /*, &[aria-expanded='true']*/ {
+					color: var(--menu-hover-color);
 					cursor: pointer;
-					// text-shadow: 0 0 .75rem var(--menu-hover-color);
+					text-shadow: 0 0 1rem var(--menu-hover-color);
 				}
 				
 				&[aria-expanded='false']:after {
@@ -89,7 +100,7 @@
 						
 						&:hover, &.active {
 							border-radius: 20px;
-							// background-color: rgba(213, 0, 0, .125);/*--bg-menu-hover-color);*/
+							background-color: rgba(69, 90, 100, .5);
 							color: var(--menu-hover-color);
 						}
 					}

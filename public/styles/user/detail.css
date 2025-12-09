@@ -1,7 +1,5 @@
 /* list */
-body {
-	background-color: var(--bg-page-dark-color);
-}
+
 .section-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -47,7 +45,7 @@ body {
 			top: 0;
 			padding: 0 .25rem;
 			color: #00e5ff;
-			background-color: var(--bg-page-dark-color);
+			background-color: var(--primary-dark-bg-color);
 			display: flex;
 			align-items: center;
 			transform: translate(-0.25rem, -50%);
@@ -60,14 +58,15 @@ body {
 			align-items: center;
 			width: 160px;
 			height: 88px;
-			background-color: #263238;
-			border: 1px solid #607d8b;
+			background-color: rgba(38, 50, 56, .85);
+			border: 2px solid #455a64;
 			border-radius: 0 0 4px 4px;
 			color: #607d8b;
 			margin: .5rem;
 			padding: 1rem;
 			box-sizing: border-box;
 			transition: border-color, color 0.2s ease-in-out 0.1s;
+			cursor: pointer;
 			
 			input {
 				display: none;
@@ -99,7 +98,8 @@ body {
 			
 			&:has(input:checked) {
 				border-color: #ff4081;
-				color: #ff4081; 
+				color: #ff4081;
+				background-color: #282828;
 				
 				&:before,  &:after{
 					opacity: 1;

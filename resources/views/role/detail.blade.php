@@ -1,4 +1,3 @@
-{{--@inject('viewHelper', 'App\ViewHelpers\NewReleaseHelper')--}}
 @use('App\Enums\RoleGroup')
 @use('App\Enums\Operation')
 
@@ -9,42 +8,45 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('scripts/role/create.js') }}" defer></script>
+    <script src="{{ asset('scripts/role/detail.js') }}" defer></script>
 @endpush
 
-@section('navHead', '身份管理 | 新增')
+@section('navHead', $viewModel->getBreadcrumb())
 
-@section('navAction')
-<a href="{{ url('roles/list') }}" class="btn btn-return">
+@section('navBack')
+<a href="{{ route('role.list') }}" class="btn btn-return">
+	<span class="material-symbols-outlined filled-icon">arrow_back</span>
 	<span class="title">回列表</span>
-	<span class="material-symbols-outlined filled-icon">arrow_forward</span>
 </a>
 @endsection
 
 @section('content')
-<form action="{{ url('roles/create') }}" method="post" id="roleForm">
+<form action="{{ $viewModel->getFormAction() }}" method="post" id="roleForm" data-admin="{{ RoleGroup::ADMIN->value }}">
+<input type="hidden" value="{{ $viewModel->getUpdateRoleId() }}" name="id">
 @csrf
 
 <section class="section-wrapper">
 	<div class="section role-data">
-		<div class="input-field field-orange field-dark field required">
-			<input type="text" class="form-control valid" id="name" name="name" maxlength="10" placeholder=" " required>
+		<div class="input-field field-orange field required">
+			<input type="text" class="form-control" id="name" name="name" value="{{  $viewModel->getRoleName() }}" maxlength="10" placeholder=" " required>
 			<label for="name" class="form-label">身份</label>
 		</div>
-		<div class="input-select field-orange field-dark field required">
+		<div class="input-select field-orange field required">
 			<select class="form-select" id="group" name="group">
-				<option value=""selected>請選擇</option>
-				@foreach(RoleGroup::cases() as $role)
-				<option value="{{ $role->value }}">{{ $role->label() }}</option>
+				<option value="">請選擇</option>
+				@foreach($viewModel->roleGroup as $role)
+				<option value="{{ $role->value }}" @selected($viewModel->selectedRoleGroup($role->value)) >
+				{{ $role->label() }}
+				</option>
 				@endforeach
 			</select>
 			<label for="group" class="form-label">權限群組</label>
 		</div>
 	</div>
 	
-	<div class="section role-permission">
-		@foreach($data['permissionList'] as $groupKey => $group)
-		<ul class="list-group">
+	<div class="section role-permission field-group">
+		@foreach($viewModel->functionList as $groupKey => $group)
+		<ul class="list-group {{ Str::lower($group['groupType']) }}">
 			<label class="title">
 				<span class="material-symbols-outlined filled-icon">{{ $group['groupIcon']['name'] }}</span>
 				{{ $group['groupName'] }}
@@ -57,8 +59,13 @@
 				</div>
 				<div class="permission-group-items">
 					@foreach($item['operation'] as $opKey => $operation)
-					<label class="form-check-label" for="operation{{$groupKey.$itemKey.$opKey }}">
-						<input class="form-check-input" type="checkbox" value="{{ $operation->value }}" id="operation{{$groupKey.$itemKey.$opKey }}" name="{{ Str::replaceArray('?', [$group['groupCode'], $item['actionCode']], 'group[?][?]') }}">
+					<label class="form-check-label" for="settingList{{$groupKey.$itemKey.$opKey }}">
+						<input class="form-check-input" type="checkbox" 
+							value="{{ $operation->value }}" 
+							id="settingList{{$groupKey.$itemKey.$opKey }}" 
+							name="{{ Str::replaceArray('?', [$group['groupCode'], $item['actionCode']], 'settingList[?][?][]') }}"
+							@checked($viewModel->checkedOperation($group['groupCode'], $item['actionCode'], $operation->value))
+						>
 						{{ $operation->label() }}
 					</label>
 					@endforeach
@@ -73,5 +80,6 @@
 		<button type="button" class="btn btn-red btn-cancel">取消</button>
 	</div>
 </section>
+</form>
 
 @endsection()

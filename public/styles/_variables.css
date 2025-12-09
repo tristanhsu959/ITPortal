@@ -1,31 +1,34 @@
 /* Variables Define */
 
 :root {
-	--primary-bg-color: #f0f4c3; 
-	--secondary-bg-color: #f9fbe7; 
-	--dark-bg-color: #263238; 
-	--light-bg-color: #607d8b; 
+	/* 官網主色紅 */
+	--primary-red-color: #cb1a19; /* red */
+	--primary-orange-color: #f5ac2d; /* amber */
+	--primary-orange-light-color: #ffd180;
 	
-	/* Action Bar */
-	--actionbar-bg-color: #bbdefb; 
-	--btn-profile-bg-color: #ffeb3b;
-	--btn-create-bg-color: #8bc34a;
-	--btn-return-bg-color: #263238;
+	--secondary-red-color: #ed5a65; /* red */
+	--secondary-orange-color: #ffc107; /* amber */
 	
-	/* Menu */
-	--menu-logo-bg-color: #f0f4c3;
-	--menu-bg-color: #4fc3f7;
-	--menu-text-color: #01579b; /*accent4*/
-	--menu-hover-color: #fff;
+	/* View Background */
+	--primary-default-bg-color: #fff;
+	--secondary-default-bg-color: #ccc;
 	
-	/* Dark Table */
-	--table-head-bg-color: #263238;
-	--table-head-color: #cfd8dc;
-	--table-row-border-color: #607d8b;
-	--table-col-color: #859AA4;
-	--table-col-odd-color: #40525B;
+	--primary-dark-bg-color: #000;
+	--secondary-dark-bg-color: #263238;
 	
-	/* Other Colors */
-	--primary-red-color: #cb1a19;
-	--red-color: #e53935;
+	// --primary-dark-bg-color: #263238;
+	// --secondary-dark-bg-color: #37474f;
+		
+	--divider-color: #eceff1;
+	
+	
+	
+	/* Button */
+	--btn-home-bg-color: #e91e63;
+	--btn-profile-bg-color: #00bcd4; /* 500 */
+	--btn-create-bg-color: #4caf50; /* 500 */
+	--btn-update-bg-color: #9c27b0; /* 500 */
+	--btn-delete-bg-color: #f44336; /* 500 */
+	--btn-return-bg-color: #263238; /* darken4 */
+	
 }

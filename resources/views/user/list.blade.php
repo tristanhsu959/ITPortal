@@ -1,6 +1,4 @@
-@inject('viewHelper', 'App\ViewHelpers\NewReleaseHelper')
 @use('App\Enums\Area')
-
 @extends('layouts.master')
 
 @push('styles')
@@ -8,36 +6,43 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('scripts/user/list.js') }}"></script>
+    <script src="{{ asset('scripts/user/list.js') }}" defer></script>
 @endpush
 
-@section('navHead', '帳號管理 | 列表')
+@section('navHead', $viewModel->getBreadcrumb())
 
 @section('navAction')
-<a href="{{ url('users/create') }}" class="btn btn-create">
+@if($viewModel->canCreate())
+<a href="{{ route('user.create') }}" class="btn btn-create">
 	<span class="material-symbols-outlined filled-icon">add</span>
 	<span class="title">新增</span>
 </a>
+@endif
 @endsection
 
 @section('content')
-{{--@if($status === TRUE)--}}
+@if($viewModel->status === TRUE)
+	<form action="" method="post" id="userListForm">
+	@csrf
+	</form>
 
-<section class="user-list section-wrapper">
-	<div class="searchbar">
-		<div class="input-field field-blue field-dark field">
-			<input type="text" class="form-control valid" id="account" name="account" maxlength="15" placeholder=" ">
-			<label for="account" class="form-label">AD帳號</label>
+	@if ($viewModel->canQuery())
+	<form action="{{ route('user.search') }}" method="post" id="searchForm">
+	@csrf
+	<section class="searchbar section-wrapper">
+		<div class="input-field field-lime dark field">
+			<input type="text" class="form-control valid" id="searchAd" name="searchAd" value="{{ $viewModel->getSearchAd() }}" maxlength="20" placeholder=" ">
+			<label for="searchAd" class="form-label">AD帳號</label>
 		</div>
-		<div class="input-field field-blue field-dark field">
-			<input type="text" class="form-control valid" id="displayName" name="displayName" maxlength="15" placeholder=" ">
-			<label for="displayName" class="form-label">顯示名稱</label>
+		<div class="input-field field-lime dark field">
+			<input type="text" class="form-control valid" id="searchName" name="searchName" value="{{ $viewModel->getSearchName() }}" maxlength="20" placeholder=" ">
+			<label for="searchName" class="form-label">顯示名稱</label>
 		</div>
-		<div class="input-select field-blue field-dark field">
-			<select class="form-select" id="area" name="area">
-				<option value=""selected>請選擇</option>
-				@foreach(Area::cases() as $area)
-				<option value="{{ $area->value }}">{{ $area->label() }}</option>
+		<div class="input-select field-lime dark field">
+			<select class="form-select" id="searchArea" name="searchArea">
+				<option value="">請選擇</option>
+				@foreach($viewModel->area as $area)
+				<option value="{{ $area->value }}" @selected($viewModel->selectedSearchArea($area->value)) >{{ $area->label() }}</option>
 				@endforeach
 			</select>
 			<label for="group" class="form-label">管理區域</label>
@@ -45,227 +50,50 @@
 		<button class="btn btn-search btn-info" type="button">
 			<span class="material-symbols-outlined filled-icon">search</span>
 		</button>
-	</div>
-	
-	<div class="container-fluid">
-		<div class="row head">
-			<div class="col col-1">#</div>
-			<div class="col">AD帳號</div>
-			<div class="col">顯示名稱</div>
-			<div class="col">管理區域</div>
-			<div class="col col-3">E-Mail</div>
-			<div class="col">權限身份</div>
-			<div class="col col-action">操作</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">全區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">管理者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+	</section>
+	</form>
+
+	<section class="user-list section-wrapper">
+		@if(empty(($viewModel->list)))
+		<div class="container-fluid empty-list">
+			<div class="row">
+				<div class="col">查無符合資料</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+		@else
+		<div class="container-fluid list-data">
+			<div class="row head">
+				<div class="col col-1">#</div>
+				<div class="col">AD帳號</div>
+				<div class="col">顯示名稱</div>
+				<div class="col">管理區域</div>
+				<div class="col">權限身份</div>
+				<div class="col col-action">操作</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+			@foreach($viewModel->list as $idx => $user)
+			<div class="row">
+				<div class="col col-1">{{ $idx + 1 }}</div>
+				<div class="col">{{ $user['UserAd'] }}</div>
+				<div class="col">{{ $user['UserDisplayName'] }}</div>
+				<div class="col">{{ Area::getLabelByValue($user['UserAreaId']) }}</div>
+				<div class="col">{{ $viewModel->getRoleById($user['UserRoleId']) }}</div>
+				<div class="col col-action">
+					@if($viewModel->canUpdate())
+					<a href="{{ route('user.update', [$user['UserId']]) }}" class="btn btn-edit">
+						<span class="material-symbols-outlined">edit</span>
+					</a>
+					@endif
+					@if($viewModel->canDelete())
+					<a href="{{ route('user.delete.post', [$user['UserId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['UserAd']) }}">
+						<span class="material-symbols-outlined">delete</span>
+					</a>
+					@endif
+				</div>
 			</div>
+			@endforeach
 		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">T2025001</div>
-			<div class="col">Tomas</div>
-			<div class="col">北區</div>
-			<div class="col col-3">tristan.hsu@8way.com.tw</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
-			</div>
-		</div>
-	</div>
-</section>
-{{--@endif--}}
+		@endif
+	</section>
+	@endif
+@endif
 @endsection()
