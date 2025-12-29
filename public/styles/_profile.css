@@ -1,7 +1,7 @@
 /* User Profile */
 
 .offcanvas.offcanvas-start {
-	width: 280px;
+	width: 320px;
 	border-width: 0;
 	
 	.offcanvas-header h5 {
@@ -9,6 +9,7 @@
 	}
 	
 	.offcanvas-body {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -19,60 +20,77 @@
 			padding: 1rem;
 		}
 		
-		.access-info {
-			position: relative;
+		.info-head {
 			display: flex;
-			background-color: #f8bbd0;
-			padding-top: 2rem;
-			padding-bottom: 2rem;
-				
+			flex-direction: column;
+			align-items: center;
+			/* background-color: rgba(0, 188, 212, .6); */
+			padding-top: 3rem;
+			padding-bottom: 3rem;
+			background-color: hsla(from var(--brand-red-bg) h s 46% / .75);
+			
 			>.material-symbols-outlined {
 				font-size: 4rem;
-				color: #ec407a;
+				color: var(--brand-secondary-red-bg);
 			}
 			
-			.info {
-				flex: 1;
-				padding: .5rem 0;
+			p {
+				margin: 0;
+				color: rgba(255, 255, 255, .87);
+				font-size: 1.1rem;
+				font-family: 'Poiret One';
+				font-weight: 400;
 				
-				p {
-					margin: 0;
-					color: #424242;
-					
-					&:first-child {
-						font-size: .85rem;
-						font-family: 'Orbitron';
-					}
-					&:last-child {
-						font-size: 1.2rem;
-						font-weight: 500;
-						color: #000;
-					}
+				&.name {
+					font-family: 'Orbitron';
+					font-size: 1.2rem;
+					font-weight: 500;
+					color: rgba(0, 0, 0, .87);
 				}
-			}
-			
-			a.btn-signout {
-				position: absolute;
-				bottom: 0;
-				right: 1rem;
-				transform: translateY(50%);
-				background-color: #7e57c2;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 3.5rem;
-				height: 3.5rem;
-				border-radius: 2rem;
-				color: #fff;
 			}
 		}
 		
-		.other-info {
-			padding-top: calc(3.5rem / 2 + 1rem);
+		.info-body {
+			padding-top: 2rem;
 			
 			p {
 				display: flex;
 				justify-content: space-between;
+			}
+			
+			.user-area {
+				span {
+					width: 30%;
+					background-color: var(--brand-orange-bg);
+					color: #212121;
+					font-size: .85rem;
+					font-weight: 400;
+					padding: .3rem .65rem ;
+					line-height: 1.2;
+					border-radius: 1rem;
+					border: 3px solid var(--brand-red-bg);
+					margin: .125rem 0;
+				}
+			}
+		}
+		
+		a.btn-signout {
+			position: absolute;
+			bottom: 1rem;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: hsl(8, 100%, 56%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 3.5rem;
+			height: 3.5rem;
+			border-radius: 2rem;
+			color: #fff;
+			margin: auto;
+			
+			&:hover {
+				background-color: hsl(8, 100%, 60%);
 			}
 		}
 	}

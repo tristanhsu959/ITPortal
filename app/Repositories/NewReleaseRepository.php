@@ -2,44 +2,37 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\DB;
 use Exception;
-use App\Exceptions\DBException;
 
-#新品:橙汁排骨/番茄牛三寶麵 => 邏輯相同
+#新品:橙汁排骨/番茄牛三寶麵 => 邏輯相同 : 20251217 Local另起repository替換
 class NewReleaseRepository extends Repository
 {
-	
+	#MSSQL
 	public function __construct()
 	{
 		
 	}
 	
 	/* 取主資料-BuyGood
-	 * @params: start date
-	 * @params: end date
-	 * @params: product ids
-	 * @return: collection
+	 * @params: datetime
+	 * @params: datetime
+	 * @params: array
+	 * @return: array
 	 */
 	public function getBgSaleData($startDateTime, $endDateTime, $productIds)
 	{
-		try{
 		$db = $this->connectBGPosErp('SALE01 as a');
 		$result = $this->_getSaleResult($db, $startDateTime, $endDateTime, $productIds);
 		
 		return $result;
-		}
-		catch(Exception $e)
-		{
-			throw new DBException('讀取DB發生錯誤', $e->getMessage(), __class__, __function__);
-		}
 	}
 	
 	/* 取Mapping資料 | 複合店情境 - BaFang
-	 * @params: start date
-	 * @params: end date
-	 * @params: brand code
-	 * @return: collection
+	 * @params: datetime
+	 * @params: datetime
+	 * @params: array
+	 * @params: array
+	 * @return: array
 	 */
 	public function getBfSaleData($startDateTime, $endDateTime, $productIds, $shopIds)
 	{
@@ -50,10 +43,12 @@ class NewReleaseRepository extends Repository
 	}
 	
 	/* Build query string | 新品:八方/梁社漢共用
-	 * @params: start date
-	 * @params: end date
-	 * @params: brand code
-	 * @return: collection
+	 * @params: query builder
+	 * @params: datetime
+	 * @params: datetime
+	 * @params: array
+	 * @params: array
+	 * @return: array
 	 */
 	private function _getSaleResult($db, $startDateTime, $endDateTime, $productIds, $shopIds = NULL)
 	{

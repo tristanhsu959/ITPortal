@@ -1,31 +1,38 @@
 /* Variables Define */
 
 :root {
-	--primary-bg-color: #f0f4c3; 
-	--secondary-bg-color: #f9fbe7; 
-	--dark-bg-color: #263238; 
-	--light-bg-color: #607d8b; 
+	/* 官網主色紅 */
+	--brand-red-bg: #ff3b1e;
+	--brand-secondary-red-bg: #cb1a19;
+	--brand-orange-bg: #f5ac2d; 
 	
-	/* Action Bar */
-	--actionbar-bg-color: #bbdefb; 
-	--btn-profile-bg-color: #ffeb3b;
-	--btn-create-bg-color: #8bc34a;
-	--btn-return-bg-color: #263238;
+	--theme-bg: #121212; /* #2f3135; */
+	--theme-surface-l0: #212121;
+	--theme-surface-l1: #424242;
+	--theme-surface-l2: #616161;
+	--theme-surface-l3: #757575;
 	
-	/* Menu */
-	--menu-logo-bg-color: #f0f4c3;
-	--menu-bg-color: #4fc3f7;
-	--menu-text-color: #01579b; /*accent4*/
-	--menu-hover-color: #fff;
+	--theme-primary-color: rgba(255 255 255 / .87);
+	--theme-secondary-color: rgba(255 255 255 / .6);
+	--theme-placeholder-color: rgba(255 255 255 / .48);
+	--theme-disabled-color: rgba(255 255 255 / .38); /* disabled or hint */
+	--theme-divider-color: rgba(255 255 255 / .12);
 	
-	/* Dark Table */
-	--table-head-bg-color: #263238;
-	--table-head-color: #cfd8dc;
-	--table-row-border-color: #607d8b;
-	--table-col-color: #859AA4;
-	--table-col-odd-color: #40525B;
+	/* --theme-bg: #121212; */ /*hsl(0 0% 7%);*/
+	/* --theme-on-bg: #fafafa; */ /* #fafafa */
 	
-	/* Other Colors */
-	--primary-red-color: #cb1a19;
-	--red-color: #e53935;
+	/* TBD */
+	--theme-primary: #cb1a19;
+	--theme-on-primary: #ffffff;
+	--theme-secondary: #f5ac2d;
+	--theme-on-secondary: #212121;
+	
+	/* For different primary bg */
+	--theme-primary-alpha: 100%;
+	--theme-secondary-alpha: 70%;
+	--theme-disabled-alpha: 30%;
+	--theme-hint-alpha: 30%;
+	--theme-divider-alpha: 12%;
+	
+	/* Theme Color Define */
 }

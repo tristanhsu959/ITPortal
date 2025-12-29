@@ -7,11 +7,11 @@
 				<span class="material-symbols-outlined">release_alert</span>
 				<h5 class="modal-title" id="alertModalToggleLabel">ALERT</h5>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body description">
 				Show alert message here.
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+				<button class="btn btn-ok" data-bs-dismiss="modal">確認</button>
 			</div>
 		</div>
 	</div>
@@ -24,12 +24,12 @@
 				<span class="material-symbols-outlined">verified</span>
 				<h5 class="modal-title" id="alertModalToggleLabel">CONFIRM</h5>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body description">
 				Show confirm description here.
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary btn-major" data-bs-dismiss="modal">確認</button>
-				<button class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
+				<button class="btn btn-ok btn-major" data-bs-dismiss="modal">確認</button>
+				<button class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>
