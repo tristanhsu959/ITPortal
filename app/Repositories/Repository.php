@@ -18,8 +18,25 @@ class Repository
 		return DB::connection('BGPosErp')->table($table)->lock('WITH(NOLOCK)');
 	}
 	
-	protected function connectSaleDashboard($table)
+	/* Local Sale[s]_Dashboard */
+	protected function connectSalesDashboard($table = NULL)
 	{
-		return DB::connection('SaleDashboard')->table($table)->lock('WITH(NOLOCK)');
+		if (empty($table))
+			return DB::connection('SalesDashboard');
+		else
+			return DB::connection('SalesDashboard')->table($table); #無法用nolock
 	}
+	
+	/* 原測試機已改為Local MySql */
+	/*protected function connectSaleDashboard($table = NULL)
+	{
+		return $this->connectLocalSalesDashboard($table);
+		
+		#deprecated
+		if (empty($table))
+			return DB::connection('SaleDashboard');
+		else
+			return DB::connection('SaleDashboard')->table($table)->lock('WITH(NOLOCK)');
+		
+	}*/
 }

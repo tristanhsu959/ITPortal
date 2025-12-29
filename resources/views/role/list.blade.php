@@ -1,80 +1,79 @@
 @extends('layouts.master')
+@use('App\Enums\RoleGroup')
+@use('App\Enums\Area')
 
 @push('styles')
 	<link href="{{ asset('styles/role/list.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('scripts/role/list.js') }}"></script>
+    <script src="{{ asset('scripts/role/list.js') }}" defer></script>
 @endpush
 
-@section('navHead', '身份管理 | 列表')
+@section('navHead', $viewModel->getBreadcrumb())
 
 @section('navAction')
-<a href="{{ url('roles/create') }}" class="btn btn-create">
+@if($viewModel->canCreate())
+<a href="{{ route('role.create') }}" class="btn btn-create">
 	<span class="material-symbols-outlined filled-icon">add</span>
 	<span class="title">新增</span>
 </a>
+@endif
 @endsection
 
 @section('content')
-@if($status === TRUE)
-<section class="role-list section-wrapper">
-	@if(empty($data))
-	<div class="container-fluid empty-list">
-		<div class="row">
-			<div class="col">查無符合資料</div>
-		</div>
-	</div>
-	@else
-	<div class="container-fluid list-data">
-		<div class="row head">
-			<div class="col col-1">#</div>
-			<div class="col">身份</div>
-			<div class="col">權限群組</div>
-			<div class="col col-action">操作</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">1</div>
-			<div class="col">經理</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+
+@if($viewModel->status === TRUE)
+	<form action="" method="post" id="roleListForm">
+	@csrf
+	</form>
+
+	@if ($viewModel->canQuery())
+	<section class="role-list section-wrapper">
+		@if(empty(($viewModel->list)))
+		<div class="container-fluid empty-list">
+			<div class="row">
+				<div class="col">查無符合資料</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col col-1">2</div>
-			<div class="col">經理</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+		@else
+		<div class="container-fluid list-data grid grid-purple">
+			<div class="row head">
+				<div class="col col-1">#</div>
+				<div class="col">身份</div>
+				<div class="col">權限群組</div>
+				<div class="col col-4">管理區域</div>
+				<div class="col">更新時間</div>
+				<div class="col col-action">操作</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col col-1">3</div>
-			<div class="col">經理</div>
-			<div class="col">使用者</div>
-			<div class="col col-action">
-				<a href="" class="btn btn-edit">
-					<span class="material-symbols-outlined">edit</span>
-				</a>
-				<a href="" class="btn btn-del">
-					<span class="material-symbols-outlined">delete</span>
-				</a>
+			@foreach($viewModel->list as $idx => $role)
+			<div class="row">
+				<div class="col col-1">{{ $idx + 1 }}</div>
+				<div class="col">{{ $role['roleName'] }}</div>
+				<div class="col">{{ RoleGroup::getLabelByValue($role['roleGroup']) }}</div>
+				<div class="col col-4 col-area">
+					@foreach($role['roleArea'] as $area)
+					<div class="badge">{{ Area::getLabelByValue($area) }}</div>
+					@endforeach
+				</div>
+				<div class="col">{{ $role['updateAt'] }}</div>
+				<div class="col col-action">
+					@if($viewModel->canUpdate())
+					<a href="{{ route('role.update', [$role['roleId']]) }}" class="btn btn-edit">
+						<span class="material-symbols-outlined">edit</span>
+					</a>
+					@endif
+					@if($viewModel->canDelete())
+					<a href="{{ route('role.delete.post', [$role['roleId']]) }}" class="btn btn-delete {{ $viewModel->disabledSupervisor($role['roleGroup']) }}">
+						<span class="material-symbols-outlined">delete</span>
+					</a>
+					@endif
+				</div>
 			</div>
+			@endforeach
 		</div>
-	</div>
+		@endif
+	</section>
 	@endif
-</section>
 @endif
 @endsection()

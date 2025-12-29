@@ -4,50 +4,56 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>八方雲集</title>
+		<title>八方雲集{{ empty(env('APP_ENV_HEAD')) ? '': '-' . env('APP_ENV_HEAD')}}</title>
 		
 		<link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
 		
 		<!-- Styles & Font -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto|Orbitron&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="{{ asset('styles/master.css') }}" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		
+		@sectionMissing('signin')
+		<link href="{{ asset('styles/_app.css') }}" rel="stylesheet" />
+		@endif
+		
 		@stack('styles')
 		
 		<!-- Scripts -->
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 		<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js" integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous" defer></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
-		<script src="{{ asset('scripts/master.js') }}" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script><script src="{{ asset('scripts/master.js') }}" defer></script>
 		@stack('scripts')
 	</head>
 
 	<body>
+		<main>
 		@hasSection('signin')
 			<div class='content-wrapper'>
 				@yield('signin')
 			</div>
 		@else
-			@include('layouts.master_menu')
+			@include('layouts.master_actionbar')
 		
 			<div class='content-wrapper'>
-				@include('layouts.master_actionbar')
+				@include('layouts.master_menu')
 				@hasSection('content')
 					@yield('content')
 				@endif
 			</div>
 			
 			@include('layouts.master_profile')
-			
 		@endif
+		</main>
 		
-		
-		@if(! empty($msg))
+		@if(! empty($viewModel->msg) || ! empty(session('msg')))
 		<div class="toast msg align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
 			<div class="d-flex">
 				<div class="toast-body">
-				{{ $msg }}
+				{{ empty($viewModel->msg) ? session('msg') : $viewModel->msg }}
 				</div>
 				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>

@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @push('styles')
-    <link href="{{ asset('styles/signin.css') }}" rel="stylesheet">
+    <link href="{{ asset('styles/signin/signin.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('scripts/signin.js') }}" defer></script>
+    <script src="{{ asset('scripts/signin/signin.js') }}" defer></script>
 @endpush
 
 @section('signin')
@@ -15,7 +15,7 @@
 	<span class="copyright">Bafang<i>&copy;</i>2025</span>
 </div>
 
-<div class="v-divider"></div>
+<div class="divider"></div>
 
 <div class="right-content">
 	<div class="head">
@@ -24,18 +24,18 @@
 		<h6>使用AD帳號登入至系統</h6>
 	</div>
 	
-	<form action="{{ route('auth') }}" method="post" id="signinForm">
+	<form action="{{ route('signin.post') }}" method="post" id="signinForm">
 		@csrf
-		<div class="input-field field-blue">
-			<input type="text" class="form-control valid" id="ad_account" name="ad_account" maxlength="20" placeholder=" " required>
-			<label for="ad_account" class="form-label">Account</label>
-			<span class="domain-text">@8way.com.tw</span>
+		<div class="input-field field-light-blue">
+			<input type="text" class="form-control1" id="adAccount" name="adAccount" value="{{ $viewModel->adAccount }}" maxlength="20" required>
+			<label for="adAccount" class="form-label">Account</label>
+			<span class="helper-text">@8way.com.tw</span>
 		</div>
-		<div class="input-field field-blue">
-			<input type="password" class="form-control" id="ad_password" name="ad_password" placeholder=" " maxlength="20" required>
-			<label for="ad_password" class="form-label">Password</label>
+		<div class="input-field field-light-blue">
+			<input type="password" class="form-control1" id="adPassword" name="adPassword" maxlength="20" required>
+			<label for="adPassword" class="form-label">Password</label>
 		</div>
-		<button id="btnSignin" type="button" class="btn btn-outline-danger">Sign In</button>
+		<button id="btnSignin" type="button" class="btn btn-signin red">Sign In</button>
 	</form>
 </div>
 
