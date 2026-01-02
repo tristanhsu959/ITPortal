@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>八方雲集</title>
+		<title>八方雲集-IT Portal</title>
 		
 		<link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
 		
@@ -25,24 +25,29 @@
 		@stack('scripts')
 	</head>
 
-	<body class="dark">
+	<body>
 		@hasSection('signin')
-			<div class='content-wrapper'>
+			<main class="signin">
 				@yield('signin')
-			</div>
+			</main>	
 		@else
-			@include('layouts.master_menu')
-		
-			<div class='content-wrapper'>
-				@include('layouts.master_actionbar')
-				@hasSection('content')
-					@yield('content')
-				@endif
-			</div>
+			<main>
+				@include('layouts.master_menu')
 			
-			@include('layouts.master_profile')
+				<section class='content-wrapper'>
+					@include('layouts.master_actionbar')
+					@hasSection('content')
+						@yield('content')
+					@endif
+				</section>
+				
+				@include('layouts.master_profile')
+			</main>
+			
+			@include('layouts.master_dialog')
 			
 		@endif
+		
 		
 		@if(! empty($viewModel->msg) || ! empty(session('msg')))
 		<div class="toast msg align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
@@ -53,10 +58,6 @@
 				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 		</div>
-		@endif
-		
-		@sectionMissing('signin')
-			@include('layouts.master_dialog')
 		@endif
 	</body>
 </html>

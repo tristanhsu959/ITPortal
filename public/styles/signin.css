@@ -1,20 +1,39 @@
-/* Main Style */
+/* Signin Style */
 
 body {
 	font-family: 'Roboto', 'Orbitron', sans-serif;
 	font-size: 16px;
-	margin: 0;
-	display: flex;
-	background-color:  var(--primary-default-bg-color);
-	background:  var(--primary-default-bg-color);
 	
-	.content-wrapper {
-		flex-grow: 1;
+	main.signin {
+		width: calc(100% / 3);
 		height: 100vh;
 		display: flex;
-		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		margin: auto;
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.head {
+			width: 25%;
+			img {
+				width: 256px;
+			}
+		}
+		.content-wrapper {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	
+	/* .content-wrapper {
+		
 		
 		.v-divider {
 			width: 2px;
@@ -30,7 +49,7 @@ body {
 			height: auto;
 		}
 		
-		/* Logo */
+		/* Logo *
 		.left-content {
 			display: flex;
 			flex-direction: column;
@@ -110,5 +129,5 @@ body {
 				width: 100%;
 			}
 		}
-	}
+	} */
 }
