@@ -44,13 +44,19 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: flex-start;
-			gap: .8rem;
+			gap: 1rem;
 			padding: 0;
 			margin: 0 1rem;
 			
 			li {
-				width: calc((256px - 2rem - 1.6rem) / 3);
-				height: calc((256px - 2rem - 1.6rem) / 3);
+				width: 64px;
+				height: 64px;
+				list-style-type: none;
+				
+				&.col-2 {
+					width: calc(64px * 2 + 1rem);
+					height: 64px;;
+				}
 				
 				a {
 					display: flex;

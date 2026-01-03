@@ -3,32 +3,54 @@
 	<div class="head">IT Portal</div>
 	<div class="container-fluid">
 		<ul>
-			<li class="list-group-item">
+			<li>
 				<a href="" class="active">
-					<span class="material-symbols-outlined">Account_Circle</span>
+					<span class="material-symbols-outlined">account_circle</span>
 					<span>帳號</span>
 				</a>
 			</li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			<li class="list-group-item"><a href="" class="">test</a></li>
-			
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">group</span>
+					<span>身份</span>
+				</a>
+			</li>
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
+			<li class="col-2">
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
+			<li>
+				<a href="" class="">
+					<span class="material-symbols-outlined">indeterminate_question_box</span>
+					<span>UnDefined</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
