@@ -2,10 +2,16 @@
 
 $(function(){
 	$('#btnSignin').click(function() {
-		if (validationInput('#ad_account') && validationInput('#ad_password'))
+		if (validateForm(['#adAccount', '#adPassword']))
 			$('#signinForm').submit();
 		else
+		{
+			showToast('帳號或密碼不可空白');
 			return false;
+		}
 	});
 	
+	$('#btnReset').click(function(){
+		$('#signinForm')[0].reset();
+	});
 });

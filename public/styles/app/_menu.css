@@ -1,108 +1,77 @@
 /* Aside Menu */
 .aside.menu {
-	--menu-bg-color: #000; 
+	--menu-bg: #01579b; /* hsl(206,99%,31%) */
 	
 	position: sticky;
 	top: 0;
 	left: 0;
 	width: 256px;
 	height: 100vh;
-	background-color: var(--menu-bg-color);
+	background-color: var(--menu-bg);
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	
-	.logo {
-		height: 64px;
-		position: relative;
+	.head {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: linear-gradient(125deg, var(--primary-red-color), var(--primary-red-color), var(--primary-orange-color), var(--primary-orange-color));
-		
-		img {
-			width: auto;
-			height: 48px;
-			/* mix-blend-mode: soft-light;/* soft-light  luminosity ; */
-		}
+		height: 64px;
+		font-family: 'Audiowide';
+		color: #fafafa;
+		font-size: 1.8rem;
+		font-weight: bold;
+		border-bottom: 2px solid rgba(0 0 0 / .20);
 	}
 	
 	.container-fluid {
-		--menu-text-color: #00b8d4; 
-		--menu-hover-color: #84ffff; /*#18ffff;*/
+		/*#00bcd4*/
+		--menu-color: rgba(0, 188, 212, .87); 
+		--menu-group-color: rgba(0, 188, 212, 1);  
+		--menu-hover-color: #80deea; /*200*/
 		
 		width: 100%;
-		height: calc(100vh - 64px);
-		padding-left: 0;
-		padding-right: 0;
-		border-right: 1px solid #263238;
+		height: calc(100vh - 64px - 1px);
+		/* height: calc(100vh - 64px); 若設定要考慮logo padding */
+		padding: 1rem 0;
+		box-sizing: border-box;
 		overflow-y: auto;
 		scrollbar-width: thin;
-		scrollbar-color: var(--menu-text-color) #263238; 
+		scrollbar-color: var(--menu-group-color) var(--menu-bg); 
 		/* Two valid colors. The first applies to the thumb of the scrollbar, the second to the track. */
 		
-	
-		.menu-group {
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			gap: .8rem;
+			padding: 0;
+			margin: 0 1rem;
 			
-			&:first-child {
-				margin-top: 1rem;
-			}
-			
-			a.list-title {
-				position: relative;
-				display: flex;
-				align-items: center;
-				padding: .5rem 1rem;
-				text-decoration: none;
-				color: var(--menu-text-color);
+			li {
+				width: calc((256px - 2rem - 1.6rem) / 3);
+				height: calc((256px - 2rem - 1.6rem) / 3);
 				
-				.material-symbols-outlined {
-					margin-right: .5rem;
-				}
-				
-				&:hover, &.active /*, &[aria-expanded='true']*/ {
-					color: var(--menu-hover-color);
-					cursor: pointer;
-					text-shadow: 0 0 1rem var(--menu-hover-color);
-				}
-				
-				&[aria-expanded='false']:after {
-					position: absolute;
-					right: 1rem;
-					content: "\e315";
-					font-family: 'Material Symbols Outlined';
-				}
-				&[aria-expanded='true']:after {
-					position: absolute;
-					right: 1rem;
-					content: "\e313";
-					font-family: 'Material Symbols Outlined';
-				}
-			}
-			
-			ul.list-group {
-				color: #607d8b;
-				
-				li.list-group-item {
+				a {
 					display: flex;
-					border-width: 0px;
-					padding: 0 1rem 0 2rem;
-					background-color: var(--menu-bg-color);
-					margin-bottom: .25rem;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					height: 100%;
+					background-color: hsla(206, 99%, 21%, .85);
+					border-radius: .5rem;
+					text-decoration: none;
+					color: #01579b;
+					font-size: .75rem;
 					
-					a {
-						flex: 1;
-						padding: 0 1rem;
-						text-decoration: none;
-						color: var(--menu-text-color);
-						font-size: .875rem;
-						line-height: 40px;
-						
-						&:hover, &.active {
-							border-radius: 20px;
-							background-color: rgba(69, 90, 100, .5);
-							color: var(--menu-hover-color);
-						}
+					&:hover {
+						background-color: hsl(206, 99%, 41%);
+						color: #fafafa;
+					}
+					&.active {
+						background-color: #ff3b1e;
+						color: #fafafa;
 					}
 				}
 			}

@@ -1,7 +1,7 @@
 /* Role Create JS */
 
 $(function(){
-	$('.btn-cancel').click(function(){
+	$('.btn-reset').click(function(){
 		$('#userForm')[0].reset();
 	});
 	
@@ -14,7 +14,10 @@ $(function(){
 function submitForm()
 {
 	if (validateForm(['#adAccount', 'input[name=role]:checked']))
+	{
+		$('#loading').addClass('active');
 		$('#userForm').submit();
+	}
 	else
 		showAlertDialog('AD帳號，所屬身份為必填');
 }

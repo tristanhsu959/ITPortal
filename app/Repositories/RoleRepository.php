@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Exception;
-use App\Exceptions\DBException;
 
 class RoleRepository extends Repository
 {
@@ -13,72 +13,93 @@ class RoleRepository extends Repository
 	{
 		
 	}
-	
-	/* Get Roles Data from DB
+	/* Case-sensitive in ubuntu */
+	/* Get role list from DB 
 	 * @params: 
-	 * @return: collection
+	 * @return: array
 	 */
 	public function getList()
 	{
-		try
-		{
-			$db = $this->connectSaleDashboard('Role');
+		$db = $this->connectSalesDashboard('role');
 			
-			$result = $db
-				->select('RoleId', 'RoleName', 'RoleGroup')
-				->get();
+		$result = $db
+			->select('roleId', 'roleName', 'roleGroup', 'roleArea', 'updateAt')
+			->get()
+			->toArray();
 				
-			return $result;
-		}
-		catch(Exception $e)
-		{
-			throw new DBException('讀取DB發生錯誤', $e->getMessage(), __class__, __function__);
-			return FALSE;
-		}
+		return $result;
 	}
 	
-	
-	
-	
-	
-	/* 取Mapping資料 | 複合店情境 - BaFang
-	 * @params: start date
-	 * @params: end date
-	 * @params: brand code
-	 * @return: collection
+	/* Create Role
+	 * @params: string
+	 * @params: string
+	 * @params: json string
+	 * @params: json string
+	 * @return: boolean
 	 */
-	public function getBfSaleData($startDateTime, $endDateTime, $productIds, $shopIds)
+	public function insertRole($name, $group, $permission, $area)
 	{
-		$db = $this->connectBFPosErp('SALE01 as a');
-		$result = $this->_getSaleResult($db, $startDateTime, $endDateTime, $productIds, $shopIds);
+		$roleData['roleName']		= $name;
+		$roleData['roleGroup'] 		= $group;
+		$roleData['rolePermission'] = $permission;
+		$roleData['roleArea'] 		= $area;
+		$roleData['createAt'] 		= now()->format('Y-m-d H:i:s');
+		$roleData['updateAt'] 		= $roleData['createAt'];
+		
+		$db = $this->connectSalesDashboard('role');
+		$id = $db->insertGetId($roleData);
+		
+		return TRUE;
+	}
+	
+	/* Get Role Data
+	 * @params: int
+	 * @return: array
+	 */
+	public function getRoleById($id)
+	{
+		$db = $this->connectSalesDashboard('role');
+			
+		$result = $db->select('roleId', 'roleName', 'roleGroup', 'rolePermission', 'roleArea', 'updateAt')
+					->where('roleId', '=', $id)
+					->get()->first();
 		
 		return $result;
 	}
 	
-	/* Build query string | 新品:八方/梁社漢共用
-	 * @params: start date
-	 * @params: end date
-	 * @params: brand code
-	 * @return: collection
+	/* Update Role
+	 * @params: int
+	 * @params: string
+	 * @params: int
+	 * @params: json string
+	 * @params: json string
+	 * @return: boolean
 	 */
-	private function _getSaleResult($db, $startDateTime, $endDateTime, $productIds, $shopIds = NULL)
+	public function updateRole($id, $name, $group, $permission, $area)
 	{
-		$query = $db
-				->select('a.SHOP_ID', 'a.QTY', 'b.SALE_DATE', 'c.SHOP_NAME')
-				->join('SALE00 as b', function($join) {
-					$join->on('a.SHOP_ID', '=', 'b.SHOP_ID')
-							->on('a.SALE_ID', '=', 'b.SALE_ID');
-				})
-				->join('SHOP00 as c', 'a.SHOP_ID', '=', 'c.SHOP_ID')
-				->whereIn('a.PROD_ID', $productIds)
-				->where('b.SALE_DATE', '>=', $startDateTime)
-				->where('b.SALE_DATE', '<=', $endDateTime)
-				->orderBy('b.SALE_DATE', 'DESC')
-				->orderBy('a.SHOP_ID');
-				
-		if (! is_null($shopIds))
-			$query->whereIn('a.SHOP_ID', $shopIds);
+		#只能用facade
 		
-		return $query->get();
+		$roleData['roleName']		= $name;
+		$roleData['roleGroup'] 		= $group;
+		$roleData['rolePermission']	= $permission;
+		$roleData['roleArea'] 		= $area;
+		$roleData['updateAt'] 		= now()->format('Y-m-d H:i:s');
+		
+		$db = $this->connectSalesDashboard('role');
+		$db->where('roleId', '=', $id)->update($roleData);
+		
+		return TRUE;
+	}
+	
+	/* Remove Role
+	 * @params: int
+	 * @return: boolean
+	 */
+	public function RemoveRole($roleId)
+	{
+		$db = $this->connectSalesDashboard('role');
+		$db->where('roleId', '=', $roleId)->delete();
+		
+		return TRUE;
 	}
 }

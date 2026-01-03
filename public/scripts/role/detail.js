@@ -1,7 +1,7 @@
 /* Role Create JS */
 
 $(function(){
-	$('.btn-cancel').click(function(){
+	$('.btn-reset').click(function(){
 		$('#roleForm')[0].reset();
 	});
 	
@@ -10,7 +10,7 @@ $(function(){
 	});
 	
 	$('#group').change(function(){
-		if ($(this).val() == $('#roleForm').data('admin'))
+		if ($(this).val() == $('#roleForm').data('admin') || $(this).val() == $('#roleForm').data('supervisor'))
 		{
 			$('.role-permission ul.admin .form-check-input').prop('disabled', false);
 			$('.role-permission ul.admin').show();
@@ -45,7 +45,10 @@ function submitForm()
 {
 	//沒有設定權限也可以Submit
 	if (validateForm(['#name', '#group']))
+	{
+		$('#loading').addClass('active');
 		$('#roleForm').submit();
+	}
 	else
 		showAlertDialog('身份及權限群組為必填');
 }

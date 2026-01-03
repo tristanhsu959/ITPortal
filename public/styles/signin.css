@@ -3,131 +3,66 @@
 body {
 	font-family: 'Roboto', 'Orbitron', sans-serif;
 	font-size: 16px;
-	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: $theme-bg;
+		
 	main.signin {
 		width: calc(100% / 3);
 		height: 100vh;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin: auto;
-		
-		.container {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
+				
 		.head {
-			width: 25%;
 			img {
-				width: 256px;
+				width: 288px;
+			}
+		}
+		.divider span {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			color: #ff3b1e;
+			font-family: 'Orbitron';
+			font-size: 2rem;
+			font-weight: bold;
+			transform: translate(-50%, -50%);
+			background-color: var(--theme-bg);
+			padding-left: 1rem;
+			padding-right: 1rem;
+			
+			i {
+				color: #fafafa;
+				font-family: 'Poiret One';
+				text-shadow: 1px 1px #ff3b1e, -1px -1px #ff3b1e, 1px -1px #ff3b1e, -1px 1px #ff3b1e;
+				font-Style: normal;
+				margin-left: .5rem;
 			}
 		}
 		.content-wrapper {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-		}
-	}
-	
-	/* .content-wrapper {
-		
-		
-		.v-divider {
-			width: 2px;
-			height: 40%;
-			border: 4px solide red;
-			margin: 0 1rem;
-			background-color: var(--divider-color);
-		}
-		
-		.left-content, .right-content {
-			min-width: 400px;
-			width: 20%;
-			height: auto;
-		}
-		
-		/* Logo *
-		.left-content {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			
-			img {
-				position: relative;
-				width: 60%;
-				height: auto;
-			}
-			
-			.copyright {
-				font-family: 'Orbitron';
-				font-size: .75rem;
-				font-weight: bold;
-				
-				i {
-					font-family: 'Roboto';
-					font-style: normal;
-					font-size: .875rem;
-					color: var(--secondary-red-color);
-				}
-			}
-		}
-		
-		.right-content {
-			padding: 4rem 2rem;
-			
-			.head {
-				padding: 0;
-				margin: 1rem 0;
-				
-				img {
-					width: 32px;
-					height: auto;
-				}
-				.title {
-					font-family: 'Orbitron';
-					font-size: 1.4rem;
-				}
-				h6 {
-					color: #666; 
-					font-weight: normal;
-					font-size: .875rem;
-					padding-top: .5rem;
-					padding-bottom: .5rem;
-				}
-			}
+			width: 100%;
+			padding: 0 3rem;
+			margin: 2rem 0;
 			
 			.input-field {
-				margin: 1rem 0;
-				
-				label {
-					background-color: var(--primary-default-bg-color);
-				}
-				input {
-					color: #212529;
-					background-color: var(--primary-default-bg-color);
-				}
-				.group-text {
-					width: 110px;
-					color: #ccc;
-					margin-right: .75rem;
-				}
+				margin-bottom: 1rem;
 			}
-			
-			.btn {
-				--bs-btn-color: #f44336;
-				--bs-btn-border-color: #f44336;
-				--bs-btn-hover-color: #fff;
-				--bs-btn-hover-bg: #f44336;
-				--bs-btn-hover-border-color: #f44336;
+			.footer {
+				display:flex;
 				
-				margin: 3rem 0 0;
-				display: block;
-				width: 100%;
+				#btnSignin {
+					width: 100%;
+					border-radius: .125rem 0 0 .125rem;
+				}
+				#btnReset {
+					display: flex;
+					align-items: center;
+					border-radius: 0 .125rem .125rem 0;
+				}
 			}
 		}
-	} */
+	}
 }

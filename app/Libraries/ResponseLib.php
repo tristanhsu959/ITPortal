@@ -24,7 +24,49 @@ class ResponseLib
 		return new ResponseLib($data);
     }
 	
-	public function data($data = [])
+	public function __get($name)
+    {
+		return data_get($this->_response, $name, FALSE);
+	}
+	
+	/* set to success : responseLib::initialize($initData)->success($resultData)->get()
+	 * @params: string
+	 * @return: object
+	 */
+	public function success($msg = NULL)
+	{
+		if (! empty($msg))
+			$this->_response['msg'] = $msg;
+		
+		$this->_response['status'] = TRUE;
+		
+		return $this;
+	}
+	
+	/* set to fail : responseLib::initialize($initData)->fail($msg)->get()
+	 * @params: string
+	 * @return: object
+	 */
+	public function fail($msg = NULL)
+	{
+		if (! empty($msg))
+			$this->_response['msg'] = $msg;
+		
+		$this->_response['status'] = FALSE;
+		
+		return $this;
+	}
+	
+	/* Return response format
+	 * @params: string
+	 * @return: array
+	 */
+	public function get()
+	{
+		return $this->_response;
+	}
+	
+	/*public function data($data = [])
 	{
 		$this->_response['data'] = $data;
 		return $this;
@@ -34,36 +76,6 @@ class ResponseLib
 	{
 		$this->_response['msg'] = $msg;
 		return $this;
-	}
+	}*/
 	
-	/* set to success : responseLib::initialize($initData)->success($resultData)->get()
-	 * @params: array
-	 * @return: object
-	 */
-	public function success($data = [])
-	{
-		if (! empty($data))
-			$this->_response['data'] = $data;
-		
-		$this->_response['status'] = TRUE;
-		
-		return $this;
-	}
-	
-	/* set to fail : responseLib::initialize($initData)->fail($msg)->get()
-	 * @params: array
-	 * @return: object
-	 */
-	public function fail($msg = NULL)
-	{
-		$this->_response['msg'] = $msg;
-		$this->_response['status'] = FALSE;
-		
-		return $this;
-	}
-	
-	public function get()
-	{
-		return $this->_response;
-	}
 }

@@ -1,7 +1,7 @@
 /* JS */
 
 $(function(){
-	$('.btn-del').click(function(e){
+	$('.btn-delete').click(function(e){
 		e.preventDefault();
 		let action = $(this).attr('href');
 		
@@ -14,11 +14,16 @@ $(function(){
 	
 	$('.btn-search').click(function(e){
 		e.preventDefault();
-		$('#searchForm').submit();
+		$('#loading').addClass('active');
+		$('#searchForm')[0].submit();
 		/*if (validateForm('#searchAd') || validateForm('#searchName') || validateForm('#searchArea'))
 			$('#searchForm').submit();
 		else
 			showAlertDialog('至少須輸入一個條件');*/
 	});
 	
+	$('.btn-search-reset').click(function(e) {
+		$('#searchForm').find('.input-field input').val('');
+		$('#searchForm').find('select').prop('selectedIndex', 0);
+	});
 });

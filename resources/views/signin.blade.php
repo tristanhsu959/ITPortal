@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @push('styles')
     <link href="{{ asset('styles/signin.css') }}" rel="stylesheet">
@@ -9,32 +9,28 @@
 @endpush
 
 @section('signin')
-<div class="container">
-<section class="head">
-	<img src="{{ asset('images/logo.svg') }}" />
-	<span class="copyright">Bafang<i>&copy;</i>2025</span>
-</section>
 
-<section class="content-wrapper">
-	<div class="header">
-		{{--<img src="{{ asset('images/microsoft_logo.png') }}" />--}}
-		<span class="title">Sign In</span>
-		<h6>使用AD帳號登入至系統</h6>
-	</div>
-	
-	<form action="{{-- route('signin.post') --}}" method="post" id="signinForm">
-		@csrf
-		<div class="input-field field-blue">
-			<input type="text" class="form-control" id="adAccount" name="adAccount" value="{{-- $viewModel->adAccount --}}" maxlength="20" placeholder=" " required>
-			<label for="adAccount" class="form-label">Account</label>
-			<span class="domain-text">@8way.com.tw</span>
-		</div>
-		<div class="input-field field-blue">
-			<input type="password" class="form-control" id="adPassword" name="adPassword" placeholder=" " maxlength="20" required>
-			<label for="adPassword" class="form-label">Password</label>
-		</div>
-		<button id="btnSignin" type="button" class="btn btn-outline-danger">Sign In</button>
-	</form>
-</section>
-</div>
+	<section class="head">
+		<img src="{{ asset('images/logo.svg') }}" />
+	</section>
+	<div class="divider"><span>IT<i>Portal</i></span></div>
+	<section class="content-wrapper">
+		<form action="{{ route('signin.post') }}" method="post" id="signinForm">
+			@csrf
+			<div class="input-field field-purple">
+				<input type="text" class="form-control" id="adAccount" name="adAccount" value="{{-- $viewModel->adAccount --}}" maxlength="20" placeholder=" " required>
+				<label for="adAccount" class="form-label">Account</label>
+				<span class="domain-text">@8way.com.tw</span>
+			</div>
+			<div class="input-field field-purple">
+				<input type="password" class="form-control" id="adPassword" name="adPassword" placeholder=" " maxlength="20" required>
+				<label for="adPassword" class="form-label">Password</label>
+			</div>
+			<div class="footer">
+				<button id="btnSignin" type="button" class="btn btn-bd-red">Sign In</button>
+				<button id="btnReset" type="button" class="btn btn-dark"><span class="material-symbols-outlined">backspace</span></button>
+			</div>
+		</form>
+	</section>
+
 @endsection()

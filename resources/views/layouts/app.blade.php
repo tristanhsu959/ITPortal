@@ -12,16 +12,21 @@
 		<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="{{ asset('styles/master.css') }}" rel="stylesheet" />
+		<link href="{{ asset('styles/include.css') }}" rel="stylesheet" />
+		@sectionMissing('signin')
+		<link href="{{ asset('styles/app.css') }}" rel="stylesheet" />
+		@endif
+		
 		@stack('styles')
 		
 		<!-- Scripts -->
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 		<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js" integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous" defer></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
-		<script src="{{ asset('scripts/master.js') }}" defer></script>
+		<script src="{{ asset('scripts/app.js') }}" defer></script>
 		@stack('scripts')
 	</head>
 
@@ -32,32 +37,22 @@
 			</main>	
 		@else
 			<main>
-				@include('layouts.master_menu')
+				@include('layouts._menu')
 			
 				<section class='content-wrapper'>
-					@include('layouts.master_actionbar')
+					@include('layouts._actionbar')
 					@hasSection('content')
 						@yield('content')
 					@endif
 				</section>
 				
-				@include('layouts.master_profile')
+				{{--@include('layouts._profile')--}}
 			</main>
 			
-			@include('layouts.master_dialog')
+			@include('layouts._dialog')
 			
 		@endif
 		
-		
-		@if(! empty($viewModel->msg) || ! empty(session('msg')))
-		<div class="toast msg align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="d-flex">
-				<div class="toast-body">
-				{{ empty($viewModel->msg) ? session('msg') : $viewModel->msg }}
-				</div>
-				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-		</div>
-		@endif
+		@include('layouts._toast')
 	</body>
 </html>

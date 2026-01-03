@@ -1,6 +1,14 @@
 /* Common JS */
 
 $(function(){
+	$(document).on('contextmenu', function(e){
+		e.preventDefault();
+	});
+	
+	initToast();
+	
+	
+	
 	/* Menu */
 	$('.menu .menu-group').each(function($item, $key){
 		$(this).find('a.list-title').removeClass('active');
@@ -14,6 +22,10 @@ $(function(){
 		});
 	});
 	
+	$('.menu .menu-group .list-group-item a').click(function(){
+		$('#loading').addClass('active');
+	});
+	
 	/* Remove invalid style */
 	$('.form-control').on('keypress', function(event){
 		$(this).removeClass('is-invalid');
@@ -22,8 +34,32 @@ $(function(){
 		$(this).removeClass('is-invalid');
 	});
 	
-	$('.toast').toast('show');
+	
+	
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		return new bootstrap.Tooltip(tooltipTriggerEl)
+	})
 });
+
+//Called by backend
+function initToast()
+{
+	if ($.trim($('.toast .toast-body').html()) != '')
+		$('.toast').toast('show');
+}
+
+//Called by js
+function showToast(msg)
+{
+	msg = msg || '';
+	
+	if (msg != '')
+	{
+		$('.toast .toast-body').html(msg);
+		$('.toast').toast('show');
+	}
+}
 
 /* valid or invalid */
 function validateForm(fields, invalidStyle)
@@ -74,3 +110,4 @@ function showConfirmDialog(desc, callback)
 	$('#confirm_modal .btn-major').on('click', callback);
 	$('#confirm_modal').modal('show');
 }
+
