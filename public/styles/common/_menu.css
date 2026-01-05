@@ -53,7 +53,7 @@
 				height: 64px;
 				list-style-type: none;
 				
-				&.col-2 {
+				&.w2 {
 					width: calc(64px * 2 + 1rem);
 					height: 64px;;
 				}

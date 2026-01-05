@@ -23,7 +23,8 @@ body {
 			width: calc(100vw - 256px - var(--scrollbar-width)); /* 避免scrollbar寬度影響 *
 			/* height: calc(100vh - 64px); */ /* 100vh sticky會失效 */
 			box-sizing: border-box;
-			padding: 0 1rem 1rem;
+			padding: 0;
+			background-color: inherit;
 		}
 	}
 	

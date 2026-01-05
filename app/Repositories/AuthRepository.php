@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use Exception;
 use Log;
 
-class SigninRepository extends Repository
+class AuthRepository extends Repository
 {
 	#Windows default is case-insensitive, Linex is case-sensitive
 	#mysql是系統預設改不了或無效|檔案有分(table name)|Column & data似乎依編碼沒分

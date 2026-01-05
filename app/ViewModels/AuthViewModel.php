@@ -3,9 +3,10 @@
 namespace App\ViewModels;
 
 use App\Enums\FormAction;
+use App\Enums\AuthType;
 use App\ViewModels\Traits\StatusTrait;
 
-class SigninViewModel
+class AuthViewModel
 {
 	use StatusTrait;
 	
@@ -16,6 +17,7 @@ class SigninViewModel
 	{
 		#Base data
 		$this->_data['action'] 	= NULL; #enum form action
+		$this->_data['authType']= AuthType::AD->value; #default
 		$this->success();	#default
 	}
 	

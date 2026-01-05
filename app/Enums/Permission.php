@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Operation : int
+enum Permission : int
 {
     case CREATE	= 1;
 	case READ 	= 2;

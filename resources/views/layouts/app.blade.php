@@ -35,8 +35,8 @@
 			</main>	
 		@else
 			<main class="app">
-				@include('layouts._menu')
-			
+		
+				<x-menu />
 				<section class='content-wrapper'>
 					@include('layouts._actionbar')
 					@hasSection('content')

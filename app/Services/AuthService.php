@@ -2,27 +2,24 @@
 
 namespace App\Services;
 
-use App\Repositories\SigninRepository;
+use App\Repositories\AuthRepository;
 use App\Libraries\ResponseLib;
-use App\Traits\CurrentUserTrait;
+use App\Traits\AuthTrait;
 use App\Enums\AuthType;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Carbon;
-use App\Exceptions\ServiceException;
 use Exception;
 use LdapRecord\Connection;
 use LdapRecord\Query\Filter\Parser;
 use Illuminate\Support\Facades\Hash;
 
-class SigninService
+class AuthService
 {
-	use CurrentUserTrait;
+	use AuthTrait;
 	
-	public function __construct(protected SigninRepository $_repository)
+	public function __construct(protected AuthRepository $_repository)
 	{
 	}
 	
@@ -166,7 +163,7 @@ class SigninService
 	{
 		$currentUser = $this->getCurrentUser();
 		$this->removeCurrentUser();
-		Log::channel('webSysLog')->info("{$currentUser['account']} 使用者登出系統", [ __class__, __function__]);
+		Log::channel('appServiceLog')->info("{$currentUser['account']} 使用者登出系統", [ __class__, __function__, __line__]);
 			
 		return TRUE;
 	}

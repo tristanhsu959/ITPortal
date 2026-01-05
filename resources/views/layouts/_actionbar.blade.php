@@ -1,8 +1,10 @@
 
 <nav class="page navbar">
 	<span class="navbar-head">
-		@yield('navBack')
-		<span class="material-symbols-outlined filled-icon">bubble_chart</span>
+		<a href="" class="btn btn-return">
+			<span class="material-symbols-outlined filled-icon">arrow_back</span>
+			<span class="title">回列表</span>
+		</a>
 		@yield('navHead')
 	</span>
 	<span class="navbar-action">

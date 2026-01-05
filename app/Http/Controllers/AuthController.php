@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\SigninService;
-use App\ViewModels\SigninViewModel;
+use App\Services\AuthService;
+use App\ViewModels\AuthViewModel;
 use App\Libraries\ResponseLib;
 use App\Enums\FormAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SigninController extends Controller
+class AuthController extends Controller
 {
-	public function __construct(protected SigninService $_service, protected SigninViewModel $_viewModel)
+	public function __construct(protected AuthService $_service, protected AuthViewModel $_viewModel)
 	{
 	}
 	
