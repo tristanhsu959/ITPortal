@@ -15,12 +15,13 @@ enum FormAction : int
     {
         return match ($this) 
 		{
-			self::SIGNIN	=> '登入',
-			self::HOME		=> '首頁',
+			#self::SIGNIN	=> '登入',
+			#self::HOME		=> '首頁',
 			self::List 		=> '列表',
 			self::CREATE	=> '新增',
 			self::UPDATE 	=> '編輯',
 			self::DELETE 	=> '刪除',
+			default 		=> '',
 		};
     }
 }

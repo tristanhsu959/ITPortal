@@ -8,6 +8,4 @@
     <script src=""></script>
 @endpush
 
-@section('navHead', '首頁')
-@section('navAction', '')
 @section('content', '')

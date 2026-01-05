@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\ViewModels\HomeViewModel;
+use App\Enums\FormAction;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,16 +18,8 @@ class HomeController extends Controller
 	
 	public function index(Request $request)
 	{
-		// $a = [
-			// "porkRibs"=>[2],
-			// "tomatoBeef"=>[2],
-			// "users"=>[1, 2, 3, 4],
-			// "roles"=>[1, 2, 3, 4],
-		// ];
-		#{"porkRibs":[2],"tomatoBeef":[2],"users":[1,2,3,4],"roles":[1,2,3,4]}
-		# ["1","2","3","4","5","6"]
+		$this->_viewModel->action = FormAction::HOME;
 		
-		// dd(json_encode($a));
 		return view('home')->with('viewModel', $this->_viewModel);
 	}
 	

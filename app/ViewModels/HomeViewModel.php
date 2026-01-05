@@ -4,19 +4,20 @@ namespace App\ViewModels;
 
 use App\Enums\FormAction;
 use App\ViewModels\Traits\StatusTrait;
+use App\ViewModels\Traits\ActionBarTrait;
 
 class HomeViewModel
 {
-	use StatusTrait;
+	use StatusTrait, ActionBarTrait;
 	
-	private $_service;
-	private $_title = '登入';
-	private $_data = [];
+	private $_title 	= '首頁';
+	private $_backRoute	= 'home'; #set by route name
+	private $_data 		= [];
 	
 	public function __construct()
 	{
 		#Base data
-		$this->_data['action'] 		= NULL; #enum form action
+		$this->_data['action'] = FormAction::HOME; #enum form action
 		$this->success();	#default
 	}
 	
@@ -35,25 +36,4 @@ class HomeViewModel
     {
 		return array_key_exists($name, $this->_data);
 	}
-	
-	/* initialize
-	 * @params: enum
-	 * @return: void
-	 */
-	public function initialize($action)
-	{
-		#初始化各參數及Form Options
-		$this->_data['action']	= $action;
-	}
-	
-	/* Keep signin form data : account only, 以防會使用到
-	 * @params: string
-	 * @return: void
-	 */
-	public function keepFormData($adAccount)
-    {
-		data_set($this->_data, 'adAccount', $adAccount);
-	}
-	
-	        
 }

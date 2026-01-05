@@ -73,11 +73,17 @@
 			margin-right: .5rem;
 			color: hsl(199, 92%, 85%);
 			background-color: transparent;
+			border-width: 0;
+			display: none;
 			
 			&:hover {
 				width: calc(4ch * 3.5);
 				background-color: #37474f;
-				color: hsl(291, 47%, 71%);
+				color: #f3e5f5;
+			}
+			
+			&.active {
+				display: flex;
 			}
 		}
 	}

@@ -15,10 +15,10 @@ class AuthViewModel
 	
 	public function __construct()
 	{
-		#Base data
-		$this->_data['action'] 	= NULL; #enum form action
-		$this->_data['authType']= AuthType::AD->value; #default
-		$this->success();	#default
+		#Default data
+		$this->_data['action'] 	= FormAction::SIGNIN; 
+		$this->_data['authType']= AuthType::AD->value; 
+		$this->success();	
 	}
 	
 	public function __set($name, $value)
