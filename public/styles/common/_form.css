@@ -1,0 +1,166 @@
+/* Form Component Style */
+
+body {
+	--input-field-color: var(--theme-primary-color);
+	--input-field-bg-color: transparent;
+	--input-field-label-color: var(--theme-placeholder-color);
+	--input-field-label-bg-color: transparent;
+}
+
+/* Input field default setting */
+.input-field {
+	position: relative;
+	width: 100%;
+	
+	/* Default setting */
+	/* Input */
+	.form-control {
+		display: block;
+		width: 100%;
+		padding: .625rem 1rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		border: 1px solid #616161;
+		border-radius: 4px;
+		letter-spacing: 1px;
+		color: var(--input-field-color);
+		background-color: var(--input-field-bg-color);
+		box-sizing: border-box;
+	}
+	
+	.form-control:focus {
+		box-shadow: none;
+		outline: none;
+	}
+	
+	/* Label */
+	label {
+		position: absolute;
+		pointer-events: none;
+		top: 0;
+		left: 1rem;
+		transform: translateY(.625rem);
+		transition: all 0.3s ease;
+		color: var(--input-field-label-color); /* default */
+	}
+	
+	input:focus ~ label, input:not(:placeholder-shown) ~ label {
+		transform: translateY(-50%) translateX(-.5rem) scale(0.8);
+		padding: 0px 8px;
+		/* font-weight: bold; */
+		letter-spacing: 1px;
+		border: none;
+		color: var(--input-field-label-color);
+		background-color: var(--theme-surface-bg); /* #fafafa is default */
+	}
+	
+	/* Hint inside of input */
+	.inline-hint {
+		position: absolute;
+		top: 50%;
+		right: 1rem;
+		display: inline-block;
+		transform: translateY(-50%);
+		color: var(--theme-disabled-color);
+	}
+}
+
+/* Input color */
+.input-field {
+	&.field-purple {
+		input {
+			border-color: #ce93d8; 
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: #ce93d8;
+		}
+	}
+}
+	/*&.field-light-blue {
+		input {
+			border-color: #00b0ff; /* accent3 *
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: #00b0ff;
+		}
+	}
+	
+	
+	&.field-cyan {
+		input {
+			border-color: #00bcd4;
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: #00bcd4;
+		}
+	}
+	/* Input define *
+	
+	
+	
+	
+	&.field-blue {
+		input {
+			border-color: #00b0ff; 
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: #00b0ff;
+		}
+	}
+	
+	&.field-orange {
+		input {
+			border-color: rgba(255, 145, 0, .6);
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: rgba(255, 145, 0, .6);
+		}
+	}
+	&.field-lime {
+		input {
+			border-color: rgba(198, 255, 0, .6); /*#e6ee9c ; *
+		}
+		input:focus ~ label, input:not(:placeholder-shown) ~ label {
+			color: rgba(198, 255, 0, .6);
+		}
+	}
+	
+	input.is-invalid {
+		border-color: red;
+	}
+	
+	.input-hint {
+		font-size: .75rem;
+		color: var(--theme-placeholder-color);
+	}
+	
+	
+}
+
+/* input Required 
+.field.required {
+	input ~ label, input:not(:placeholder-shown) ~ label, .form-select + label {
+		display: flex;
+		align-items: center;
+		
+		&:before {
+			content: '\e1eb';
+			font-family: 'Material Symbols Outlined';
+			color: rgba(244, 67, 54, .87);
+		}
+	}
+}
+
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%); 
+  cursor: pointer;
+}*/
+
+/* Switch Radio */
+
+
+
+

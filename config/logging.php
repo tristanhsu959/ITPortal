@@ -54,19 +54,19 @@ return [
 		
 		/* User Define */
 		
-		'webSysLog' => [
+		'appServiceLog' => [
 			'driver' => 'daily',
 			'days' => 15,
 			#'channels' => ['daily'],
 			'ignore_exceptions' => false,
-			'path' => storage_path('logs/webSys.log'),
+			'path' => storage_path('logs/service.log'),
 		],
-		'webDBLog' => [
+		'appDBLog' => [
 			'driver' => 'daily',
 			'days' => 15,
 			#'channels' => ['daily'],
 			'ignore_exceptions' => false,
-			'path' => storage_path('logs/webDB.log'),
+			'path' => storage_path('logs/db.log'),
 		],
 		
 		/* User Define End */

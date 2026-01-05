@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Repository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Exception;
+use Log;
 
 class SigninRepository extends Repository
 {
@@ -21,27 +23,63 @@ class SigninRepository extends Repository
 	 */
 	public function getUserByAccount($account)
 	{
-		$db = $this->connectSalesDashboard('user');
+		try
+		{
+			$db = $this->connectItPortal('user');
+				
+			$result = $db->select('userId', 'userAd', 'userPassword', 'userRoleId', 'roleGroup', 'rolePermission')
+						->join('role', 'roleId', '=', 'userRoleId')
+						->where('userAd', '=', $account)
+						->get()->first();
 			
-		$result = $db->select('userId', 'userAd', 'userRoleId')
-					->where('userAd', '=', $account)
-					->get()->first();
-		
-		return $result;
+			return $result;
+		}
+		catch(Exception $e)
+		{
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			return FALSE;
+		}
 	}
 	
 	/* Get permission of the user
 	 * @params: int
+	 * @params: array
 	 * @return: boolean
 	 */
-	public function getUserPermission($roleId)
+	public function syncAdInfo($userId, $adInfo)
 	{
-		$db = $this->connectSalesDashboard('role');
-		
-		$result = $db->select('roleGroup', 'rolePermission', 'roleArea')
-					->where('roleId', '=', $roleId)
-					->get()->first();
-						
-		return $result;
+		try
+		{
+			$data = [];
+			
+			#有資料才更新
+			if (! empty(data_get($adInfo, 'company', '')))
+				$data['adCompany'] = data_get($adInfo, 'company');
+			
+			if (! empty(data_get($adInfo, 'department', '')))
+				$data['adDepartment'] = data_get($adInfo, 'department');
+			
+			if (! empty(data_get($adInfo, 'employeeId', '')))
+				$data['adEmployeeId'] = data_get($adInfo, 'employeeId');
+			
+			if (! empty(data_get($adInfo, 'displayName', '')))
+				$data['adDisplayName'] = data_get($adInfo, 'displayName');
+			
+			if (! empty(data_get($adInfo, 'mail', '')))
+				$data['adMail'] = data_get($adInfo, 'mail');
+			
+			if (empty($data))
+				return TRUE;
+			
+			$db = $this->connectItPortal('user_ad_info');
+			$result = $db->updateOrInsert(['adUserId' => $userId], $data);
+					
+			return TRUE;
+		}
+		catch(Exception $e)
+		{
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			return FALSE;
+		}
 	}
 }

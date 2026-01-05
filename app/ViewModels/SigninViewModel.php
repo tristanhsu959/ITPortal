@@ -9,14 +9,13 @@ class SigninViewModel
 {
 	use StatusTrait;
 	
-	private $_service;
-	private $_title = '登入';
+	private $_function = '登入';
 	private $_data = [];
 	
 	public function __construct()
 	{
 		#Base data
-		$this->_data['action'] 		= NULL; #enum form action
+		$this->_data['action'] 	= NULL; #enum form action
 		$this->success();	#default
 	}
 	
@@ -36,24 +35,13 @@ class SigninViewModel
 		return array_key_exists($name, $this->_data);
 	}
 	
-	/* initialize
-	 * @params: enum
-	 * @return: void
-	 */
-	public function initialize($action)
-	{
-		#初始化各參數及Form Options
-		$this->_data['action']	= $action;
-	}
-	
 	/* Keep signin form data : account only, 以防會使用到
 	 * @params: string
 	 * @return: void
 	 */
-	public function keepFormData($adAccount)
+	public function keepFormData($account, $authType)
     {
-		data_set($this->_data, 'adAccount', $adAccount);
+		data_set($this->_data, 'account', $account);
+		data_set($this->_data, 'authType', $authType);
 	}
-	
-	        
 }

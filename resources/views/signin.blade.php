@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@use('App\Enums\AuthType')
 
 @push('styles')
     <link href="{{ asset('styles/signin.css') }}" rel="stylesheet">
@@ -18,17 +19,27 @@
 		<form action="{{ route('signin.post') }}" method="post" id="signinForm">
 			@csrf
 			<div class="input-field field-purple">
-				<input type="text" class="form-control" id="adAccount" name="adAccount" value="{{-- $viewModel->adAccount --}}" maxlength="20" placeholder=" " required>
-				<label for="adAccount" class="form-label">Account</label>
-				<span class="domain-text">@8way.com.tw</span>
+				<input type="text" class="form-control" id="account" name="account" value="{{ $viewModel->account }}" maxlength="20" placeholder=" " required>
+				<label for="account" class="form-label">Account</label>
+				<span class="inline-hint">@8way.com.tw</span>
 			</div>
 			<div class="input-field field-purple">
-				<input type="password" class="form-control" id="adPassword" name="adPassword" placeholder=" " maxlength="20" required>
-				<label for="adPassword" class="form-label">Password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder=" " maxlength="20" required>
+				<label for="password" class="form-label">Password</label>
 			</div>
 			<div class="footer">
-				<button id="btnSignin" type="button" class="btn btn-bd-red">Sign In</button>
+				<button id="btnSignin" type="button" class="btn btn-red">Sign In</button>
 				<button id="btnReset" type="button" class="btn btn-dark"><span class="material-symbols-outlined">backspace</span></button>
+			</div>
+			<div class="radio-group">
+				<label for="ad">
+					<input type="radio" id="ad" name="authType" value="{{ AuthType::AD->value }}" @checked(AuthType::AD->value == $viewModel->authType) >
+					{{ AuthType::AD->label() }}
+				</label>
+				<label for="system">
+					<input type="radio" id="system" name="authType" value="{{ AuthType::SYSTEM->value }}" @checked(AuthType::SYSTEM->value == $viewModel->authType)>
+					{{ AuthType::SYSTEM->label() }}
+				</label>
 			</div>
 		</form>
 	</section>

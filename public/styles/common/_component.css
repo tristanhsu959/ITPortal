@@ -1,38 +1,31 @@
-/* Non Form Component Style */
+/* Component Style */
 
-/* Button */
-.btn {
-	/* border-radius: 2px; */
-}
-.btn-bd-red {
+/* Button variables defined in bootstrap */
+.btn-red {
 	--bd-color: #ff3b1e; /* hsl(8, 100%, 56%); */
-	--bs-btn-font-weight: 600;
+	--bs-btn-font-weight: 500;
 	--bs-btn-color: var(--bs-white);
 	--bs-btn-bg: var(--bd-color);
 	--bs-btn-border-color: var(--bd-color);
 	--bs-btn-border-radius: .125rem;
 	--bs-btn-hover-color: var(--bs-white);
-	--bs-btn-hover-bg: hsl(8, 100%, 46%);
-	--bs-btn-hover-border-color: hsl(8, 100%, 46%);
-	--bs-btn-focus-shadow-rgb: hsl(8, 100%, 46%);
+	--bs-btn-hover-bg: hsl(from var(--bd-color) h s 46%); /* -10% */
+	--bs-btn-hover-border-color: hsl(from var(--bd-color) h s 46%);
+	--bs-btn-focus-shadow-rgb: hsl(from var(--bd-color) h s 46%);
 	--bs-btn-active-color: var(--bs-btn-hover-color);
-	--bs-btn-active-bg: hsl(8, 100%, 36%);
-	--bs-btn-active-border-color: hsl(8, 100%, 36%);
+	--bs-btn-active-bg: hsl(from var(--bd-color) h s 36%); /* -20% */
+	--bs-btn-active-border-color: hsl(from var(--bd-color) h s 36%);
 }
 
 
-.btn {
-	/* border-radius: 2px; */
-	/* color: rgba(255, 255, 255, .7); */
-	/* border-width: 0; */
-	
+/* .btn {
 	&:hover {
 		color: rgba(255, 255, 255, 1);
 	}
 	
-	/* Outline */
+	/* Outline *
 	&.btn-signin {
-		/* background-color: rgba(156, 39, 176, 0.6); */
+		/* background-color: rgba(156, 39, 176, 0.6); *
 		border: 1px solid #f44336;
 		color: #f44336;
 		
@@ -41,7 +34,7 @@
 			color: rgb(255, 255, 255);
 		}
 	}
-	/* Outline end */
+	/* Outline end *
 	
 	&.btn-search {
 		display: flex;
@@ -49,7 +42,7 @@
 		align-items: center;
 		width: 40px;
 		height: 40px;
-		/* border-radius: 2rem; */
+		/* border-radius: 2rem; *
 		background-color: hsl(199, 92%, 74%);
 		
 		&:hover {
@@ -62,14 +55,14 @@
 		align-items: center;
 		width: 40px;
 		height: 40px;
-		/* border-radius: 2rem; */
+		/* border-radius: 2rem; *
 		background-color: hsl(8, 100%, 56%);
 		
 		&:hover {
 			background-color: hsl(8, 100%, 60%);
 		}
 	}
-	/* List button */
+	/* List button *
 	&.btn-edit {
 		background-color: hsl(262, 52%, 47%);
 		&:hover {
@@ -82,7 +75,7 @@
 			background-color: hsl(4, 90%, 62%);
 		}
 	}
-	/* List button */
+	/* List button *
 	
 	&.btn-save {
 		background-color: hsl(199, 98%, 48%);
@@ -96,7 +89,7 @@
 			background-color: hsl(4, 90%, 62%);
 		}
 	}
-	/* Modal */
+	/* Modal *
 	&.btn-ok {
 		background-color: hsl(206, 99%, 31%);
 		&:hover {
@@ -122,7 +115,7 @@
 		background-color: rgba(255, 255, 255, .38); 
 	}
 	
-}
+} */
 
 /* Table, Grid */
 .grid-purple {

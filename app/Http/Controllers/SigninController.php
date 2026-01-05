@@ -12,14 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class SigninController extends Controller
 {
-	private $_service;
-	private $_viewModel;
-	
-	public function __construct(SigninService $signinService, SigninViewModel $signinViewModel)
+	public function __construct(protected SigninService $_service, protected SigninViewModel $_viewModel)
 	{
-		$this->_service 	= $signinService;
-		$this->_viewModel 	= $signinViewModel;
-		
 	}
 	
 	/* Signin view
@@ -28,7 +22,7 @@ class SigninController extends Controller
 	 */
 	public function showSignin()
 	{
-		
+		$this->_viewModel->action = FormAction::SIGNIN;
 		return view('signin')->with('viewModel', $this->_viewModel);
 	}
 	
@@ -38,25 +32,26 @@ class SigninController extends Controller
 	 */
 	public function signin(Request $request)
 	{
-		return redirect('home');
-		$adAccount = $request->input('adAccount');
-		$adPassword = $request->input('adPassword');
+		$account 	= $request->input('account');
+		$password	= $request->input('password');
+		$authType 	= $request->input('authType');
 		
-		$this->_viewModel->initialize(FormAction::SIGNIN);
-		$this->_viewModel->keepFormData($adAccount); #account only
+		$this->_viewModel->action = FormAction::SIGNIN;
+		$this->_viewModel->keepFormData($account, $authType); #account only
 		
 		$validator = Validator::make($request->all(), [
-            'adAccount' => 'required|max:20',
-			'adPassword' => 'required|max:20',
+            'account' => 'required|max:20',
+			'password' => 'required|max:20',
+			'authType' => 'required',
         ]);
  
         if ($validator->fails())
 		{
-			$this->_viewModel->fail('登入失敗，輸入資料不完整');
-			return view('signin')->with('viewModel', $this->_viewModel)->with('msg', '登入失敗，輸入資料不完整');
+			$this->_viewModel->fail('登入失敗，帳號或密碼空白');
+			return view('signin')->with('viewModel', $this->_viewModel);
 		}
 		
-		$response = $this->_service->authSiginIn($adAccount, $adPassword);
+		$response = $this->_service->signin($account, $password, $authType);
 		
 		if ($response->status === FALSE)
 		{
@@ -73,7 +68,7 @@ class SigninController extends Controller
 	 */
 	public function signout(Request $request)
 	{
-		$this->_viewModel->initialize(FormAction::SIGNIN);
+		$this->_viewModel->action = FormAction::SIGNIN;
 		$this->_service->signout();
 		
 		return view('signin')->with('viewModel', $this->_viewModel);

@@ -4,87 +4,158 @@ namespace App\Services;
 
 use App\Repositories\SigninRepository;
 use App\Libraries\ResponseLib;
-use App\Traits\AuthenticationTrait;
-use App\Traits\AuthorizationTrait;
+use App\Traits\CurrentUserTrait;
+use App\Enums\AuthType;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Carbon;
+use App\Exceptions\ServiceException;
 use Exception;
+use LdapRecord\Connection;
+use LdapRecord\Query\Filter\Parser;
+use Illuminate\Support\Facades\Hash;
 
 class SigninService
 {
-	use AuthenticationTrait, AuthorizationTrait;
+	use CurrentUserTrait;
 	
-	private $_title = '登入驗證';
-	private $_repository;
-	
-	public function __construct(SigninRepository $signinRepository)
+	public function __construct(protected SigninRepository $_repository)
 	{
-		$this->_repository = $signinRepository;
 	}
 	
-	/* 登入驗證(由trait決定驗證方式)
+	/* 登入驗證
 	 * @params: string
 	 * @params: string
+	 * @params: int
 	 * @return: array
 	 */
-	public function authSiginIn($adAccount, $adPassword)
+	public function signin($account, $password, $authType)
 	{
 		try
 		{
-			#1. Clear old auth session
-			$this->removeSigninUserInfo();
-			$this->removeAuthMenu();
-		
+			#1. Clear old auth session : CurrentUserTrait
+			$this->removeCurrentUser();
+			
 			#2. auth by AD
-			$adInfo = $this->authenticationAD($adAccount, $adPassword);
+			$adInfo = $this->_authenticationByAD($account, $password, $authType);
 			
 			#3. auth DB account permission
-			$userInfo = $this->_authAccountRegister($adAccount);
-			
-			if ($userInfo === FALSE)
-				throw new Exception('登入失敗，帳號尚未在系統註冊');
+			$userInfo = $this->_authenticationBySystem($account, $password, $authType);
 			
 			#4. Save to session
-			$this->saveUserToSession($adInfo, $userInfo);
+			$this->saveCurrentUser($adInfo, $userInfo);
+			
+			#5. Sync Ad info to DB
+			$this->_repository->syncAdInfo($userInfo['userId'], $adInfo);
 			
 			return ResponseLib::initialize()->success();
 		}
 		catch(Exception $e)
 		{
-			Log::channel('webSysLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
 			return ResponseLib::initialize()->fail($e->getMessage());
 		}
 	}
 	
-	/* 驗證帳號是否有在系統註冊
+	/* AD登入驗證
 	 * @params: string
+	 * @params: string
+	 * @params: int
+	 * @return: array
+	 */
+	public function _authenticationByAD($account, $password, $authType)
+	{
+		#for local non ad env
+		if (env('APP_ENV_TYPE', '') == 'nonad' OR $authType == AuthType::SYSTEM->value) 
+		{
+			return [
+				"company" => "八方雲集國際股份有限公司",
+				"department" => "資訊處",
+				"title" => "Machine #9",
+				"displayName" => "Akh",
+				"employeeId" => "T9099999",
+				"name" => "Akh",
+				"mail" => "machine.akh@8way.com.tw",
+			];
+		}
+		
+		#C:\openldap\sysconf\ldap.conf for local dev
+		#無法匿名連線(除LDAP外)
+		
+		$result = [];
+		
+		$domain = config('web.auth.domain');
+		$connectionConfig = config('web.auth.ad');
+		#必須是Distinquished Name:cn= , base dn
+		$connectionConfig['username'] = "{$account}@{$domain}"; //"cn={$account},{$connectionConfig['base_dn']}"; 
+		$connectionConfig['password'] = $password;
+		
+		try 
+		{
+			$connection = new Connection($connectionConfig);
+			$connection->connect();
+			
+			/*
+			"CN=林 XX,OU=T16000 資訊處,OU=8way_a00 八方雲集國際股份有限公司,OU=八方雲集國際股份有限公司,DC=8way,DC=com,DC=tw"
+			cn=中文名, title, ou, displayname=英+中, memof, company, department, employeeid, samaccountname, mail, mobile
+			*/
+			$result = $connection->query()->where('samaccountname', '=', $account)->first();
+			
+			#只取需要的資訊
+			$adInfo['company'] 		= data_get($result, 'company.0', '');
+			$adInfo['department'] 	= data_get($result, 'department.0', '');
+			$adInfo['title'] 		= data_get($result, 'title.0', '');
+			$adInfo['displayName'] 	= data_get($result, 'displayname.0', ''); #=>FirstName LastName CNName
+			$adInfo['employeeId'] 	= data_get($result, 'employeeid.0', ''); #=>CNName
+			$adInfo['name'] 		= Str::remove(' ', data_get($result, 'name.0', '')); #=>CNName
+			$adInfo['mail'] 		= data_get($result, 'mail.0', '');
+			
+			return $adInfo;
+		} 
+		catch (\LdapRecord\Auth\BindException $e) 
+		{
+			$msg = 'AD Error：?|?|?|?';
+			$msg = Str::replaceArray('?', [
+				$e->getDetailedError()->getErrorCode(),
+				$e->getMessage(), 
+				$e->getDetailedError()->getErrorMessage(),
+				$e->getDetailedError()->getDiagnosticMessage()
+			], $msg);
+			
+			#AD單獨記錄Log
+			Log::channel('appServiceLog')->error($msg, [ __class__, __function__, __line__]);
+			
+			throw new Exception('AD驗證失敗，帳號或密碼錯誤');
+		}
+	}
+	
+	
+	/* 驗證系統帳密
+	 * @params: string
+	 * @params: string
+	 * @params: int
 	 * @return: mixed
 	 */
-	private function _authAccountRegister($adAccount)
+	private function _authenticationBySystem($account, $password, $authType)
 	{
-		try
+		$userInfo = $this->_repository->getUserByAccount($account);
+		
+		if ($userInfo === FALSE)
+			throw new Exception('讀取帳號資訊發生錯誤');
+		
+		if (empty($userInfo))
+			throw new Exception('登入失敗，此帳號尚未在系統註冊');
+		
+		if ($authType == AuthType::SYSTEM->value)
 		{
-			$userInfo = $this->_repository->getUserByAccount($adAccount);
-			
-			if (empty($userInfo))
-				return FALSE;
-			
-			#允許有帳號無Permission, 故不檢查
-			$roleData = $this->_repository->getUserPermission($userInfo['userRoleId']);
-			$userInfo['roleGroup']	= $roleData['roleGroup'];
-			$userInfo['permission'] = empty($roleData['rolePermission']) ? [] : json_decode($roleData['rolePermission'], TRUE);
-			$userInfo['area'] 		= empty($roleData['roleArea']) ? [] : json_decode($roleData['roleArea'], TRUE);
-			
-			return $userInfo;
+			if (Hash::check($password, $userInfo['userPassword']) == FALSE)
+				throw new Exception('系統驗證失敗，帳號或密碼錯誤');
 		}
-		catch(Exception $e)
-		{
-			Log::channel('webSysLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
-			throw new Exception('驗證帳號註冊狀態，發生錯誤');
-		}
+		
+		return $userInfo;
 	}
 	
 	/* 登出
@@ -93,9 +164,9 @@ class SigninService
 	 */
 	public function signout()
 	{
-		$this->removeSigninUserInfo();
-		$this->removeAuthMenu();
-		Log::channel('webSysLog')->info('使用者登出系統', [ __class__, __function__]);
+		$currentUser = $this->getCurrentUser();
+		$this->removeCurrentUser();
+		Log::channel('webSysLog')->info("{$currentUser['account']} 使用者登出系統", [ __class__, __function__]);
 			
 		return TRUE;
 	}

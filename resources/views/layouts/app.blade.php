@@ -15,10 +15,8 @@
 		<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="{{ asset('styles/include.css') }}" rel="stylesheet" />
-		@sectionMissing('signin')
+		<link href="{{ asset('styles/common.css') }}" rel="stylesheet" />
 		<link href="{{ asset('styles/app.css') }}" rel="stylesheet" />
-		@endif
 		
 		@stack('styles')
 		
@@ -36,7 +34,7 @@
 				@yield('signin')
 			</main>	
 		@else
-			<main>
+			<main class="app">
 				@include('layouts._menu')
 			
 				<section class='content-wrapper'>

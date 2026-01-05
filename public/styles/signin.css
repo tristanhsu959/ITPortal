@@ -1,12 +1,9 @@
 /* Signin Style */
 
 body {
-	font-family: 'Roboto', 'Orbitron', sans-serif;
-	font-size: 16px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: $theme-bg;
 		
 	main.signin {
 		width: calc(100% / 3);
@@ -21,37 +18,57 @@ body {
 				width: 288px;
 			}
 		}
-		.divider span {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			color: #ff3b1e;
-			font-family: 'Orbitron';
-			font-size: 2rem;
-			font-weight: bold;
-			transform: translate(-50%, -50%);
-			background-color: var(--theme-bg);
-			padding-left: 1rem;
-			padding-right: 1rem;
+		
+		.divider {
+			display: flex;
+			width: 75%;
+			position: relative;
 			
-			i {
-				color: #fafafa;
-				font-family: 'Poiret One';
-				text-shadow: 1px 1px #ff3b1e, -1px -1px #ff3b1e, 1px -1px #ff3b1e, -1px 1px #ff3b1e;
-				font-Style: normal;
-				margin-left: .5rem;
+			&:before, &:after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background-color: rgba(0, 0, 0, .12);
+				margin-top: .5rem;
+				margin-bottom: .5rem;
+			}
+			
+			span {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				color: #ff3b1e;
+				font-family: 'Orbitron';
+				font-size: 2rem;
+				font-weight: bold;
+				transform: translate(-50%, -50%);
+				background-color: var(--theme-bg);
+				padding-left: 1rem;
+				padding-right: 1rem;
+				
+				i {
+					color: #fafafa;
+					font-family: 'Poiret One';
+					text-shadow: 1px 1px #ff3b1e, -1px -1px #ff3b1e, 1px -1px #ff3b1e, -1px 1px #ff3b1e;
+					font-Style: normal;
+					margin-left: .5rem;
+				}
 			}
 		}
+
+		
 		.content-wrapper {
 			width: 100%;
-			padding: 0 3rem;
-			margin: 2rem 0;
+			padding: 2rem 3rem;
+			/* margin: 2rem 0; */
+			box-sizing: border-box;
 			
 			.input-field {
 				margin-bottom: 1rem;
 			}
 			.footer {
 				display:flex;
+				margin-bottom: 1rem;
 				
 				#btnSignin {
 					width: 100%;
@@ -61,6 +78,34 @@ body {
 					display: flex;
 					align-items: center;
 					border-radius: 0 .125rem .125rem 0;
+				}
+			}
+			
+			.radio-group {
+				position: relative;
+				display: inline-flex;
+				padding: 0.25rem;
+				border-radius: 10rem;
+				background-color: #eeeeee;
+				float: right;
+				
+				label {
+					background-color: transparent;
+					border: none;
+					border-radius: inherit;
+					padding: 0.25rem 1rem;
+					font-size: .75rem;
+					color: #bdbdbd;
+					cursor: pointer;
+					
+					&:has(:checked) {
+						color: #fafafa;
+						background-color: #ba68c8;
+					}
+				  
+					input {
+						display: none;
+					}
 				}
 			}
 		}
