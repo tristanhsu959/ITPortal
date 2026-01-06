@@ -5,7 +5,7 @@
 	position: sticky;
 	top: 0;
 	left: 0;
-	width: 256px;
+	width: var(--menu-width);
 	height: 100vh;
 	background-color: var(--menu-bg);
 	margin: 0;
@@ -30,9 +30,9 @@
 		--menu-group-color: rgba(0, 188, 212, 1);  
 		--menu-hover-color: #80deea; /*200*/
 		
+		/* width: calc(100% - (var(--menu-width) - 100%)); 有scrollbar時 */
 		width: 100%;
 		height: calc(100vh - 64px - 1px);
-		/* height: calc(100vh - 64px); 若設定要考慮logo padding */
 		padding: 1rem 0;
 		box-sizing: border-box;
 		overflow-y: auto;
@@ -41,12 +41,14 @@
 		/* Two valid colors. The first applies to the thumb of the scrollbar, the second to the track. */
 		
 		ul {
+			--gap: calc( (var(--menu-width) - (64px * 4) - 2rem) / 3 );
+			
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: flex-start;
-			gap: 1rem;
-			padding: 0;
-			margin: 0 1rem;
+			gap: calc(var(--gap) * 2) var(--gap);
+			padding: 0 1rem;
+/* 			margin: 0 1rem; */
 			
 			li {
 				width: 64px;

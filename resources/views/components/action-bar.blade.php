@@ -8,6 +8,9 @@
 		{!! $renderBreadcrumb !!}
 	</span>
 	<span class="navbar-action">
+		<a class="btn btn-menu" href="javascript:void()" role="button">
+			<span class="material-symbols-outlined">menu</span>
+		</a>
 		<a class="btn btn-home" href="{{ route('home') }}" role="button">
 			<span class="material-symbols-outlined">home</span>
 		</a>

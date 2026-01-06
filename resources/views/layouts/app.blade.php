@@ -35,8 +35,8 @@
 			</main>	
 		@else
 			<main class="app">
-		
 				<x-menu />
+				
 				<section class='content-wrapper'>
 					<x-action-bar :breadcrumb="$viewModel->breadcrumb()" :routeName="$viewModel->backRoute()"/>
 					
@@ -45,7 +45,7 @@
 					@endif
 				</section>
 				
-				{{--@include('layouts._profile')--}}
+				<x-profile />
 			</main>
 			
 			@include('layouts._dialog')

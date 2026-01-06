@@ -161,9 +161,10 @@ class AuthService
 	 */
 	public function signout()
 	{
-		$currentUser = $this->getCurrentUser();
+		$currentUser = $this->getCurrentUser(); 
 		$this->removeCurrentUser();
-		Log::channel('appServiceLog')->info("{$currentUser['account']} 使用者登出系統", [ __class__, __function__, __line__]);
+		
+		Log::channel('appServiceLog')->info("{$currentUser->userAd} 使用者登出系統", [ __class__, __function__, __line__]);
 			
 		return TRUE;
 	}

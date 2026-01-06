@@ -1,11 +1,12 @@
 /* User Profile */
 
 .offcanvas.offcanvas-start {
-	width: 320px;
+	width: 304px;
 	border-width: 0;
+	font-family: 'Orbitron';
 	
 	.offcanvas-header h5 {
-		font-family: 'Orbitron';
+		font-family: inherit;
 	}
 	
 	.offcanvas-body {
@@ -27,25 +28,28 @@
 			/* background-color: rgba(0, 188, 212, .6); */
 			padding-top: 3rem;
 			padding-bottom: 3rem;
-			background-color: hsla(from var(--brand-red-bg) h s 46% / .75);
+			background-color: #0288d1;
 			
 			>.material-symbols-outlined {
 				font-size: 4rem;
-				color: var(--brand-secondary-red-bg);
+				color: hsl(8, 100%, 56%);
 			}
 			
 			p {
 				margin: 0;
-				color: rgba(255, 255, 255, .87);
-				font-size: 1.1rem;
-				font-family: 'Poiret One';
+				color: rgba(255, 255, 255, .38);
+				font-size: 1rem;
 				font-weight: 400;
 				
 				&.name {
-					font-family: 'Orbitron';
 					font-size: 1.2rem;
 					font-weight: 500;
-					color: rgba(0, 0, 0, .87);
+					color: rgba(255, 255, 255, .87);
+				}
+				&.mail {
+					font-family: 'Roboto';
+					font-size: .875rem;
+					font-weight: 500;
 				}
 			}
 		}
@@ -57,26 +61,11 @@
 				display: flex;
 				justify-content: space-between;
 			}
-			
-			.user-area {
-				span {
-					width: 30%;
-					background-color: var(--brand-orange-bg);
-					color: #212121;
-					font-size: .85rem;
-					font-weight: 400;
-					padding: .3rem .65rem ;
-					line-height: 1.2;
-					border-radius: 1rem;
-					border: 3px solid var(--brand-red-bg);
-					margin: .125rem 0;
-				}
-			}
 		}
 		
 		a.btn-signout {
 			position: absolute;
-			bottom: 1rem;
+			bottom: 2rem;
 			left: 50%;
 			transform: translateX(-50%);
 			background-color: hsl(8, 100%, 56%);
@@ -90,7 +79,7 @@
 			margin: auto;
 			
 			&:hover {
-				background-color: hsl(8, 100%, 60%);
+				background-color: hsl(8, 100%, 52%);
 			}
 		}
 	}

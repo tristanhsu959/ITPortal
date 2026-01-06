@@ -31,6 +31,15 @@ return [
 	
     'connections' => [
 		
+		'ItPortal' => [
+            'driver' => 'mysql',
+            'host' => env('IT_DB_HOST', '127.0.0.1'),
+            'port' => env('IT_DB_PORT', '3306'),
+            'database' => env('IT_DB_DATABASE', 'it_portal'),
+            'username' => env('IT_DB_USERNAME', 'it_portal'),
+            'password' => env('IT_DB_PASSWORD', ''),
+        ],
+		
 		#八方
 		'BFPosErp' => [
             'driver' => 'sqlsrv',
@@ -62,14 +71,6 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 		
-		'ItPortal' => [
-            'driver' => 'mysql',
-            'host' => env('IT_DB_HOST', '127.0.0.1'),
-            'port' => env('IT_DB_PORT', '3306'),
-            'database' => env('IT_DB_DATABASE', 'it_portal'),
-            'username' => env('IT_DB_USERNAME', 'it_portal'),
-            'password' => env('IT_DB_PASSWORD', ''),
-        ],
 		
 		/*
         'sqlite' => [
