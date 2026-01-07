@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
-use App\Traits\AuthorizationTrait;
+#use App\Traits\AuthorizationTrait;
 use App\Libraries\ResponseLib;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -13,16 +13,14 @@ use Log;
 
 class UserService
 {
-	use AuthorizationTrait;
+	#use AuthorizationTrait;
 	
-	private $_functionCode = 'users';
+	private $_functionCode = 'user';
 	
 	private $_title = '帳號管理';
-	private $_repository;
-    
-	public function __construct(UserRepository $userRepository)
+	
+	public function __construct(protected UserRepository $_repository)
 	{
-		$this->_repository = $userRepository;
 	}
 	
 	/* Function code define (match to menu define)

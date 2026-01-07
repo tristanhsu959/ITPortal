@@ -17,22 +17,19 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 /* Home */
 Route::get('home', [HomeController::class, 'index'])->name('home');
 
-/* 新品 */
-Route::get('new_releases/pork_ribs', [NewReleaseController::class, 'getPorkRibsStatistics']);
-Route::get('new_releases/tomato_beef', [NewReleaseController::class, 'getTomatoBeefStatistics']);
+/* 帳號管理 */
+Route::get('user', [UserController::class, 'list']);
+Route::get('user/list', [UserController::class, 'list']);
+Route::get('user/create', [UserController::class, 'create']);
+Route::get('user/update/{id?}', [UserController::class, 'update']);
+Route::get('user/delete/{id?}', [UserController::class, 'remove']);
 
 /* 身份管理 */
-Route::get('roles', [RoleController::class, 'list']);
-Route::get('roles/list', [RoleController::class, 'list']);
-Route::get('roles/create', [RoleController::class, 'showCreate']);
-Route::post('roles/create', [RoleController::class, 'create']);
-Route::get('roles/update/{id?}', [RoleController::class, 'showUpdate']);
-Route::post('roles/update/{id?}', [RoleController::class, 'update']);
-Route::post('roles/delete/{id?}', [RoleController::class, 'remove']);
+Route::get('role', [RoleController::class, 'list']);
+Route::get('role/list', [RoleController::class, 'list']);
+Route::get('role/create', [RoleController::class, 'showCreate']);
+Route::post('role/create', [RoleController::class, 'create']);
+Route::get('role/update/{id?}', [RoleController::class, 'showUpdate']);
+Route::post('role/update/{id?}', [RoleController::class, 'update']);
+Route::post('role/delete/{id?}', [RoleController::class, 'remove']);
 
-/* 帳號管理 */
-Route::get('users', [UserController::class, 'list']);
-Route::get('users/list', [UserController::class, 'list']);
-Route::get('users/create', [UserController::class, 'create']);
-Route::get('users/update/{id?}', [UserController::class, 'update']);
-Route::get('users/delete/{id?}', [UserController::class, 'remove']);

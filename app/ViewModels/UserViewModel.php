@@ -11,7 +11,7 @@ use App\Enums\RoleGroup;
 class UserViewModel
 {
 	private $_service;
-	private $_title = '帳號管理';
+	private $_function = '帳號管理';
 	private $_data = [];
 	
 	public function __construct(UserService $userService)
@@ -19,15 +19,14 @@ class UserViewModel
 		$this->_service = $userService;
 		
 		#initialize
-		$this->_data['action'] 		= NULL; #enum form action
-		$this->_data['status']		= FALSE;
-		$this->_data['msg'] 		= '';
+		$this->_data['action'] 	= FormAction::LIST; #default
+		$this->success();
 		
 		#Form Data
-		$this->_data['userData'] 	= NULL; #DB data
-		$this->_data['list'] 		= []; #DB data
-		$this->_data['search']		= [];
-		$this->_data['option']		= [];
+		$this->_data['user'] 	= NULL; #DB data
+		$this->_data['list'] 	= []; #DB data
+		$this->_data['search']	= [];
+		$this->_data['option']	= [];
 	}
 	
 	public function __set($name, $value)

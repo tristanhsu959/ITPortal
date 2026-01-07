@@ -6,23 +6,23 @@ return [
 	
 	#由這裏控制順序/enabled/disabled
 	'enabled' => [
-		'users',
-		'roles',
+		'user',
+		'role',
 	],
 	
 	#Function
 	'available' => [
-		'users' => [
+		'user' => [
 			'name' 		=> '帳號管理',
-			'url' 		=> 'users',
+			'url' 		=> 'user',
 			'style'		=> ['icon' => 'account_circle', 'width' => 'w1'],
 			'permissions'=> [
 				Permission::READ, Permission::CREATE, Permission::UPDATE, Permission::DELETE, 
 			],
 		],
-		'roles' => [
+		'role' => [
 			'name' 		=> '身份管理',
-			'url' 		=> 'roles',
+			'url' 		=> 'role',
 			'style'		=> ['icon' => 'group', 'width' => 'w1'],
 			'permissions'=> [
 				Permission::READ, Permission::CREATE, Permission::UPDATE, Permission::DELETE, 

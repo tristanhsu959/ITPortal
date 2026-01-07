@@ -20,15 +20,15 @@
 			@csrf
 			<div class="input-field field-purple">
 				<input type="text" class="form-control" id="account" name="account" value="{{ $viewModel->account }}" maxlength="20" placeholder=" " required>
-				<label for="account" class="form-label">Account</label>
+				<label for="account" class="form-label">AD帳號</label>
 				<span class="inline-hint">@8way.com.tw</span>
 			</div>
 			<div class="input-field field-purple">
 				<input type="password" class="form-control" id="password" name="password" placeholder=" " maxlength="20" required>
-				<label for="password" class="form-label">Password</label>
+				<label for="password" class="form-label">密碼</label>
 			</div>
 			<div class="footer">
-				<button id="btnSignin" type="button" class="btn btn-red">Sign In</button>
+				<button id="btnSignin" type="button" class="btn btn-red">登入</button>
 				<button id="btnReset" type="button" class="btn btn-dark"><span class="material-symbols-outlined">backspace</span></button>
 			</div>
 			<div class="radio-group">
