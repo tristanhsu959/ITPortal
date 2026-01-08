@@ -29,7 +29,7 @@ class UserRepository extends Repository
 		{
 			$db = $this->connectItPortal('user as a');
 				
-			$db->select('a.userId', 'a.userAd', 'a.userRoleId', 'a.updateAt', 'b.roleGroup', 'c.adDisplayName')
+			$db->select('a.userId', 'a.userAd', 'a.userRoleId', 'a.updateAt', 'b.roleName', 'b.roleGroup', 'c.adDisplayName')
 				->join('role as b', 'b.roleId', '=', 'a.userRoleId')
 				->leftJoin('user_ad_info as c', 'c.adUserId', '=', 'a.userId');
 			

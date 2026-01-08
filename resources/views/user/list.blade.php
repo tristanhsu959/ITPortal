@@ -10,19 +10,20 @@
 
 @section('content')
 @if($viewModel->status() === TRUE)
-	<form action="" method="post" id="userListForm">
-	@csrf
-	</form>
 	
-	@if(!$viewModel->canCreate())
+	@if($viewModel->canCreate() || $viewModel->canUpdate())
+	<form action="" method="post" id="userForm">@csrf</form>
+	@endif
+	
+	@if($viewModel->canCreate())
 	<a href="{{ route('user.create.get') }}" class="btn btn-create">
 		<span class="material-symbols-outlined filled-icon">add</span>
 		<span class="title">新增</span>
 	</a>
 	@endif
-
+	
+	@if ($viewModel->canQuery())
 	<section class="searchbar section-wrapper">
-		@if ($viewModel->canQuery())
 		<form action="{{ route('user.search') }}" method="post" id="searchForm">
 			@csrf
 			<div class="input-field field-blue field">
@@ -50,7 +51,7 @@
 			</button>
 		</form>
 	</section>
-
+	
 	<section class="user-list section-wrapper">
 		@if(empty(($viewModel->list)))
 		<div class="container-fluid empty-list">
@@ -59,13 +60,14 @@
 			</div>
 		</div>
 		@else
-		<div class="container-fluid list-data">
+		<div class="container-fluid list-data grid">
 			<div class="row head">
 				<div class="col col-1">#</div>
 				<div class="col">AD帳號</div>
 				<div class="col">顯示名稱</div>
-				<div class="col">管理區域</div>
-				<div class="col">權限身份</div>
+				<div class="col">身份</div>
+				<div class="col col-3">部門|工號|EMail</div>
+				<div class="col col-2">更新時間</div>
 				<div class="col col-action">操作</div>
 			</div>
 			@foreach($viewModel->list as $idx => $user)
@@ -73,109 +75,30 @@
 				<div class="col col-1">{{ $idx + 1 }}</div>
 				<div class="col">{{ $user['userAd'] }}</div>
 				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col"></div>
-				<div class="col">{{-- $viewModel->getRoleById($user['userRoleId']) --}}</div>
-				<div class="col col-action">
-					@if($viewModel->canUpdate())
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit">
-						<span class="material-symbols-outlined">edit</span>
-					</a>
-					@endif
-					@if($viewModel->canDelete())
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['userAd']) }}">
-						<span class="material-symbols-outlined">delete</span>
-					</a>
-					@endif
+				<div class="col">{{ $user['roleName'] }}</div>
+				<div class="col col-3">dsfdsfd
 				</div>
-			</div>
-			@endforeach
-			@foreach($viewModel->list as $idx => $user)
-			<div class="row">
-				<div class="col col-1">{{ $idx + 1 }}</div>
-				<div class="col">{{ $user['userAd'] }}</div>
-				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col"></div>
-				<div class="col">{{-- $viewModel->getRoleById($user['userRoleId']) --}}</div>
+				<div class="col col-2">2025-11-11 11:11:11</div>
 				<div class="col col-action">
-					@if($viewModel->canUpdate())
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit">
+					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit @disabled(!$viewModel->canUpdate())">
 						<span class="material-symbols-outlined">edit</span>
 					</a>
-					@endif
-					@if($viewModel->canDelete())
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['userAd']) }}">
+					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-delete @disabled(!$viewModel->canDeleteThisUser($user['userId'], $user['roleGroup']))">
 						<span class="material-symbols-outlined">delete</span>
 					</a>
-					@endif
-				</div>
-			</div>
-			@endforeach
-			@foreach($viewModel->list as $idx => $user)
-			<div class="row">
-				<div class="col col-1">{{ $idx + 1 }}</div>
-				<div class="col">{{ $user['userAd'] }}</div>
-				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col"></div>
-				<div class="col">{{-- $viewModel->getRoleById($user['userRoleId']) --}}</div>
-				<div class="col col-action">
-					@if($viewModel->canUpdate())
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit">
-						<span class="material-symbols-outlined">edit</span>
-					</a>
-					@endif
-					@if($viewModel->canDelete())
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['userAd']) }}">
-						<span class="material-symbols-outlined">delete</span>
-					</a>
-					@endif
-				</div>
-			</div>
-			@endforeach
-			@foreach($viewModel->list as $idx => $user)
-			<div class="row">
-				<div class="col col-1">{{ $idx + 1 }}</div>
-				<div class="col">{{ $user['userAd'] }}</div>
-				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col"></div>
-				<div class="col">{{-- $viewModel->getRoleById($user['userRoleId']) --}}</div>
-				<div class="col col-action">
-					@if($viewModel->canUpdate())
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit">
-						<span class="material-symbols-outlined">edit</span>
-					</a>
-					@endif
-					@if($viewModel->canDelete())
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['userAd']) }}">
-						<span class="material-symbols-outlined">delete</span>
-					</a>
-					@endif
-				</div>
-			</div>
-			@endforeach
-			@foreach($viewModel->list as $idx => $user)
-			<div class="row">
-				<div class="col col-1">{{ $idx + 1 }}</div>
-				<div class="col">{{ $user['userAd'] }}</div>
-				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col"></div>
-				<div class="col">{{-- $viewModel->getRoleById($user['userRoleId']) --}}</div>
-				<div class="col col-action">
-					@if($viewModel->canUpdate())
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit">
-						<span class="material-symbols-outlined">edit</span>
-					</a>
-					@endif
-					@if($viewModel->canDelete())
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-del {{ $viewModel->disabledSupervisor($user['userAd']) }}">
-						<span class="material-symbols-outlined">delete</span>
-					</a>
-					@endif
 				</div>
 			</div>
 			@endforeach
 		</div>
 		@endif
 	</section>
+	@else
+	<section class="user-list section-wrapper">
+		<div class="alert alert-danger" role="alert">
+		此帳號無查詢權限
+		</div>
+	</section>
 	@endif
-@endif
-@endsection()
+	
+@endif <!-- Status -->
+@endsection

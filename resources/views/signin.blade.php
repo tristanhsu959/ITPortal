@@ -44,4 +44,4 @@
 		</form>
 	</section>
 
-@endsection()
+@endsection

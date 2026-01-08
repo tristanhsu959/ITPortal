@@ -49,6 +49,27 @@
 		height: 40px;
 		color: #fafafa;
 	}
+	
+	/* List button */
+	&.btn-edit {
+		color: #fafafa;
+		background-color: hsl(262, 52%, 47%);
+		&:hover {
+			background-color: hsl(262, 52%, 51%);
+		}
+	}
+	&.btn-delete {
+		color: #fafafa;
+		background-color: hsl(4, 90%, 58%);
+		&:hover {
+			background-color: hsl(4, 90%, 62%);
+		}
+	}
+	/* List button */
+	
+	&.disabled {
+		background-color: rgba(0, 0, 0, .38); 
+	}
 }
 	/* Outline *
 	&.btn-signin {
@@ -65,20 +86,7 @@
 	
 	
 	
-	/* List button *
-	&.btn-edit {
-		background-color: hsl(262, 52%, 47%);
-		&:hover {
-			background-color: hsl(262, 52%, 51%);
-		}
-	}
-	&.btn-delete {
-		background-color: hsl(4, 90%, 58%);
-		&:hover {
-			background-color: hsl(4, 90%, 62%);
-		}
-	}
-	/* List button *
+	
 	
 	&.btn-save {
 		background-color: hsl(199, 98%, 48%);
@@ -114,27 +122,19 @@
 		border-radius: 2px;
 	}
 	
-	&.disabled {
-		background-color: rgba(255, 255, 255, .38); 
-	}
+	
 	
 } */
 
-/* Table, Grid */
-.grid-purple {
-	--table-head-bg: #7b1fa2; /* 500 */
-}
-.grid-cyan {
-	--table-head-bg: #0097a7; /* 700 */
-}
-
-/* Common Define */
+/* Table, Grid Define */
+/* Defatul table */
 .grid {
-	--table-head-color: rgba(255 255 255 / 1); 
+	--table-head-bg: #03a9f4; 
+	--table-head-color: rgba(0 0 0 / .87); 
 	--table-row-border-color: var(--theme-divider-color);
-	--table-row-even-bg: hsla(200, 19%, 18%, .3);
-	--table-row-odd-bg: hsla(200, 19%, 18%, .56); 
-	--table-row-color: rgba(255 255 255 / .7);
+	--table-row-color: rgba(0 0 0 / .7);
+	--table-row-even-bg: hsla(37, 100%, 94%, .12);
+	--table-row-odd-bg: hsla(37, 100%, 94%, .38);
 	
 	.row {
 		border-width: 0;
@@ -165,6 +165,7 @@
 			&.col-action {
 				display: flex;
 				justify-content: flex-end;
+				max-width: 100px;
 				
 				.btn {
 					display: flex;

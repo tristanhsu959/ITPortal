@@ -4,16 +4,19 @@ namespace App\ViewModels;
 
 use App\ViewModels\Attributes\attrStatus;
 use App\ViewModels\Attributes\attrActionBar;
+use App\ViewModels\Attributes\attrAllowAction;
 use App\Enums\FormAction;
 use App\Enums\Operation;
 use App\Enums\RoleGroup;
+use App\Enums\Functions;
 
 
 class UserViewModel
 {
-	use attrStatus, attrActionBar;
+	use attrStatus, attrActionBar, attrAllowAction;
 	
 	private $_title 	= '帳號管理';
+	private $_function	= Functions::USER->value;
 	private $_backRoute	= 'user'; #set by route name
 	private $_data 		= [];
 	
@@ -46,6 +49,17 @@ class UserViewModel
 		return array_key_exists($name, $this->_data);
 	}
 	
+	/* 判別列表的使用者是否可刪除(除登入者權限外)
+	 * @params: int : 欲刪除的user id
+	 * @params: int : 欲刪除的user role group
+	 * @return: boolean
+	 */
+	public function canDeleteThisUser($userId, $roleGroup)
+	{
+		#當前使用者(即自己)/Supervisor不可刪
+		return ! ($this->isCurrentUser($userId) OR (RoleGroup::SUPERVISOR->value == $roleGroup));
+	}
+	
 	/* Form submit action
 	 * @params: 
 	 * @return: string
@@ -63,11 +77,11 @@ class UserViewModel
 	 * @params:  
 	 * @return: void
 	 */
-	private function _setOptions()
+	/* private function _setOptions()
 	{
 		$this->_data['option']['area'] 		= Area::cases(); #enum
 		$this->_data['option']['roleList']	= $this->_service->getRoleOptions();
-	}
+	} */
 	
 	/* Keep search data of form
 	 * @params: string
@@ -75,12 +89,12 @@ class UserViewModel
 	 * @params: int
 	 * @return: string
 	 */
-	public function keepSearchData($adAccount, $displayName, $area)
+	/* public function keepSearchData($adAccount, $displayName, $area)
     {
 		data_set($this->_data, 'search.userAd', $adAccount);
 		data_set($this->_data, 'search.userDisplayName', $displayName);
 		data_set($this->_data, 'search.userAreaId', $area);
-	}
+	} */
 	
 	/* Get search data
 	 * @params: string
@@ -88,7 +102,7 @@ class UserViewModel
 	 * @params: int
 	 * @return: string
 	 */
-	public function getSearchAd()
+	/* public function getSearchAd()
 	{
 		return data_get($this->_data, 'search.userAd', '');
 	}
@@ -101,7 +115,7 @@ class UserViewModel
 	public function getSearchArea()
 	{
 		return data_get($this->_data, 'search.userAreaId', 0);
-	}
+	} */
 	
 	/* Keep user form data
 	 * @params: int
@@ -110,19 +124,19 @@ class UserViewModel
 	 * @params: int
 	 * @return: void
 	 */
-	public function keepFormData($id = 0, $adAccount = '', $displayName = '', $role = 0)
+	/* public function keepFormData($id = 0, $adAccount = '', $displayName = '', $role = 0)
     {
 		data_set($this->_data, 'userData.id', $id);
 		data_set($this->_data, 'userData.ad', $adAccount);
 		data_set($this->_data, 'userData.displayName', $displayName);
 		data_set($this->_data, 'userData.roleId', $role);
-	}
+	} */
 	
 	/* Get user data
 	 * @params: 
 	 * @return: string
 	 */
-	public function getUserId()
+	/* public function getUserId()
     {
 		return data_get($this->_data, 'userData.id', 0);
 	}
@@ -140,7 +154,7 @@ class UserViewModel
 	public function getUserRoleId()
 	{
 		return data_get($this->_data, 'userData.roleId', 0);
-	}
+	} */
 	
 	/* User Data End */
 	
@@ -148,11 +162,11 @@ class UserViewModel
 	 * @params: int
 	 * @return: string
 	 */
-	public function getRoleById($roleId)
+	/* public function getRoleById($roleId)
 	{
 		$list = $this->_data['option']['roleList'];
 		return data_get($list, $roleId, '');
-	}
+	} */
 	
 	
 	#Page operation permission
@@ -161,63 +175,24 @@ class UserViewModel
 	 * @params: 
 	 * @return: boolean
 	 */
-	public function canQuery()
-	{
-		return true;
-		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::READ->value);
-	}
 	
-	public function canCreate()
-	{
-		return true;
-		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::CREATE->value);
-	}
 	
-	public function canUpdate()
-	{
-		return true;
-		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::UPDATE->value);
-	}
 	
-	public function canDelete()
-	{
-		return true;
-		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::DELETE->value);
-	}
 	
-	/* Form Style */
-	public function getBreadcrumb()
-    {
-		return $this->_title . ' | ' . $this->action->label();
-	}
 	
 	/* Search form */
-	public function selectedSearchArea($areaId)
+	/* public function selectedSearchArea($areaId)
 	{
 		return ($areaId == $this->getSearchArea());
 	}
 	
-	/* User form */
-	public function checkedArea($areaId)
-	{
-		$userAreaIds = $this->getUserAreaId();
-		
-		return in_array($areaId, $userAreaIds);
-	}
 	
 	public function checkedRole($roleId)
 	{
 		$userRoleId = $this->getUserRoleId();
 		
 		return ($roleId == $userRoleId);
-	}
+	} */
 	
-	/* supervisor permission
-	 * @params: int : 欲刪除的user id(排除supervisor)
-	 * @return: boolean
-	 */
-	public function disabledSupervisor($deleteRoleGroup)
-	{
-		return (RoleGroup::SUPERVISOR->value == $deleteRoleGroup) ? 'disabled' : '';
-	}
+	
 }
