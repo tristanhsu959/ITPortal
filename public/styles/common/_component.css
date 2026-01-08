@@ -17,12 +17,39 @@
 	--bs-btn-active-border-color: hsl(from var(--bd-color) h s 36%);
 }
 
+.btn-signin {
+	--bd-color: #ff3b1e; /* hsl(8, 100%, 56%); */
+	--bs-btn-font-weight: 500;
+	--bs-btn-color: var(--bs-white);
+	--bs-btn-bg: var(--bd-color);
+	--bs-btn-border-color: var(--bd-color);
+	--bs-btn-border-radius: .125rem;
+	--bs-btn-hover-color: var(--bs-white);
+	--bs-btn-hover-bg: hsl(from var(--bd-color) h s 46%); /* -10% */
+	--bs-btn-hover-border-color: hsl(from var(--bd-color) h s 46%);
+	--bs-btn-focus-shadow-rgb: hsl(from var(--bd-color) h s 46%);
+	--bs-btn-active-color: var(--bs-btn-hover-color);
+	--bs-btn-active-bg: hsl(from var(--bd-color) h s 36%); /* -20% */
+	--bs-btn-active-border-color: hsl(from var(--bd-color) h s 36%);
+}
 
-/* .btn {
-	&:hover {
-		color: rgba(255, 255, 255, 1);
-	}
+.btn {
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	
+	&.btn-search {
+		width: 40px;
+		height: 40px;
+		color: #fafafa;
+	}
+	&.btn-search-reset {
+		width: 40px;
+		height: 40px;
+		color: #fafafa;
+	}
+}
 	/* Outline *
 	&.btn-signin {
 		/* background-color: rgba(156, 39, 176, 0.6); *
@@ -36,32 +63,8 @@
 	}
 	/* Outline end *
 	
-	&.btn-search {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 40px;
-		height: 40px;
-		/* border-radius: 2rem; *
-		background-color: hsl(199, 92%, 74%);
-		
-		&:hover {
-			background-color: hsl(199, 92%, 78%);
-		}
-	}
-	&.btn-search-reset {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 40px;
-		height: 40px;
-		/* border-radius: 2rem; *
-		background-color: hsl(8, 100%, 56%);
-		
-		&:hover {
-			background-color: hsl(8, 100%, 60%);
-		}
-	}
+	
+	
 	/* List button *
 	&.btn-edit {
 		background-color: hsl(262, 52%, 47%);

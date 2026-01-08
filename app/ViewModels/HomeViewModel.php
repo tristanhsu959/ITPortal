@@ -3,12 +3,12 @@
 namespace App\ViewModels;
 
 use App\Enums\FormAction;
-use App\ViewModels\Traits\StatusTrait;
-use App\ViewModels\Traits\ActionBarTrait;
+use App\ViewModels\Attributes\attrStatus;
+use App\ViewModels\Attributes\attrActionBar;
 
 class HomeViewModel
 {
-	use StatusTrait, ActionBarTrait;
+	use attrStatus, attrActionBar;
 	
 	private $_title 	= '首頁';
 	private $_backRoute	= 'home'; #set by route name

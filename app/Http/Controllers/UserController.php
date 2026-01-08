@@ -23,7 +23,7 @@ class UserController extends Controller
 	 */
 	public function list(Request $request)
 	{
-		$this->_viewModel->action = FormAction::List;
+		$this->_viewModel->action = FormAction::LIST;
 		
 		$response = $this->_service->getList();
 		

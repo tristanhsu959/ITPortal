@@ -30,7 +30,7 @@ class menu extends Component
         return view('components.menu', ['menu' => $this->_menu]);
     }
 	
-	public function isActive(string $url): bool
+	public function isActive(string $url): string
 	{
 		$segments = request()->segments();
 		return in_array($url, $segments) ? 'active' : '';

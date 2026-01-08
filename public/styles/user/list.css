@@ -1,26 +1,33 @@
-/* Role list */
+/* User list */
 
 .searchbar.section-wrapper {
+	--theme-surface-bg: var(--search-bg);
+	--input-field-color: rgba(255 255 255 / .87);
+	--input-field-label-color: rgba(255 255 255 / .6);
+	
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	width: 100%;
 	height: 64px;
-	padding: 1rem 1rem 0;
-	display: flex;
-	align-items: center;
-	// position: sticky;
-	// top: 0;
-	// z-index: 10;
+	padding: 1rem;
+	background-color: var(--search-bg);
+	border-bottom: 1px solid rgba(0 0 0 / .20);
 	
-	.field {
-		margin-right: 1rem;
-	}
-	
-	.btn-search {
-		display: flex;
-		justify-content: center;
+	form {
+		width: 50%;
+		height: 100%;
+		display: inline-flex;
+		justify-content: flex-start;
 		align-items: center;
-		width: 40px;
-		height: 40px;
-		border-radius: 2rem;
-		color: #fff;
+		
+		.field {
+			margin-right: 1rem;
+		}
+		
+		.btn:last-child {
+			margin-left: .5rem;
+		}
 	}
 }
 

@@ -4,13 +4,13 @@ namespace App\ViewModels;
 
 use App\Enums\FormAction;
 use App\Enums\AuthType;
-use App\ViewModels\Traits\StatusTrait;
+use App\ViewModels\Attributes\attrStatus;
 
 class AuthViewModel
 {
-	use StatusTrait;
+	use attrStatus;
 	
-	private $_function = '登入';
+	private $_title 	= '登入';
 	private $_data = [];
 	
 	public function __construct()

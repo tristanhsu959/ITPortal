@@ -163,8 +163,9 @@ class AuthService
 	{
 		$currentUser = $this->getCurrentUser(); 
 		$this->removeCurrentUser();
+		$logUser = data_get($currentUser, 'userAd', '');
 		
-		Log::channel('appServiceLog')->info("{$currentUser->userAd} 使用者登出系統", [ __class__, __function__, __line__]);
+		Log::channel('appServiceLog')->info("{$logUser} 使用者登出系統", [ __class__, __function__, __line__]);
 			
 		return TRUE;
 	}

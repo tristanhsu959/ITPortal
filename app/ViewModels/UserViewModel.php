@@ -2,22 +2,23 @@
 
 namespace App\ViewModels;
 
-use App\Services\UserService;
+use App\ViewModels\Attributes\attrStatus;
+use App\ViewModels\Attributes\attrActionBar;
 use App\Enums\FormAction;
-use App\Enums\Area;
 use App\Enums\Operation;
 use App\Enums\RoleGroup;
 
+
 class UserViewModel
 {
-	private $_service;
-	private $_function = '帳號管理';
-	private $_data = [];
+	use attrStatus, attrActionBar;
 	
-	public function __construct(UserService $userService)
+	private $_title 	= '帳號管理';
+	private $_backRoute	= 'user'; #set by route name
+	private $_data 		= [];
+	
+	public function __construct()
 	{
-		$this->_service = $userService;
-		
 		#initialize
 		$this->_data['action'] 	= FormAction::LIST; #default
 		$this->success();
@@ -45,39 +46,10 @@ class UserViewModel
 		return array_key_exists($name, $this->_data);
 	}
 	
-	/* initialize
-	 * @params: enum
-	 * @return: void
-	 */
-	public function initialize($action)
-	{
-		#初始化各參數及Form Options
-		$this->_data['action']	= $action;
-		$this->_data['msg'] 	= '';
-		
-		$this->_setOptions();
-	}
-	
-	/* Status / Msg
-	 * @params: string
-	 * @return: boolean
-	 */
-	public function success($msg = NULL)
-	{
-		$this->_data['status'] 	= TRUE;
-		$this->_data['msg'] 	= $msg ?? '';
-	}
-	
-	public function fail($msg)
-	{
-		$this->_data['status'] 	= FALSE;
-		$this->_data['msg'] 	= $msg;
-	}          
-	
 	/* Form submit action
 	 * @params: 
 	 * @return: string
-	 */
+	 *
 	public function getFormAction() : string
     {
 		return match($this->action)
@@ -85,7 +57,7 @@ class UserViewModel
 			FormAction::CREATE => route('user.create.post'),
 			FormAction::UPDATE => route('user.update.post'),
 		};
-	}
+	}*/
 	
 	/* Form所屬的參數選項
 	 * @params:  
@@ -191,22 +163,26 @@ class UserViewModel
 	 */
 	public function canQuery()
 	{
-		return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::READ->value);
+		return true;
+		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::READ->value);
 	}
 	
 	public function canCreate()
 	{
-		return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::CREATE->value);
+		return true;
+		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::CREATE->value);
 	}
 	
 	public function canUpdate()
 	{
-		return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::UPDATE->value);
+		return true;
+		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::UPDATE->value);
 	}
 	
 	public function canDelete()
 	{
-		return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::DELETE->value);
+		return true;
+		//return $this->_service->hasOperationPermission($this->_service->getFunctionCode(), Operation::DELETE->value);
 	}
 	
 	/* Form Style */

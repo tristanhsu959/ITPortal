@@ -1,10 +1,10 @@
 <?php
 
-namespace App\ViewModels\Traits;
+namespace App\ViewModels\Attributes;
 
 
 #Status & Message
-trait StatusTrait
+trait attrStatus
 {
 	protected $_status;
 	protected $_msg; 

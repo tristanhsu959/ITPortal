@@ -1,11 +1,11 @@
 <?php
 
-namespace App\ViewModels\Traits;
+namespace App\ViewModels\Attributes;
 
 use App\Enums\FormAction;
 
 #Breadcrumb | backurl
-trait ActionBarTrait
+trait attrActionBar
 {
 	/* Set status & msg
 	 * @params: string
@@ -17,7 +17,7 @@ trait ActionBarTrait
 		$action 		= data_get($this->_data, 'action', '');
 		
 		$breadcrumb[] 	= $this->_title;
-		$actionName = $action->label();
+		$actionName 	= $action->label();
 		
 		if (empty($actionName))
 			return $breadcrumb;
@@ -30,11 +30,11 @@ trait ActionBarTrait
 	public function backRoute()
 	{
 		$action = data_get($this->_data, 'action', '');
+		$except = [FormAction::SIGNIN->value, FormAction::HOME->value, FormAction::LIST->value];
 		
-		if ($action != FormAction::SIGNIN && $action != FormAction::HOME
-				&& $action != FormAction::List)
-			return $this->_backRoute;
-		else
+		if (in_array($action->value, $except))
 			return '';
+		else
+			return $this->_backRoute;
 	}
 }

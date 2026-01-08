@@ -14,7 +14,7 @@
 	padding-left: 1rem;
 	padding-right: 1rem;
 	background-color: var(--nav-bg-color);
-	margin-bottom: 1rem;
+	box-sizing: border-box;
 	
 	.navbar-head {
 		display: flex;

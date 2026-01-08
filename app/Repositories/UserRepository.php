@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use Exception;
+use Log;
 
 class UserRepository extends Repository
 {
@@ -16,46 +17,39 @@ class UserRepository extends Repository
 		
 	}
 	
-	/* Get role list
-	 * @params: 
-	 * @return: array
-	 */
-	public function getRoleList()
-	{
-		$db = $this->connectSalesDashboard('role');
-			
-		$result = $db
-			->select('roleId', 'roleName')
-			->get()
-			->toArray();
-				
-		return $result;
-	}
-	
 	/* Get user list by query conditions
 	 * @params: string
 	 * @params: string
 	 * @params: int
 	 * @return: array
 	 */
-	public function getList($searchAd = NULL, $searchName = NULL, $searchArea = NULL)
+	public function getList($searchAd = NULL, $searchName = NULL)
 	{
-		$db = $this->connectSalesDashboard('user as a');
+		try
+		{
+			$db = $this->connectItPortal('user as a');
+				
+			$db->select('a.userId', 'a.userAd', 'a.userRoleId', 'a.updateAt', 'b.roleGroup', 'c.adDisplayName')
+				->join('role as b', 'b.roleId', '=', 'a.userRoleId')
+				->leftJoin('user_ad_info as c', 'c.adUserId', '=', 'a.userId');
 			
-		$db->select('a.userId', 'a.userAd', 'a.userDisplayName', 'a.userRoleId', 'a.updateAt', 'b.roleGroup', 'b.roleArea')
-			->join('role as b', 'b.roleId', '=', 'a.userRoleId');
-		
-		#query conditions
-		if (! is_null($searchAd))
-			$db->where('a.userAd', 'like', "%{$searchAd}%");
-		if (! is_null($searchName))
-			$db->where('a.userDisplayName', 'like', "%{$searchName}%");
-		if (! is_null($searchArea))
-			$db->whereJsonContains('b.roleArea', $searchArea);
-		
-		$result = $db->get()->toArray();
-		
-		return $result;
+			#query conditions
+			if (! is_null($searchAd))
+				$db->where('a.userAd', 'like', "%{$searchAd}%");
+			if (! is_null($searchName))
+				$db->where('c.adDisplayName', 'like', "%{$searchName}%");
+			// if (! is_null($searchArea))
+				// $db->whereJsonContains('b.roleArea', $searchArea);
+			
+			$result = $db->get()->toArray(); #Collection array to assoc array
+			
+			return $result;
+		}
+		catch(Exception $e)
+		{
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			return FALSE;
+		}
 	}
 	
 	/* Create Account
@@ -124,4 +118,22 @@ class UserRepository extends Repository
 
 		return FALSE;
 	}
+	
+	/* Get role list
+	 * @params: 
+	 * @return: array
+	 */
+	public function getRoleList()
+	{
+		$db = $this->connectSalesDashboard('role');
+			
+		$result = $db
+			->select('roleId', 'roleName')
+			->get()
+			->toArray();
+				
+		return $result;
+	}
+	
+	
 }

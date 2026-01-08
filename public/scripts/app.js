@@ -7,7 +7,9 @@ $(function(){
 	
 	initToast();
 	
-	
+	$('#btnReset').click(function(){
+		$(this).closest('form').get(0).reset();
+	});
 	
 	/* Menu */
 	$('.menu .menu-group').each(function($item, $key){

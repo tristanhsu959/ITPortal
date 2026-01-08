@@ -42,17 +42,15 @@ class UserService
 		{
 			$list = $this->_repository->getList();
 			
-			$list = Arr::map($list, function ($item, string $key) {
-				$item['roleArea'] = empty($item['roleArea']) ? [] : json_decode($item['roleArea'], TRUE);
-				return $item;
-			});
+			if ($list === FALSE)
+				throw new Exception('讀取帳號清單時發生錯誤');
 			
 			return ResponseLib::initialize($list)->success();
 		}
 		catch(Exception $e)
 		{
 			Log::channel('webSysLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
-			return ResponseLib::initialize()->fail('讀取帳號清單時發生錯誤');
+			return ResponseLib::initialize()->fail($e->getMessage());
 		}
 	}
 	
