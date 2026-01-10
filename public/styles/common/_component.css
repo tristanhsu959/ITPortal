@@ -51,6 +51,18 @@
 	}
 	
 	/* List button */
+	&.btn-create {
+		width: 40px;
+		height: 40px;
+		border-radius: 10rem;
+		color: #fafafa;
+		background-color: #689f38;
+		
+		&:hover {
+			color: #689f38;
+			background-color: #76ff03;
+		}
+	}
 	&.btn-edit {
 		color: #fafafa;
 		background-color: hsl(262, 52%, 47%);
@@ -71,24 +83,7 @@
 		background-color: rgba(0, 0, 0, .38); 
 	}
 }
-	/* Outline *
-	&.btn-signin {
-		/* background-color: rgba(156, 39, 176, 0.6); *
-		border: 1px solid #f44336;
-		color: #f44336;
-		
-		&:hover {
-			background-color: #f44336;
-			color: rgb(255, 255, 255);
-		}
-	}
-	/* Outline end *
-	
-	
-	
-	
-	
-	&.btn-save {
+	/*&.btn-save {
 		background-color: hsl(199, 98%, 48%);
 		&:hover {
 			background-color: hsl(199, 98%, 52%);
@@ -128,15 +123,15 @@
 
 /* Table, Grid Define */
 /* Defatul table */
-.grid {
+.d-table {
 	--table-head-bg: #03a9f4; 
-	--table-head-color: rgba(0 0 0 / .87); 
+	--table-head-color: rgba(255 255 255 / .87); 
 	--table-row-border-color: var(--theme-divider-color);
 	--table-row-color: rgba(0 0 0 / .7);
 	--table-row-even-bg: hsla(37, 100%, 94%, .12);
 	--table-row-odd-bg: hsla(37, 100%, 94%, .38);
 	
-	.row {
+	.d-table-row {
 		border-width: 0;
 		border-bottom: 1px solid var(--table-row-border-color);
 		
@@ -149,33 +144,34 @@
 		&:not(.head) {
 			color: var(--table-row-color);
 			background-color: var(--table-row-even-bg);
+			font-size: .925rem;
 			
 			&:nth-child(odd) {
 				background-color: var(--table-row-odd-bg);
 			}
 		}
 		
-		.col {
+		.d-table-cell {
 			display: flex;
+			justify-content: flex-start;
 			align-items: center;
 			border-width: 0;
 			padding: .5rem;
+			white-space: nowrap;
 			
 			/* toolbar */
-			&.col-action {
-				display: flex;
+			&.cell-action {
+				display: flex !important;
 				justify-content: flex-end;
-				max-width: 100px;
 				
 				.btn {
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					width: 28px;
-					height: 28px;
-					padding: 0;
-					border-radius: 50% 50%;
+					padding: .25rem;
+					border-radius: 10rem;
 					margin-left: .5rem;
+					box-sizing: border-box;
 					
 					.material-symbols-outlined {
 						font-size: 1.25rem;

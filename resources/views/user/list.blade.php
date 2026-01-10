@@ -11,15 +11,8 @@
 @section('content')
 @if($viewModel->status() === TRUE)
 	
-	@if($viewModel->canCreate() || $viewModel->canUpdate())
+	@if($viewModel->canUpdate())
 	<form action="" method="post" id="userForm">@csrf</form>
-	@endif
-	
-	@if($viewModel->canCreate())
-	<a href="{{ route('user.create.get') }}" class="btn btn-create">
-		<span class="material-symbols-outlined filled-icon">add</span>
-		<span class="title">新增</span>
-	</a>
 	@endif
 	
 	@if ($viewModel->canQuery())
@@ -41,7 +34,7 @@
 					<option value="1"  >test</option>
 					<option value="1"  >test</option>
 				</select>
-				<label for="searchArea" class="form-label">管理區域</label>
+				<label for="searchArea" class="form-label">身份</label>
 			</div>
 			<button class="btn btn-search btn-info" type="button">
 				<span class="material-symbols-outlined filled-icon">search</span>
@@ -50,45 +43,57 @@
 				<span class="material-symbols-outlined">backspace</span>
 			</button>
 		</form>
+		
+		@if($viewModel->canCreate())
+		<a href="{{ route('user.create.get') }}" class="btn btn-create">
+			<span class="material-symbols-outlined filled-icon">add</span>
+		</a>
+		@endif
 	</section>
 	
 	<section class="user-list section-wrapper">
 		@if(empty(($viewModel->list)))
-		<div class="container-fluid empty-list">
-			<div class="row">
-				<div class="col">查無符合資料</div>
-			</div>
+		<div class="alert alert-danger" role="alert">
+			查無符合資料
 		</div>
 		@else
 		<div class="container-fluid list-data grid">
-			<div class="row head">
-				<div class="col col-1">#</div>
-				<div class="col">AD帳號</div>
-				<div class="col">顯示名稱</div>
-				<div class="col">身份</div>
-				<div class="col col-3">部門|工號|EMail</div>
-				<div class="col col-2">更新時間</div>
-				<div class="col col-action">操作</div>
-			</div>
-			@foreach($viewModel->list as $idx => $user)
-			<div class="row">
-				<div class="col col-1">{{ $idx + 1 }}</div>
-				<div class="col">{{ $user['userAd'] }}</div>
-				<div class="col">{{ $user['adDisplayName'] }}</div>
-				<div class="col">{{ $user['roleName'] }}</div>
-				<div class="col col-3">dsfdsfd
+			<div class="d-table w-100">
+				<div class="d-table-row head">
+					<div class="d-table-cell">#</div>
+					<div class="d-table-cell">AD帳號</div>
+					<div class="d-table-cell">顯示名稱</div>
+					<div class="d-table-cell">身份</div>
+					<div class="d-table-cell">工號|部門</div>
+					<div class="d-table-cell">EMail</div>
+					<div class="d-table-cell">更新時間</div>
+					<div class="d-table-cell">操作</div>
 				</div>
-				<div class="col col-2">2025-11-11 11:11:11</div>
-				<div class="col col-action">
-					<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit @disabled(!$viewModel->canUpdate())">
-						<span class="material-symbols-outlined">edit</span>
-					</a>
-					<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-delete @disabled(!$viewModel->canDeleteThisUser($user['userId'], $user['roleGroup']))">
-						<span class="material-symbols-outlined">delete</span>
-					</a>
+				@foreach($viewModel->list as $idx => $user)
+				<div class="d-table-row">
+					<div class="d-table-cell">{{ $idx + 1 }}</div>
+					<div class="d-table-cell">{{ $user['userAd'] }}</div>
+					<div class="d-table-cell">{{ $user['adDisplayName'] }}</div>
+					<div class="d-table-cell">{{ $user['roleName'] }}</div>
+					<div class="d-table-cell">
+						{{ $user['adEmployeeId'] }}
+						@if(! empty($user['adDepartment']))
+						<span class="badge rounded-pill bg-primary">{{ $user['adDepartment'] }}<span>
+						@endif
+					</div>
+					<div class="d-table-cell">{{ $user['adMail'] }}</div>
+					<div class="d-table-cell cell-date">2025-11-11 11:11:11</div>
+					<div class="d-table-cell cell-action">
+						<a href="{{ route('user.update.get', [$user['userId']]) }}" class="btn btn-edit @disabled(!$viewModel->canUpdate())">
+							<span class="material-symbols-outlined">edit</span>
+						</a>
+						<a href="{{ route('user.delete.post', [$user['userId']]) }}" class="btn btn-delete @disabled(!($viewModel->canDelete() && $viewModel->canDeleteThisUser($user['userId'], $user['roleGroup'])))">
+							<span class="material-symbols-outlined">delete</span>
+						</a>
+					</div>
 				</div>
+				@endforeach
 			</div>
-			@endforeach
 		</div>
 		@endif
 	</section>

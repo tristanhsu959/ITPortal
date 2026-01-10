@@ -29,7 +29,7 @@ trait attrAllowAction
 	}
 	
 	public function canCreate()
-	{return false;
+	{
 		$currentUser = $this->getCurrentUser();
 		return $currentUser->hasActionPermission($this->_function, Permission::CREATE->value);
 	}
