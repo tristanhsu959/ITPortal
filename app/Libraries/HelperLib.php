@@ -8,10 +8,21 @@ use Illuminate\Support\Arr;
 #Util helper
 class HelperLib
 {
-	private $_response;
-	
 	public function __construct()
 	{
+	}
+	
+	public static function appName()
+	{
+		$env = env('APP_ENV');
+		$appName = env('APP_NAME');
+		
+		$name = "八方雲集 $appName";
+		
+		if ($env == 'production')
+			return $name;
+		else
+			return $name . "-Staging";
 	}
 	
 	/* Cache name

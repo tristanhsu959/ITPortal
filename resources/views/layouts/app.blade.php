@@ -7,7 +7,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>八方雲集{{ empty(env('APP_ENV_HEAD')) ? '': '-' . env('APP_ENV_HEAD')}}</title>
+		<title>{{ HelperLib::appName() }}</title>
 		
 		<link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
 		
@@ -44,11 +44,11 @@
 			<x-menu :menus="AppManager::getAuthMenu()" :currentPath="request()->url()"/>
 		@endif
 		
-		<main x-data="{hasAuth: @js(AppManager::hasAuth())}" :class="hasAuth ? 'app':'signin'" class="responsive"> <!--@scroll.capture.window="isTop = $event.target.scrollTop <= 10"-->
-			@if(AppManager::hasAuth())
-				<x-action-bar :initData="$viewModel->actionBarData()" />
-			@endif
-			
+		@if(AppManager::hasAuth())
+			<x-action-bar :initData="$viewModel->actionBarData()" />
+		@endif
+		
+		<main x-data="{hasAuth: @js(AppManager::hasAuth())}" :class="hasAuth ? 'app':'signin'" class="responsive">
 			@yield('content')
 		</main>
 		

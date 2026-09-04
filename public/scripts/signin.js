@@ -5,12 +5,12 @@ document.addEventListener('alpine:init', () => {
 		formData: {...response.formData},
 		errors: new Set(),
 		isLoading: false,
-		isForgetPassword: false,
+		showForgotPassword: false,
 		showOidcButton: false,
 		
 		validate() {
-			if (this.isForgetPassword)
-				this.validateForgetPassword();
+			if (this.showForgotPassword)
+				this.validateForgotPassword();
 			else
 				this.validateLogin();
 		},
@@ -32,7 +32,7 @@ document.addEventListener('alpine:init', () => {
 				return false;
 		},
 		
-		validateForgetPassword() {
+		validateForgotPassword() {
 			this.errors.clear();
 			
 			if (Helper.isEmpty(this.formData.account))

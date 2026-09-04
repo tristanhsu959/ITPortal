@@ -6,7 +6,7 @@ button, a {
 	}
 	/* Search */
 	&.btn-show-search {
-		--primary: #4fc3f7;/* #81d4fa; */
+		--primary: #4fc3f7;
 	}	
 	&.btn-search {
 		--primary: #4fc3f7;
@@ -31,14 +31,8 @@ button, a {
 	&.btn-save {
 		--primary: #00c853;
 	}
-	&.btn-cancel {
-		--primary: #212121;
-	}
 	
 	/* Other */
-	&.btn-red {
-		--primary: #f44336;
-	}
 	&.btn-light-blue {
 		--primary: #03a9f4;
 	}

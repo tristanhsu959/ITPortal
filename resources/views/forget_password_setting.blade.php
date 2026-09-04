@@ -6,7 +6,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>八方雲集{{ empty(env('APP_ENV_HEAD')) ? '': '-' . env('APP_ENV_HEAD')}}</title>
+		<title>{{ HelperLib::appName() . '-忘記密碼' }}</title>
 		
 		<link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
 		
@@ -28,28 +28,28 @@
 		<script src="{{ HelperLib::versionAsset('scripts/util.js') }}" defer></script>
 		<script src="{{ HelperLib::versionAsset('scripts/helper.js') }}" defer></script>
 		<script src="{{ HelperLib::versionAsset('scripts/app.js') }}" defer></script>
-		<script src="{{ HelperLib::versionAsset('scripts/forget_password.js') }}" defer></script>
+		<script src="{{ HelperLib::versionAsset('scripts/forgot_password.js') }}" defer></script>
 		@vite(['resources/js/app.js'])
 	</head>
 
 	<body x-cloak>
-		<main class="responsive forget-password">
+		<main class="responsive forgot-password">
 			<div x-data="setPassword(@js($viewModel->responseData()))" class="content-wrapper">
-				<form :action="formData.formAction" method="post" class="row" novalidate @submit.prevent="validate()" >
+				<form :action="formData.formAction" method="post" class="grid" novalidate @submit.prevent="validate()" >
 					@csrf
 					<input type="hidden" name="id" :value="formData.id" />
 					<input type="hidden" name="account" :value="formData.account" />
 					<input type="hidden" name="name" :value="formData.name" />
-					<div class="content-left">
+					
+					<div class="s12 m6 head-logo">
 						<img src="{{ asset('images/logo.svg') }}" />
-						<span class="copyright">Bafang<i>&copy;</i>2025</span>
+						<span class="copyright l m">Bafang<i>&copy;</i>IT Portal 2026</span>
 					</div>
 
-					<div class="divider"> </div>
-
-					<div class="content-right">
+					<div class="s12 m6 form-content">
 						<div class="header">
-							<span class="title"><i class="fill">encrypted</i>密碼設定</span>
+							<img src="{{ asset('images/bf_logo.png') }}" />
+							<span class="title">密碼設定</span>
 							<h6 class="purple-text">設定密碼後，請重新登入</h6>
 						</div>
 						
@@ -69,9 +69,10 @@
 								</button>
 							</i>
 						</div>
+						
 						<div class="field label border field-light-green suffix" :class="Helper.hasError(errors, 'confirmPassword')">
 							<input x-model="formData.confirmPassword" :type="showConfirmPassword ? 'text':'password'" name="confirmPassword" maxlength="20" @input="errors.delete('confirmPassword')">
-							<label>確認密碼</label>
+							<label>確認新密碼</label>
 							<span class="red-text small-text">再輸入一次新密碼</span>
 							<i class="btn-icon">
 								<button type="button" class="large square" @click="showConfirmPassword = !showConfirmPassword">
@@ -85,7 +86,7 @@
 							<button type="submit" class="green left-round max">
 								<span>儲存</span>
 							</button>
-							<button type="button" class="right-round square btn-cancel" @click="reset()">
+							<button type="button" class="right-round square red" @click="reset()">
 								<i>close</i>
 							</button>
 						</nav>

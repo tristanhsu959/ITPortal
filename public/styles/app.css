@@ -89,6 +89,7 @@ body {
 			}
 		} */
 	}
+	
 	/* .field>:is(i,img,svg,progress.circle,a) */
 	#profileEdit {
 		.dialog-body .field > i:has(.checkbox) {
@@ -99,120 +100,177 @@ body {
 			pointer-events: auto;
 		}
 	}
-		
-	main.signin, main.forget-password {
+	
+	/* SignIn */
+	main.signin {
 		min-height: 100vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-grow: 1;
 		
-		.divider {
-			width: 0;
-			height: 25%;
-			border-left: 1px solid #ddd;
-			margin-left: 2rem;
-			margin-right: 2rem;
+		.content-wrapper {
+			width: 100%;
+			padding: 1rem;
 		}
 		
 		/* Logo */
-		.content-left {
-			width: 320px;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			
-			img {
-				position: relative;
-				width: 100%;
-				height: auto;
-			}
-			
-			.copyright {
-				font-family: 'Orbitron';
-				font-size: .75rem;
-				font-weight: bold;
-				
-				i {
-					font-family: 'Roboto';
-					font-style: normal;
-					font-size: .875rem;
-					color: #f44336;
-				}
-			}
-		}
-		
-		.content-right {
-			width: 400px;
-			padding: 4rem 2rem;
-			
-			.header {
-				padding: 0;
+		.grid {
+			.head-logo {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 				margin-block-end: 1rem;
 				
 				img {
-					width: 32px;
-					height: auto;
+					width: 50%;
 				}
+				
 				.title {
 					font-family: 'Orbitron';
-					font-size: 1.4rem;
+					font-size: 1.2rem;
+					font-weight: 500;
 				}
-				h6 {
+				/* .copyright {
 					font-family: 'Orbitron';
-					color: var(--on-surface-variant); 
-					font-weight: normal;
-					font-size: .875rem;
+					font-size: .75rem;
+					font-weight: bold;
+					
+					i {
+						font-family: 'Roboto';
+						font-style: normal;
+						font-size: .875rem;
+						color: #f44336;
+					}
+				} */
+			}
+			
+			.form-content {
+				min-width: 100%;
+				.head {
+					margin-block-end: 1rem;
+					
+					/* img {
+						width: 6rem;
+						height: auto;
+					} */
+					.title {
+						font-family: 'Orbitron';
+						font-size: 1.4rem;
+						text-align: center;
+					}
+					h6 {
+						font-family: 'Orbitron';
+						color: var(--on-surface-variant); 
+						font-weight: normal;
+						font-size: .875rem;
+					}
+				}
+				
+				.field.captcha {
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: none;
+				}
+				
+				nav.group {
+					margin-block-start: 2rem !important;
 				}
 			}
 			
-			.field .domain {
-				position: absolute;
-				top: 50%;
-				right: .5rem;
-				color: var(--on-surface-variant);
-				opacity: .6;
-				transform: translateY(-50%);
+		}
+		
+	}
+	/* SignIn End */
+	
+	
+	
+	/* Forgot password setting page */
+	main.forgot-password {
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-grow: 1;
+		
+		.content-wrapper {
+			padding: 1rem;
+		}
+		
+		/* Logo */
+		.grid {
+			.head-logo {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				
+				img {
+					width: 90%;
+				}
+				.copyright {
+					font-family: 'Orbitron';
+					font-size: .75rem;
+					font-weight: bold;
+					
+					i {
+						font-family: 'Roboto';
+						font-style: normal;
+						font-size: .875rem;
+						color: #f44336;
+					}
+				}
 			}
 			
-			.field.captcha {
-				position: absolute;
-				top: 0;
-				left: 0;
-				display: none;
-			}
-			
-			nav.group {
-				margin-block-start: 2rem !important;
+			.form-content {
+				.header {
+					margin-block-end: 1rem;
+					
+					img {
+						width: 40px;
+						height: auto;
+					}
+					.title {
+						font-family: 'Orbitron';
+						font-size: 1.4rem;
+					}
+					h6 {
+						font-family: 'Orbitron';
+						color: var(--on-surface-variant); 
+						font-weight: normal;
+						font-size: .875rem;
+					}
+				}
+				
+				.field > i.btn-icon {
+					pointer-events: auto;
+					border-radius: 1rem;
+					
+					button {
+						background-color: transparent;
+						color: #000;
+						
+						&:hover {
+							background-color: #4caf50;
+							color: #fafafa;
+						}
+					}
+				}
+				
+				nav.group {
+					margin-block-start: 2rem !important;
+				}
 			}
 		}
 		
-		/* OIDC button */
-		.btn-oidc {
-			position: absolute;
-			right: -3rem;
-			bottom: -3rem;
-		}
-	}
-	
-	main.forget-password {
-		.content-right .header .title {
-			color: #4caf50;
-		}
-		.field > i.btn-icon {
-			pointer-events: auto;
-			border-radius: 1rem;
-			
-			button {
-				background-color: transparent;
-				color: #000;
-				
-				&:hover {
-					background-color: #4caf50;
-					color: #fafafa;
-				}
-			}
-		}
 	}
 }
+
+@media screen and (min-width: 960px) {
+	body main.signin .content-wrapper {
+		width: calc(100% / 3);
+	}
+}
+
