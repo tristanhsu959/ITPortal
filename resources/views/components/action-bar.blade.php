@@ -1,10 +1,6 @@
 
-<header x-data='@json($initData)' class="orange top-nav">
+<header x-data="@js($initData)" class="top-nav primary-container">
 	<nav>
-		<header x-show="!$store.menu.active" class="orange">
-			<img src="{{ asset('images/logo.png') }}" />
-		</header>
-		
 		<a :href="backUrl" x-show="backUrl" class="button circle transparent">
 			<i>arrow_back</i>
 		</a>
@@ -14,9 +10,11 @@
 			<i x-show="!$store.menu.active">menu</i>
 			<i x-show="$store.menu.active">menu_open</i>
 		</button>
+		
 		<a :href="homeRoute" x-show="!isHome" class="button circle transparent">
 			<i>home</i>
 		</a>
+		
 		<button class="circle transparent" data-ui="#profile">
 			<i>person</i>
 		</button>

@@ -1,13 +1,9 @@
 /* Aside Menu */
 nav.menu {
-	--menu-width: 304px;
+	--menu-width: 320px;
 	--menu-bg: var(--inverse-surface);
 	
-	position: sticky;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	width: var(--menu-width);
+	min-width: var(--menu-width);
 	height: 100vh;
 	background-color: var(--menu-bg);
 	margin: 0;
@@ -19,23 +15,25 @@ nav.menu {
 		position: relative;
 		width: 100%;
 		min-height: 64px;
-		height: 64px;
+		max-height: 64px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-family: 'Audiowide';
-		border-bottom: 1px solid rgba(0 0 0 / .20);
 		margin: 0;
+		font-family: 'Orbitron';
+		font-size: 1.2rem;
+		font-weight: 500;
 		
 		img {
-			height: 80%;
-		}
+			height: 50%;
+		} 
 	}
 	
 	.container {
+		padding: 1rem .5rem;
 		height: calc(100vh - 64px);
-		overflow-y: auto;
-	
+		color: var(--inverse-on-surface);
+		
 		details {
 			width: 100%;
 			padding: .5rem 1rem;
@@ -61,10 +59,6 @@ nav.menu {
 						background-color: #455a64;
 					}
 				}
-			}
-			
-			&:last-child {
-				margin-block-end: 1rem;
 			}
 		}
 	}

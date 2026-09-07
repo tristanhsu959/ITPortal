@@ -35,7 +35,7 @@
 		@vite(['resources/js/app.js'])
 	</head>
 
-	<body x-cloak>
+	<body x-cloak class="">
 		<div x-data x-cloak x-show="$store.app.isLoading" class="loading-bar">
 			<progress class="pink-text"></progress>
 		</div>

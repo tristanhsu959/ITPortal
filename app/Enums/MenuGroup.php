@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum MenuGroup : int
 {
-	case BAFANG		= 1;
-    case BUYGOOD 	= 2;
+	case SALE_ORDER		= 1;
+    case PURCHASE_ORDER = 2;
 	case FJVEGGIE 	= 3;
 	case DATA		= 70;
 	case PRODUCT	= 80;
@@ -15,8 +15,8 @@ enum MenuGroup : int
     {
         return match ($this) 
 		{
-			self::BAFANG	=> '八方',
-			self::BUYGOOD 	=> '御廚',
+			self::SALE_ORDER		=> '銷售訂單查詢',
+			self::PURCHASE_ORDER 	=> '出貨訂單查詢',
 			self::FJVEGGIE 	=> '芳珍',
 			self::DATA 		=> '資料維護',
 			self::PRODUCT 	=> '產品設定',

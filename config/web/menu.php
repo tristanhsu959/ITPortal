@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 #Menu Config (key與route要相同)
 return [
 	#Group (Enable List)
-	MenuGroup::BAFANG->value => [
+	MenuGroup::SALE_ORDER->value => [
 		[
 			'name' 		=> Functions::BF_NEW_RELEASE->label(), #新品銷售
 			'code'		=> Functions::BF_NEW_RELEASE->value,
@@ -89,7 +89,7 @@ return [
 		], */
 	],
 	
-	MenuGroup::BUYGOOD->value => [
+	MenuGroup::PURCHASE_ORDER->value => [
 		[
 			'name' 		=> Functions::BG_NEW_RELEASE->label(), #新品銷售
 			'code'		=> Functions::BG_NEW_RELEASE->value,
