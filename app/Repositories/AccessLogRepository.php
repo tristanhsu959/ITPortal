@@ -24,7 +24,7 @@ class AccessLogRepository extends Repository
 	 */
 	public function insert($userId, $userAccount)
 	{
-		$db = $this->connectSalesDashboard('access_log');
+		$db = $this->connectItPortal('access_log');
 		
 		$db->updateOrInsert(
 			['userId' => $userId, 'userAccount' => $userAccount],

@@ -6,6 +6,15 @@ use Illuminate\Support\Facades\DB;
 
 class Repository
 {
+	/* Local Main DB */
+	protected function connectItPortal($table = NULL)
+	{
+		if (empty($table))
+			return DB::connection('ItPortal');
+		else
+			return DB::connection('ItPortal')->table($table);
+	}
+	
 	#八方
 	protected function connectBFPosErp($table = NULL)
 	{
@@ -33,22 +42,6 @@ class Repository
 			return DB::connection('FJPosErp')->table($table);
 	}
 	
-	/* Local Sale[s]_Dashboard */
-	protected function connectSalesDashboard($table = NULL)
-	{
-		if (empty($table))
-			return DB::connection('SalesDashboard');
-		else
-			return DB::connection('SalesDashboard')->table($table);
-	}
-	
-	protected function connectPosStatistics($table = NULL)
-	{
-		if (empty($table))
-			return DB::connection('PosStatistics');
-		else
-			return DB::connection('PosStatistics')->table($table);
-	}
 	
 	#台北(北區)
 	protected function connectOrderTP($table = NULL)
@@ -103,16 +96,4 @@ class Repository
 			return DB::connection('QuickOrder')->table($table); 
 	}
 	
-	/* 原測試機已改為Local MySql */
-	/*protected function connectSaleDashboard($table = NULL)
-	{
-		return $this->connectLocalSalesDashboard($table);
-		
-		#deprecated
-		if (empty($table))
-			return DB::connection('SaleDashboard');
-		else
-			return DB::connection('SaleDashboard')->table($table)->lock('WITH(NOLOCK)');
-		
-	}*/
 }

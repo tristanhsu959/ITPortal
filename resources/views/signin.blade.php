@@ -55,11 +55,12 @@
 			</nav>
 			
 			<nav>
-				<div class="max"></div>
-				<button type="button" class="right pink-text transparent" @click="showForgotPassword = !showForgotPassword">
-					<i x-show="showForgotPassword">password_2_off</i>
+				<button type="button" class="pink-text transparent max" @click="showForgotPassword = !showForgotPassword">
 					<i x-show="!showForgotPassword">password_2</i>
-					<span>忘了吃銀杏?</span>
+					<span x-show="!showForgotPassword">忘記密碼?</span>
+					
+					<i x-show="showForgotPassword">password_2_off</i>
+					<span x-show="showForgotPassword">返回</span>
 				</button>
 			</nav>
 		</div>

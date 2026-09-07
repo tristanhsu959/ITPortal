@@ -50,6 +50,7 @@ class AuthController extends Controller
 		
 		$botSt = session()->get('botTimeValidate');
 		
+		#Honeybot:Bot會填入captcha
 		if (! empty($captcha) OR $botSt->diffInSeconds(now()) < 1)
 			 abort(400, 'Bad Request');
 		

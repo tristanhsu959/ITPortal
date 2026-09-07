@@ -54,6 +54,7 @@ class AuthService
 			
 			#5.Auth password or AD(併行)
 			$isPass = $this->_authPassword($account, $userInfo['userPassword'], $password);
+			
 			if ($isPass === FALSE)
 				throw new Exception('登入失敗，帳號密碼錯誤');
 			
@@ -107,33 +108,14 @@ class AuthService
 	
 	private function _rebuildInfo($userInfo)
 	{
-		#20260703:因改了rolearea結構,故先處理以防萬一
-		data_fill($userInfo, 'roleArea.opCenter', []);
-		data_fill($userInfo, 'roleArea.sales', []);
-		data_fill($userInfo, 'roleArea.purchase', []);
-		
 		if ($userInfo['roleGroup'] == RoleGroup::SUPERVISOR->value)
 		{
-			$userInfo['rolePermission'] 		= Functions::getAll();
-			$userInfo['roleArea']['opCenter'] 	= OpCenter::getAll();
-			$userInfo['roleArea']['sales'] 		= Area::getAll();
-			$userInfo['roleArea']['purchase'] 	= Area::getAll();
+			$userInfo['rolePermission'] = Functions::getAll();
+			$userInfo['isSupervisor'] 	= TRUE;
 		}
-				
-		#宜蘭已整併至大台北,但POS還是有宜蘭(但帳號管理已不會再有), 自動綁定
-		#銷售
-		$userInfo['roleArea']['sales'] = collect($userInfo['roleArea']['sales'])
-			->when(fn($area) => $area->contains(Area::TAIPEI->value), fn($area) => $area->push(Area::YILAN->value))
-			->unique()
-			->values()
-			->toArray();
+		else
+			$userInfo['isSupervisor'] 	= FALSE;
 		
-		$userInfo['roleArea']['purchase'] = collect($userInfo['roleArea']['purchase'])
-			->when(fn($area) => $area->contains(Area::TAIPEI->value), fn($area) => $area->push(Area::YILAN->value))
-			->unique()
-			->values()
-			->toArray();
-			
 		return $userInfo;
 	}
 	

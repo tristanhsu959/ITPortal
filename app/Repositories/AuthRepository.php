@@ -25,22 +25,19 @@ class AuthRepository extends Repository
 	{
 		try
 		{
-			$db = $this->connectSalesDashboard('user');
+			$db = $this->connectItPortal('user');
 				
 			$result = $db
 					->select('userId', 'userAccount', 'userPassword')
 					->addSelect('userDisplayName', 'department', 'email', 'isActive')
-					->addSelect('roleGroup', 'rolePermission', 'roleArea')
+					->addSelect('roleGroup', 'rolePermission')
 					->leftJoin('role', 'roleUserId', '=', 'userId')
 					->where('userAccount', '=', $account)
 					->get()
 					->first();
 			
 			if (! empty($result))
-			{
 				$result['rolePermission'] 	= empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
-				$result['roleArea'] 		= empty($result['roleArea']) ? [] : json_decode($result['roleArea'], TRUE);
-			}
 			
 			return $result;
 		}

@@ -31,6 +31,16 @@ return [
 	
     'connections' => [
 		
+		'ItPortal' => [
+            'driver' => 'mysql',
+            'host' => env('IT_DB_HOST', '127.0.0.1'),
+            'port' => env('IT_DB_PORT', '3306'),
+            'database' => env('IT_DB_DATABASE', 'it_portal'),
+            'username' => env('IT_DB_USERNAME', 'it_portal'),
+            'password' => env('IT_DB_PASSWORD', ''),
+            #'fetch' => PDO::FETCH_ASSOC,
+        ],
+		
 		#八方
 		'BFPosErp' => [
             'driver' => 'sqlsrv',
@@ -47,6 +57,7 @@ return [
             'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'true'),
 			'collation' => 'Chinese_PRC_CI_AS', 
         ],
+		
 		#梁社漢
 		'BGPosErp' => [
             'driver' => 'sqlsrv',
@@ -63,6 +74,7 @@ return [
             'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'true'),
 			'collation' => 'Chinese_PRC_CI_AS', 
         ],
+		
 		#芳珍
 		'FJPosErp' => [
             'driver' => 'sqlsrv',
@@ -80,39 +92,6 @@ return [
 			'collation' => 'Chinese_PRC_CI_AS', 
         ],
 		
-		'SalesDashboard' => [
-            'driver' => 'mysql',
-            'host' => env('LSD_DB_HOST', '127.0.0.1'),
-            'port' => env('LSD_DB_PORT', '3306'),
-            'database' => env('LSD_DB_DATABASE', 'staging_sales_dashboard'),
-            'username' => env('LSD_DB_USERNAME', 'staging_sales_dashboard'),
-            'password' => env('LSD_DB_PASSWORD', ''),
-            'fetch' => PDO::FETCH_ASSOC,
-        ],
-		
-		#Local pos order
-		'PosStatistics' => [
-            'driver' => 'mysql',
-            'host' => env('LPOS_DB_HOST', '127.0.0.1'),
-            'port' => env('LPOS_DB_PORT', '3306'),
-            'database' => env('LPOS_DB_DATABASE', 'pos_statistics'),
-            'username' => env('LPOS_DB_USERNAME', 'salesdashboard'),
-            'password' => env('LPOS_DB_PASSWORD', ''),
-            'fetch' => PDO::FETCH_ASSOC,
-        ],
-		
-		'RemoteSaleDashboard' => [
-            'driver' => 'sqlsrv',
-            'host' => env('SD_DB_HOST', '192.168.1.237'),
-            'port' => env('SD_DB_PORT', '1433'),
-            'database' => env('SD_DB_DATABASE', 'SaleDashbaord'),
-            'username' => env('SD_DB_USERNAME', 'sa'),
-            'password' => env('SD_DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-			'fetch' => PDO::FETCH_ASSOC,
-        ],
 		#舊訂貨系統
 		'OrderTP' => [
             'driver' => 'sqlsrv',
