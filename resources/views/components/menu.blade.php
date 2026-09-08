@@ -1,6 +1,6 @@
 <!-- Menu component -->
 
-<nav x-data="{menus:@js($menus), currentPath:@js($currentPath)}" x-show="$store.menu.active" class="menu left">
+<nav x-data="{menus:@js($menus), currentPath:@js($currentPath)}" x-show="$store.menu.active" class="menu left l m">
 	<header class="primary-container">
 		<img src="{{ asset('images/bf_logo.png') }}" />
 		<span>IT Portal</span>

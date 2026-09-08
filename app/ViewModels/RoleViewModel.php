@@ -5,7 +5,6 @@ namespace App\ViewModels;
 use App\Facades\AppManager;
 use App\Enums\FormAction;
 use App\Enums\RoleGroup;
-use App\Enums\Area;
 use App\Enums\Functions;
 use App\ViewModels\Attributes\attrStatus;
 use App\ViewModels\Attributes\attrActionBar;
@@ -31,9 +30,9 @@ class RoleViewModel extends Fluent
 	public function initialize($action)
 	{
 		#初始化各參數及Form Options
-		$this->action	= $action;
-		$this->success();
+		$this->action = $action;
 		
+		$this->initializeState();
 		$this->_setOptions();
 	}
 	
@@ -44,9 +43,7 @@ class RoleViewModel extends Fluent
 	private function _setOptions()
 	{
 		$this->set('options.functions', AppManager::getMenu()); 
-		$this->set('options.areas', Area::mapWithKeys());
-		$this->set('options.roleGroup', RoleGroup::mapWithKeys());
-		$this->set('options.supervisorGroupId',RoleGroup::SUPERVISOR->value); 
+		$this->set('options.supervisorGroupId', RoleGroup::SUPERVISOR->value); 
 	}
 	
 	/* Keep user form data
@@ -57,13 +54,12 @@ class RoleViewModel extends Fluent
 	 * @params: array
 	 * @return: void
 	 */
-	public function keepFormData($roleId = 0, $name = '', $permission = [], $area = [], $group = RoleGroup::USER->value, $updateAt = '')
+	public function keepFormData($id = 0, $name = '', $permission = [], $isActive = TRUE, $updateAt = NULL)
     {
-		$this->set('formData.id', $roleId);
+		$this->set('formData.id', $id);
 		$this->set('formData.name', $name);
 		$this->set('formData.permission', $permission);
-		$this->set('formData.area', $area);
-		$this->set('formData.group', $group);
+		$this->set('formData.area', $isActive);
 		$this->set('formData.updateAt', $updateAt);
 	}
 	
@@ -71,9 +67,9 @@ class RoleViewModel extends Fluent
 	 * @params: 
 	 * @return: string
 	 */
-	public function getFormAction() : string
+	public function getFormAction($formAction) : string
     {
-		return match($this->action)
+		return match($formAction)
 		{
 			FormAction::CREATE => route('role.create.post'),
 			FormAction::UPDATE => route('role.update.post'),
@@ -92,5 +88,33 @@ class RoleViewModel extends Fluent
 	public function canDeleteThisRole($roleGroup)
 	{
 		return (RoleGroup::SUPERVISOR->value == $roleGroup) ? FALSE : TRUE; #super visor can not edit
+	}
+	
+	/* Output js */
+	/*因與統計不同, 不使用trait response*/
+	public function responseList()
+	{
+		$response['status'] 			= $this->status();
+		$response['hasResult'] 			= ! empty($this->list);
+		
+		$response['data'] 				= $this->list;
+		$response['supervisorGroupId']	= RoleGroup::SUPERVISOR->value;
+		$response['createRoute']		= route('role.create');
+		$response['updateRoute']		= route('role.update', ['id' => '_ID']);
+		$response['deleteRoute']		= route('role.delete', ['id' => '_ID']);
+		
+		return $response;
+	}
+	
+	public function responseDetail()
+	{
+		$response = $this->only('formData', 'options');
+		
+		$response['status'] 		= $this->status();
+		$response['backRoute']		= route($this->backRoute);
+		$response['formAction'] 	= $this->getFormAction($this->action);
+		$response['actionLabel']	= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
+		
+		return $response;
 	}
 }

@@ -13,6 +13,17 @@ trait attrStatus
 	 * @params: string
 	 * @return: void
 	 */
+	public function initializeState()
+	{
+		$this->_initialize 	= TRUE;
+		$this->_status		= 'initialize';
+		$this->_msg 		= '';
+	}
+	
+	/* Set status & msg
+	 * @params: string
+	 * @return: void
+	 */
 	public function success($msg = NULL)
 	{
 		$this->_status	= TRUE;

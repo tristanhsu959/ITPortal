@@ -1,6 +1,4 @@
 @extends('layouts.app')
-@use('App\Enums\RoleGroup')
-@use('App\Enums\Area')
 @use('App\Libraries\HelperLib')
 
 @push('styles')
@@ -12,51 +10,70 @@
 @endpush
 
 @section('content')
-<!-- Content -->
+<div x-data="roleList(@js($viewModel->responseList()))" class="content-wrapper">
 	<header class="page-nav">
 		<nav>
-			<a href="{{ route('role.create') }}" class="btn-create button circle"><i>add</i></a>
+			<a :href="response.createRoute" class="button circle green"><i>add</i></a>
+			
+			<nav x-show="response.hasResult" class="no-space filter">
+				<div class="field label border prefix field-filter-dark small">
+					<i>filter_alt</i>
+					<input type="text" x-model="$store.userFilter.filter">
+					<label>篩選</label>
+				</div>
+				<button class="right-round" @click="$store.userFilter.reset()"><i>backspace</i></button>
+			</nav>
 		</nav>
 	</header>
 	
-@if($viewModel->status() === TRUE)	
-	<form x-data='roleList(@json($viewModel->list), @json($viewModel->options))' action="" method="post" x-ref="roleListForm">
+	<section x-show="response.status === true && !response.hasResult" class="role-list container">
+		<article class="error-container border">
+			<div class="row">
+				<i>info</i><div class="max">尚無資料</div>
+			</div>
+		</article>
+	</section>
+	
+	<form x-show="response.status === true" action="" method="post" x-ref="userListForm">
 		@csrf
-		<section class="role-list container">
-			<article x-show="list.length == 0" class="error-container border">
+		<section class="user-list container">
+			<article x-show="list.data.length == 0" class="error-container border">
 				<div class="row">
 					<i>info</i><div class="max">查無符合資料</div>
 				</div>
 			</article>
 			
-			<table x-show="list.length > 0" class="stripes border odd-purple">
+			<table x-show="list.data.length > 0" class="stripes border odd-cyan">
 				<thead>
 					<tr>
 						<th class="min">#</th>
-						<th>身份</th>
-						<th>權限群組</th>
-						<th>管理區域</th>
-						<th>更新時間</th>
+						<th>帳號</th>
+						<th>顯示名稱</th>
+						<th>部門</th>
+						<th>EMail</th>
+						<th>狀態</th>
+						<th>最後登入時間</th>
 						<th class="right-align">操作</th>
 					</tr>
 				</thead>
 				<tbody>
-				<template x-for="(item, idx) in list" :key="idx">
+				<template x-for="(user, idx) in filterUsers" :key="idx">
 					<tr>
-						<td x-text="idx + 1"></td>
-						<td x-text="item.roleName"></td>
-						<td x-text="options.roleGroup[item.roleGroup]"></td>
-						<td class="col-area">
-							<template x-for="areaId in item.roleArea" :key="areaId">
-								<div class="chip round pink4 white-text" x-text="options.areas[areaId]"></div>
-							</template>
+						<td x-text="idx+1"></td>
+						<td><span x-text="user.userAccount"></span><i class="green-text" x-show="user.hasSysPassword">passkey</i></td>
+						<td x-text="user.userDisplayName"></td>
+						<td x-text="user.department"></td>
+						<td x-text="user.email"></td>
+						<td>
+							<i class="green-text" x-show="user.isActive">check_circle</i>
+							<i class="red-text" x-show="! user.isActive">x_circle</i>
 						</td>
-						<td x-text="item.updateAt"></td>
+						<td class="min" x-text="user.accessTime"></td>
 						<td class="right-align action">
-							<a :href="'{{ route('role.update', ['ROLE_ID']) }}'.replace('ROLE_ID', item.roleId)" class="btn-edit button circle small" :disabled="options.supervisorGroupId == item.roleGroup">
+							<a :href="list.updateRoute.replace('_ID', user.userId)" class="btn-edit button circle small" :disabled="user.roleGroup == list.supervisorGroupId">
 								<i class="small">edit</i>
 							</a>
-							<a @click.prevent="confirmDelete($el.href)" :href="'{{ route('role.delete', ['ROLE_ID']) }}'.replace('ROLE_ID', item.roleId)" class="btn-delete button circle small" :disabled="options.supervisorGroupId == item.roleGroup">
+							<a @click.prevent="confirmDelete($el.href)" :href="list.deleteRoute.replace('_ID', user.userId)" class="btn-delete button circle small" :disabled="user.roleGroup == list.supervisorGroupId">
 								<i class="small">delete</i>
 							</a>
 						</td>
@@ -64,9 +81,11 @@
 				</template>
 				</tbody>
 			</table>
-
+			
 		</section>
 	</form>
-@endif
+
+</div>
 <!-- Content -->
+
 @endsection

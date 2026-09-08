@@ -24,7 +24,7 @@ class RoleController extends Controller
 	{
 		$this->_viewModel->initialize(FormAction::LIST);
 		
-		$response = $this->_service->getList();
+		$response = $this->_service->getEnableList();
 		
 		if ($response->status === FALSE)
 			$this->_viewModel->fail($response->msg);
@@ -46,8 +46,7 @@ class RoleController extends Controller
 		#initialize
 		$this->_viewModel->initialize(FormAction::CREATE);
 		$this->_viewModel->keepFormData(); #init
-		$this->_viewModel->success();
-		
+				
 		return view('role/detail')->with('viewModel', $this->_viewModel);
 	}
 	

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\RoleRepository;
 use App\Libraries\ResponseLib;
+use App\Enums\RoleGroup;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -26,6 +27,30 @@ class RoleService
 		try
 		{
 			$list = $this->_repository->getList();
+			
+			return ResponseLib::initialize($list->toArray())->success();
+		}
+		catch(Exception $e)
+		{
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			return ResponseLib::initialize()->fail('讀取身份清單時發生錯誤');
+		}
+	}
+	
+	/* 取Role清單(Get enables)
+	 * @params: 
+	 * @return: array
+	 */
+	public function getEnableList()
+	{
+		try
+		{
+			$list = $this->_repository->getList();
+			
+			#不顯示內建Role
+			$list = $list->reject(function($item, $key){
+				return $item['roleGroupId'] == RoleGroup::SUPERVISOR->value;
+			})->toArray();
 			
 			return ResponseLib::initialize($list)->success();
 		}

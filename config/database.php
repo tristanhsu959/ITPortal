@@ -38,7 +38,7 @@ return [
             'database' => env('IT_DB_DATABASE', 'it_portal'),
             'username' => env('IT_DB_USERNAME', 'it_portal'),
             'password' => env('IT_DB_PASSWORD', ''),
-            #'fetch' => PDO::FETCH_ASSOC,
+            'fetch' => PDO::FETCH_ASSOC,
         ],
 		
 		#八方

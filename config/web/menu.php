@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 #Menu Config (key與route要相同)
 return [
 	#Group (Enable List)
-	MenuGroup::SALE_ORDER->value => [
+	MenuGroup::SALE->value => [
 		[
 			'name' 		=> Functions::BF_NEW_RELEASE->label(), #新品銷售
 			'code'		=> Functions::BF_NEW_RELEASE->value,
@@ -89,7 +89,7 @@ return [
 		], */
 	],
 	
-	MenuGroup::PURCHASE_ORDER->value => [
+	MenuGroup::PURCHASE->value => [
 		[
 			'name' 		=> Functions::BG_NEW_RELEASE->label(), #新品銷售
 			'code'		=> Functions::BG_NEW_RELEASE->value,
@@ -158,57 +158,6 @@ return [
 		], */
 	],
 	
-	MenuGroup::FJVEGGIE->value => [
-		[
-			'name' 		=> Functions::FJ_DAILY_REVENUE->label(), #門店營收
-			'code'		=> Functions::FJ_DAILY_REVENUE->value,
-			'style' 	=> ['icon' => 'paid', 'color' => 'light-green-text'],
-			'url' 		=> Str::replaceArray('?', [Brand::FJVEGGIE->code()], '?.daily_revenue'),
-		],
-	],
-	
-	MenuGroup::DATA->value => [
-		[
-			'name' 		=> Functions::AREA_MANAGER->label(), #督導管理,
-			'code'		=> Functions::AREA_MANAGER->value,
-			'style' 	=> ['icon' => 'location_away', 'color' => 'yellow-text'],
-			'url' 		=> 'area_manager', 
-		],
-	],
-	
-	MenuGroup::PRODUCT->value => [
-		[
-			'name' 		=> Functions::PRODUCT->label(), #產品基本資料,
-			'code'		=> Functions::PRODUCT->value,
-			'style' 	=> ['icon' => 'barcode', 'color' => 'light-blue-text'],
-			'url' 		=> 'products', 
-		],
-		[
-			'name' 		=> Functions::NEW_RELEASE_SETTING->label(), #新品設定,
-			'code'		=> Functions::NEW_RELEASE_SETTING->value,
-			'style' 	=> ['icon' => 'fiber_new', 'color' => 'light-blue-text'],
-			'url' 		=> 'new_release_setting', 
-		],
-		/* [
-			'name' 		=> Functions::SALES_SETTING->label(), #銷售設定,
-			'code'		=> Functions::SALES_SETTING->value,
-			'style' 	=> ['icon' => 'settings_applications', 'color' => 'light-blue-text'],
-			'url' 		=> 'sales_setting', 
-		], */
-		[
-			'name' 		=> Functions::SALES_PRODUCT->label(), #銷售產品設定,
-			'code'		=> Functions::SALES_PRODUCT->value,
-			'style' 	=> ['icon' => 'washoku', 'color' => 'light-blue-text'],
-			'url' 		=> 'sales_product', 
-		],
-		[
-			'name' 		=> Functions::PURCHASE_PRODUCT->label(), #訂貨產品設定,
-			'code'		=> Functions::PURCHASE_PRODUCT->value,
-			'style' 	=> ['icon' => 'warehouse', 'color' => 'light-blue-text'],
-			'url' 		=> 'purchase_product', 
-		],
-	],
-	
 	MenuGroup::MANAGE->value => [
 		[
 			'name' 		=> Functions::USER->label(), #帳號管理,
@@ -216,18 +165,20 @@ return [
 			'style' 	=> ['icon' => 'admin_panel_settings', 'color' => 'red-text'],
 			'url' 		=> 'users', 
 		],
+		
+		[
+			'name' 		=> Functions::ROLE->label(), #身份管理,
+			'code'		=> Functions::ROLE->value,
+			'style' 	=> ['icon' => 'how_to_reg', 'color' => 'red-text'],
+			'url' 		=> 'roles', 
+		],
+		
 		/* [
 			'name' 		=> Functions::STORE_MAP->label(), #門店管理,
 			'code'		=> Functions::STORE_MAP->value,
 			'style' 	=> ['icon' => 'two_pager_store', 'color' => 'red-text'],
 			'url' 		=> 'store_map', 
 		], */
-		/*
-		[
-			'name' 		=> Functions::ROLE->label(), #身份管理,
-			'code'		=> Functions::ROLE->value,
-			'style' 	=> ['icon' => 'how_to_reg', 'color' => 'red-text'],
-			'url' 		=> 'roles', 
-		],*/
+		
 	],
 ];

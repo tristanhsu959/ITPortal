@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StoreMapController;
+
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\NewReleaseSettingController;
 use App\Http\Controllers\SalesProductController;
@@ -119,7 +120,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 		Route::post('user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 	});
 	
-	/***** 身份管理 *****
+	/***** 身份管理 *****/
 	Route::middleware([AccessPermissionMiddleware::class . Str::start(Functions::ROLE->value, ':')])->group(function(){
 		Route::get('role', [RoleController::class, 'list'])->name('roles');
 		Route::get('role/list', [RoleController::class, 'list'])->name('role.list');
@@ -128,7 +129,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 		Route::get('role/update/{id}', [RoleController::class, 'showUpdate'])->name('role.update');
 		Route::post('role/update', [RoleController::class, 'update'])->name('role.update.post');
 		Route::post('role/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
-	});*/
+	});
 
 });
 

@@ -21,25 +21,21 @@ class RoleRepository extends Repository
 	 */
 	public function getList()
 	{
-		$db = $this->connectSalesDashboard('role');
+		$db = $this->connectItPortal('role');
 			
 		$result = $db
-			->select('roleId', 'roleName', 'roleGroup', 'roleArea', 'updateAt')
+			->select('roleId', 'roleName', 'roleGroupId', 'rolePermission', 'isActive', 'updateAt')
 			->orderBy('roleName')
-			->get()
-			->toArray();
+			->get();
 		
-		#處理Json type
-		foreach($result as $key => $item)
-		{
-			$result[$key] = Arr::map($item, function ($value, string $key) {
-				if ($key == 'roleArea')
-					return empty($value) ? [] : json_decode($value, TRUE);
-				else
-					return $value;
-			});
-		}
+		#處理Json type,若用each須傳&$row
+		$result->transform(function($row) {
+			$decoded = json_decode($row['rolePermission'], true);
+			$row['rolePermission'] = $decoded ?? [];
 			
+			return $row;
+		});
+		
 		return $result;
 	}
 	
