@@ -188,55 +188,19 @@ class AppManager
 		
 		return $menu;
 	}
+	
+	/* 取All Menu:功能選單(避免JS排序問題)
+	 * @params: 
+	 * @return: array
+	 */
+	public function getMenuWithoutGroup()
+	{
+		$menu = $this->getAuthMenu();
+		
+		$menu = collect($menu)->collapse()->all();
+		
+		return $menu;
+	}
 	/******************** User Basic End ********************/
 	
-	
-	/******************** User Auth Filter ********************/
-	#移至各自的manager,因營運中心太複雜
-	/* 
-	 * @params: 
-	 * @return: boolean
-	 */
-	/* public function getAllowOpCenter($filterOpCenters = [])
-	{
-		$currentUser = $this->getCurrentUser();
-		$authOpCenters = $currentUser->getOpCenterPermissions();
-		
-		if (empty($filterOpCenters))
-			return $authOpCenters;
-		else
-			return $filterOpCenters;
-	} */
-	
-	/* 
-	 * @params: 
-	 * @return: boolean
-	 */
-	/* public function getAllowPurchaseAreas($filterAreas = [])
-	{
-		$currentUser = $this->getCurrentUser();
-		$authAreas = $currentUser->getPurchaseAreaPermissions();
-		
-		if (empty($filterAreas))
-			return $authAreas;
-		else
-			return array_map('intval', $filterAreas);
-	} */
-	
-	/* 
-	 * @params: 
-	 * @return: boolean
-	 */
-	/* public function getAllowSalesAreas($filterAreas = [])
-	{
-		$currentUser = $this->getCurrentUser();
-		$authAreas = $currentUser->getSalesAreaPermissions();
-		
-		if (empty($filterAreas))
-			return $authAreas;
-		else
-			return array_map('intval', $filterAreas);
-	} */
-	
-	/******************** User Auth Filter End ********************/
 }

@@ -162,14 +162,14 @@ return [
 		[
 			'name' 		=> Functions::USER->label(), #帳號管理,
 			'code'		=> Functions::USER->value,
-			'style' 	=> ['icon' => 'admin_panel_settings', 'color' => 'red-text'],
+			'style' 	=> ['icon' => 'admin_panel_settings', 'color' => 'pink-text'],
 			'url' 		=> 'users', 
 		],
 		
 		[
 			'name' 		=> Functions::ROLE->label(), #身份管理,
 			'code'		=> Functions::ROLE->value,
-			'style' 	=> ['icon' => 'how_to_reg', 'color' => 'red-text'],
+			'style' 	=> ['icon' => 'how_to_reg', 'color' => 'pink-text'],
 			'url' 		=> 'roles', 
 		],
 		

@@ -30,15 +30,15 @@ class AuthRepository extends Repository
 			$result = $db
 					->select('userId', 'userAccount', 'userPassword')
 					->addSelect('userDisplayName', 'department', 'email', 'isActive')
-					->addSelect('roleGroup', 'rolePermission')
-					->leftJoin('role', 'roleUserId', '=', 'userId')
+					#->addSelect('roleGroup', 'rolePermission')
+					#->leftJoin('role', 'roleUserId', '=', 'userId')
 					->where('userAccount', '=', $account)
 					->get()
 					->first();
 			
-			if (! empty($result))
+			/* if (! empty($result))
 				$result['rolePermission'] 	= empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
-			
+			 */
 			return $result;
 		}
 		catch(Exception $e)

@@ -10,7 +10,7 @@
 @endpush
 
 @section('content')
-<div x-data="roleList(@js($viewModel->responseList()))" class="content-wrapper">
+<div x-data="roleList(@js($viewModel->responseList()))">
 	<header class="page-nav">
 		<nav>
 			<a :href="response.createRoute" class="button circle green"><i>add</i></a>
@@ -26,17 +26,17 @@
 		</nav>
 	</header>
 	
-	<section x-show="response.status === true && !response.hasResult" class="role-list container">
+	<section x-show="response.status === true && !response.hasResult" class="content-wrapper">
 		<article class="error-container border">
 			<div class="row">
-				<i>info</i><div class="max">尚無資料</div>
+				<i>info</i><div class="max">尚無設定</div>
 			</div>
 		</article>
 	</section>
 	
 	<form x-show="response.status === true" action="" method="post" x-ref="userListForm">
 		@csrf
-		<section class="user-list container">
+		<section class="content-wrapper">
 			<article x-show="list.data.length == 0" class="error-container border">
 				<div class="row">
 					<i>info</i><div class="max">查無符合資料</div>

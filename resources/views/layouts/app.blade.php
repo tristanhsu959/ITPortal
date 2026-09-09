@@ -41,7 +41,7 @@
 		</div>
 		
 		@if(AppManager::hasAuth())
-			<x-menu :menus="AppManager::getAuthMenu()" :currentPath="request()->url()"/>
+			<x-menu :menus="AppManager::getMenuWithoutGroup()" :currentPath="request()->url()"/>
 		@endif
 		
 		@if(AppManager::hasAuth())

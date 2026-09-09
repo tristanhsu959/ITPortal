@@ -59,7 +59,7 @@ class RoleViewModel extends Fluent
 		$this->set('formData.id', $id);
 		$this->set('formData.name', $name);
 		$this->set('formData.permission', $permission);
-		$this->set('formData.area', $isActive);
+		$this->set('formData.isActive', $isActive);
 		$this->set('formData.updateAt', $updateAt);
 	}
 	
@@ -110,10 +110,10 @@ class RoleViewModel extends Fluent
 	{
 		$response = $this->only('formData', 'options');
 		
-		$response['status'] 		= $this->status();
-		$response['backRoute']		= route($this->backRoute);
-		$response['formAction'] 	= $this->getFormAction($this->action);
-		$response['actionLabel']	= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
+		$response['response']['status'] 		= $this->status();
+		$response['response']['backRoute']		= route($this->backRoute);
+		$response['response']['formAction'] 	= $this->getFormAction($this->action);
+		$response['response']['actionLabel']	= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
 		
 		return $response;
 	}

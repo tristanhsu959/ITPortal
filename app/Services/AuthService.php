@@ -108,13 +108,17 @@ class AuthService
 	
 	private function _rebuildInfo($userInfo)
 	{
-		if ($userInfo['roleGroup'] == RoleGroup::SUPERVISOR->value)
+		#testing
+		$userInfo['rolePermission'] = Functions::getAll();
+		$userInfo['isSupervisor'] 	= TRUE;
+			
+		/* if ($userInfo['roleGroup'] == RoleGroup::SUPERVISOR->value)
 		{
 			$userInfo['rolePermission'] = Functions::getAll();
 			$userInfo['isSupervisor'] 	= TRUE;
 		}
 		else
-			$userInfo['isSupervisor'] 	= FALSE;
+			$userInfo['isSupervisor'] 	= FALSE; */
 		
 		return $userInfo;
 	}

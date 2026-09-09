@@ -1,13 +1,18 @@
 /* Role Create JS */
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('roleData', (response) => ({
-		response: {...response},
+    Alpine.data('roleData', (viewData) => ({
+		response: {...viewData.response},
+		formData: {...viewData.formData},
+		options: {...viewData.options},
+		activeTab: '',
 		errors: new Set(),
 		
 		init(){
-			
+			const tabKey = Object.keys(this.options.functions)[0];
+			this.activeTab = tabKey;
 		},
+		
         validate() {
 			this.errors.clear();
 			
