@@ -71,6 +71,39 @@
 				</div>
 			</template>
 		</div>
+
+		<table class="stripes border odd-cyan">
+			<thead>
+				<tr>
+					<th class="min">#</th>
+					<th>名稱</th>
+					<th>狀態</th>
+					<th>更新時間</th>
+					<th class="right-align">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<template x-for="(role, idx) in filterRoles" :key="idx">
+				<tr>
+					<td x-text="idx+1"></td>
+					<td x-text="role.roleName"></td>
+					<td>
+						<i class="green-text fill" x-show="role.isActive">check_circle</i>
+						<i class="red-text fill" x-show="! role.isActive">x_circle</i>
+					</td>
+					<td class="min" x-text="role.updateAt"></td>
+					<td class="right-align action">
+						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">edit</i>
+						</a>
+						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">delete</i>
+						</a>
+					</td>
+				</tr>
+			</template>
+			</tbody>
+		</table>
 		
 	</form>
 </main>

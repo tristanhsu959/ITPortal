@@ -35,25 +35,21 @@
 		@vite(['resources/js/app.js'])
 	</head>
 
-	<body x-cloak class="">
+	<body x-cloak>
 		<div x-data x-cloak x-show="$store.app.isLoading" class="loading-bar">
 			<progress class="pink-text"></progress>
 		</div>
 		
 		@if(AppManager::hasAuth())
 			<x-menu :menus="AppManager::getMenuWithoutGroup()" :currentPath="request()->url()"/>
-		@endif
-		
-		@if(AppManager::hasAuth())
+			
 			<x-action-bar :initData="$viewModel->actionBarData()" />
-		@endif
-		
-		<main x-data="{hasAuth: @js(AppManager::hasAuth())}" :class="hasAuth ? 'app':'signin'" class="responsive">
+			
 			@yield('content')
-		</main>
-		
-		@if(AppManager::hasAuth())
-			<x-profile/>
+			
+			<!--x-profile/-->
+		@else
+			@yield('content')
 		@endif
 		
 		<x-dialog />

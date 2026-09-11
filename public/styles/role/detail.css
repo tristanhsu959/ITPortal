@@ -1,9 +1,14 @@
 /* list */
+
+.content-wrapper {
+	max-height: calc(100vh - 64px - 1px);
+}
+
 section.role-data {
 	.role-permission {
 		ul.list li {
 			&:hover {
-				background-color: #f3e5f5;
+				background-color: var(--surface-container-low);
 			}
 		}
 	}

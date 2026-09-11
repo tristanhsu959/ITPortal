@@ -10,7 +10,7 @@ nav.menu {
 	background-color: var(--menu-bg);
 	margin: 0;
 	box-sizing: border-box;
-	color: #fafafa;
+	color: var(--inverse-on-surface); /* #fafafa; */
 	
 	/* &.max {
 		min-inline-size: 15rem;

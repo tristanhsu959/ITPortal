@@ -25,7 +25,6 @@ class RoleRepository extends Repository
 			
 		$result = $db
 			->select('roleId', 'roleName', 'roleGroupId', 'rolePermission', 'isActive', 'updateAt')
-			->orderBy('roleName')
 			->get();
 		
 		#處理Json type,若用each須傳&$row
@@ -46,17 +45,17 @@ class RoleRepository extends Repository
 	 * @params: json string
 	 * @return: boolean
 	 */
-	public function insert($name, $group, $permission, $area)
+	public function insert($name, $groupId, $permission, $isActive)
 	{
-		$roleData['roleName']		= $name;
-		$roleData['roleGroup'] 		= $group;
-		$roleData['rolePermission'] = json_encode($permission);
-		$roleData['roleArea'] 		= json_encode($area);
-		$roleData['createAt'] 		= now()->format('Y-m-d H:i:s');
-		$roleData['updateAt'] 		= $roleData['createAt'];
+		$data['roleName']		= $name;
+		$data['roleGroupId'] 	= $groupId;
+		$data['rolePermission'] = json_encode($permission);
+		$data['isActive'] 		= $isActive;
+		$data['createAt'] 		= now()->format('Y-m-d H:i:s');
+		$data['updateAt'] 		= $data['createAt'];
 		
-		$db = $this->connectSalesDashboard('role');
-		$id = $db->insertGetId($roleData);
+		$db = $this->connectItPortal('role');
+		$id = $db->insertGetId($data);
 		
 		return TRUE;
 	}
@@ -67,15 +66,14 @@ class RoleRepository extends Repository
 	 */
 	public function getById($id)
 	{
-		$db = $this->connectSalesDashboard('role');
+		$db = $this->connectItPortal('role');
 			
-		$result = $db->select('roleId', 'roleName', 'roleGroup', 'rolePermission', 'roleArea', 'updateAt')
+		$result = $db->select('roleId', 'roleName', 'roleGroupId', 'rolePermission', 'isActive', 'updateAt')
 					->where('roleId', '=', $id)
 					->get()->first();
 		
 		
 		$result['rolePermission'] 	= empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
-		$result['roleArea'] 		= empty($result['roleArea']) ? [] : json_decode($result['roleArea'], TRUE);
 			
 		return $result;
 	}
@@ -88,17 +86,15 @@ class RoleRepository extends Repository
 	 * @params: json string
 	 * @return: boolean
 	 */
-	public function update($id, $name, $group, $permission, $area)
+	public function update($id, $name, $permission, $isActive)
 	{
-		#只能用facade
-		$roleData['roleName']		= $name;
-		$roleData['roleGroup'] 		= $group;
-		$roleData['rolePermission']	= json_encode($permission);
-		$roleData['roleArea'] 		= json_encode($area);
-		$roleData['updateAt'] 		= now()->format('Y-m-d H:i:s');
+		$data['roleName']		= $name;
+		$data['rolePermission'] = json_encode($permission);
+		$data['isActive'] 		= $isActive;
+		$data['updateAt'] 		= now()->format('Y-m-d H:i:s');
 		
-		$db = $this->connectSalesDashboard('role');
-		$db->where('roleId', '=', $id)->update($roleData);
+		$db = $this->connectItPortal('role');
+		$db->where('roleId', '=', $id)->update($data);
 		
 		return TRUE;
 	}
@@ -107,10 +103,10 @@ class RoleRepository extends Repository
 	 * @params: int
 	 * @return: boolean
 	 */
-	public function remove($roleId)
+	public function remove($id)
 	{
-		$db = $this->connectSalesDashboard('role');
-		$db->where('roleId', '=', $roleId)->delete();
+		$db = $this->connectItPortal('role');
+		$db->where('roleId', '=', $id)->delete();
 		
 		return TRUE;
 	}

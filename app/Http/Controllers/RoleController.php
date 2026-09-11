@@ -46,7 +46,7 @@ class RoleController extends Controller
 		#initialize
 		$this->_viewModel->initialize(FormAction::CREATE);
 		$this->_viewModel->keepFormData(); #init
-				
+		
 		return view('role/detail')->with('viewModel', $this->_viewModel);
 	}
 	
@@ -59,17 +59,16 @@ class RoleController extends Controller
 		#fetch form data
 		$id 		= $request->input('id');
 		$name 		= $request->input('name');
-		$group 		= $request->input('group');
-		$permission	= $request->input('permission');
-		$area		= $request->input('area');
+		$permission	= $request->array('permission');
+		$isActive	= $request->input('isActive', FALSE);
 		
 		#initialize
 		$this->_viewModel->initialize(FormAction::CREATE);
-		$this->_viewModel->keepFormData($id, $name, $permission, $area);
+		$this->_viewModel->keepFormData($id, $name, $permission, $isActive);
 		
 		#validate input
 		$validator = Validator::make($request->all(), [
-            'name' => 'required|max:20',
+            'name' 		=> 'required|max:15',
         ]);
  
         if ($validator->fails()) 
@@ -78,7 +77,7 @@ class RoleController extends Controller
 			return view('role/detail')->with('viewModel', $this->_viewModel);
 		}
 		
-		$response = $this->_service->createRole($name, $group, $permission, $area);
+		$response = $this->_service->createRole($name, $permission, $isActive);
 		
 		if ($response->status === FALSE)
 		{
@@ -108,7 +107,8 @@ class RoleController extends Controller
 			return redirect()->route('role.list')->with('msg', $response->msg);
 		
 		$data = $response->data;
-		$this->_viewModel->keepFormData($data['roleId'], $data['roleName'], $data['rolePermission'], $data['roleArea'], $data['roleGroup'], $data['updateAt']);
+		
+		$this->_viewModel->keepFormData($data['roleId'], $data['roleName'], $data['rolePermission'], $data['isActive'], $data['roleGroupId'], $data['updateAt']);
 		$this->_viewModel->success();
 		
 		return view('role/detail')->with('viewModel', $this->_viewModel);
@@ -123,17 +123,22 @@ class RoleController extends Controller
 		#fetch form data
 		$id 		= $request->input('id');
 		$name 		= $request->input('name');
-		$group 		= $request->input('group');
 		$permission	= $request->array('permission');
-		$area		= $request->array('area');
+		$isActive	= $request->input('isActive', FALSE);
 		
-		$this->_viewModel->keepFormData($id, $name, $permission, $area, $group);
+		#返回時顯示用
+		$groupId	= $request->input('groupId');
+		$updateAt	= $request->input('updateAt');
+		
+		$this->_viewModel->initialize(FormAction::UPDATE);
+		$this->_viewModel->keepFormData($id, $name, $permission, $isActive, $groupId, $updateAt);
 		
 		if (empty($id))
 			return redirect()->route('role.list')->with('msg', '身份識別ID為空值');
 		
 		$validator = Validator::make($request->all(), [
-            'name' => 'required|max:20',
+			'id' 	=> 'required',
+            'name' 	=> 'required|max:20',
         ]);
  
         if ($validator->fails()) 
@@ -142,7 +147,7 @@ class RoleController extends Controller
 			return view('role/detail')->with('viewModel', $this->_viewModel);
 		}
 		
-		$response = $this->_service->updateRole($id, $name, $group, $permission, $area);
+		$response = $this->_service->updateRole($id, $name, $permission, $isActive);
 		
 		if ($response->status === FALSE)
 		{

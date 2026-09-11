@@ -68,14 +68,14 @@ class RoleService
 	 * @params: array
 	 * @return: array
 	 */
-	public function createRole($name, $group, $permission, $area)
+	public function createRole($name, $permission, $isActive)
 	{
 		try
 		{
-			$permission = empty($permission) ? [] : $permission;
-			$area 		= empty($area) ? [] : $area;
+			$groupId = RoleGroup::USER_DEFINED->value; #default always
+			$permission = empty($permission) ? [] : $permission; #以防萬一
 			
-			$this->_repository->insert($name, $group, $permission, $area);
+			$this->_repository->insert($name, $groupId, $permission, $isActive);
 		
 			return ResponseLib::initialize()->success();
 		}
@@ -113,14 +113,13 @@ class RoleService
 	 * @params: array
 	 * @return: array
 	 */
-	public function updateRole($id, $name, $group, $permission, $area)
+	public function updateRole($id, $name, $permission, $isActive)
 	{
 		try
 		{
 			$permission = empty($permission) ? [] : $permission;
-			$area 		= empty($area) ? [] : $area;
 			
-			$this->_repository->update($id, $name, $group, $permission, $area);
+			$this->_repository->update($id, $name, $permission, $isActive);
 		
 			return ResponseLib::initialize()->success();
 		}
@@ -135,11 +134,12 @@ class RoleService
 	 * @params: int
 	 * @return: array
 	 */
-	public function deleteRole($roleId)
+	public function deleteRole($id)
 	{
 		try
 		{
-			$this->_repository->remove($roleId);
+			$this->_repository->remove($id);
+			
 			return ResponseLib::initialize()->success();
 		}
 		catch(Exception $e)

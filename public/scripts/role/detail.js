@@ -30,8 +30,8 @@ document.addEventListener('alpine:init', () => {
 		
 		reset() {
 			this.formData.name = '';
+			this.formData.isActive = true;
 			this.formData.permission = [];
-			this.formData.area = [];
 			this.errors.clear();
 		}
     }));

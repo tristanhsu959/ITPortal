@@ -1,5 +1,5 @@
 
-<header x-data="@js($initData)" class="top-nav primary-container">
+<header x-data="@js($initData)" class="top-nav primary">
 	<nav>
 		<a :href="backUrl" x-show="backUrl" class="button circle transparent">
 			<i>arrow_back</i>

@@ -55,12 +55,13 @@
 
 /* dark bg */
 .filter {
-	.field-filter-dark {
-		--primary: #f8bbd0;
-		--outline: #f8bbd0;
-		--surface: #f8bbd0;
-		--on-surface: #f8bbd0;  
-		--on-surface-variant: #f8bbd0; 
+	--color: #80d8ff;
+	.filter-dark {
+		--primary: var(--color);
+		--outline: var(--color);
+		--surface: var(--color);
+		--on-surface: var(--color);  
+		--on-surface-variant: var(--color); 
 		
 		input {
 			color: #fafafa;
@@ -81,7 +82,7 @@
 	}
 	
 	button {
-		background-color: #f48fb1;
+		background-color: var(--color) !important;
 	}
 }
 

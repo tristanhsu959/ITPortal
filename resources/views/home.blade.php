@@ -10,8 +10,10 @@
 @endpush
 
 @section('content')
-<section class="content-wrapper">
-	<pre class="red-border"><i class="right-padding">commit</i>版本更新日期：2026-xx-xx</pre>
-	<pre class="red-border"><i class="right-padding">commit</i>版本更新後，請按 <code class="grey white-text tiny-padding">Ctrl</code> + <code class="grey white-text tiny-padding">F5</code> 清除瀏覽器暫存</pre>
-</section>
+<main class="app responsive">
+	<section class="content-wrapper padding-top">
+		<pre class="red-border"><i class="right-padding">commit</i>版本更新日期：2026-xx-xx</pre>
+		<pre class="red-border"><i class="right-padding">commit</i>版本更新後，請按 <code class="grey white-text tiny-padding">Ctrl</code> + <code class="grey white-text tiny-padding">F5</code> 清除瀏覽器暫存</pre>
+	</section>
+</main>
 @endsection

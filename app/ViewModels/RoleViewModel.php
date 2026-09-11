@@ -54,12 +54,15 @@ class RoleViewModel extends Fluent
 	 * @params: array
 	 * @return: void
 	 */
-	public function keepFormData($id = 0, $name = '', $permission = [], $isActive = TRUE, $updateAt = NULL)
+	public function keepFormData($id = 0, $name = '', $permission = [], $isActive = TRUE, $groupId = NULL, $updateAt = NULL)
     {
+		$groupId = $groupId ?? RoleGroup::USER_DEFINED->value;
+		
 		$this->set('formData.id', $id);
 		$this->set('formData.name', $name);
 		$this->set('formData.permission', $permission);
 		$this->set('formData.isActive', $isActive);
+		$this->set('formData.groupId', $groupId);
 		$this->set('formData.updateAt', $updateAt);
 	}
 	
@@ -94,14 +97,14 @@ class RoleViewModel extends Fluent
 	/*因與統計不同, 不使用trait response*/
 	public function responseList()
 	{
-		$response['status'] 			= $this->status();
-		$response['hasResult'] 			= ! empty($this->list);
+		$response['data'] = $this->list;
 		
-		$response['data'] 				= $this->list;
-		$response['supervisorGroupId']	= RoleGroup::SUPERVISOR->value;
-		$response['createRoute']		= route('role.create');
-		$response['updateRoute']		= route('role.update', ['id' => '_ID']);
-		$response['deleteRoute']		= route('role.delete', ['id' => '_ID']);
+		$response['response']['status'] 			= $this->status();
+		$response['response']['hasResult'] 			= ! empty($this->list);
+		$response['response']['supervisorGroupId']	= RoleGroup::SUPERVISOR->value;
+		$response['response']['createRoute']		= route('role.create');
+		$response['response']['updateRoute']		= route('role.update', ['id' => '_ID']);
+		$response['response']['deleteRoute']		= route('role.delete', ['id' => '_ID']);
 		
 		return $response;
 	}
