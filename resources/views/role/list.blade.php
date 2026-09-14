@@ -10,7 +10,7 @@
 @endpush
 
 @section('content')
-<main x-data="roleList(@js($viewModel->responseList()))" class="app responsive">
+<main x-data="roleList(@js($viewModel->responseList()))" class="responsive">
 	<header class="page-nav">
 		<nav>
 			<a :href="response.createRoute" class="button square green"><i>add</i></a>
@@ -39,7 +39,7 @@
 		
 		<div class="grid-table">
 			<!-- head -->
-			<div class="table-head table-row">
+			<div class="table-head grid-row">
 				<div class="th">#</div>
 				<div class="th">名稱</div>
 				<div class="th">狀態</div>
@@ -49,76 +49,7 @@
 			
 			<!-- row -->
 			<template x-for="(role, idx) in filterRoles" :key="idx">
-				<div class="table-row">
-					<div class="td" x-text="idx+1"></div>
-					<div class="td" x-text="role.roleName"></div>
-					<div class="td">
-						<span>
-							<i class="green-text fill" x-show="role.isActive">check_circle</i>
-							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
-							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
-						</span>
-					</div>
-					<div class="td" x-text="role.updateAt"></div>
-					<div class="td right-align action">
-						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">edit</i>
-						</a>
-						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">delete</i>
-						</a>
-					</div>
-				</div>
-			</template>
-			
-			<template x-for="(role, idx) in filterRoles" :key="idx">
-				<div class="table-row">
-					<div class="td" x-text="idx+1"></div>
-					<div class="td" x-text="role.roleName"></div>
-					<div class="td">
-						<span>
-							<i class="green-text fill" x-show="role.isActive">check_circle</i>
-							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
-							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
-						</span>
-					</div>
-					<div class="td" x-text="role.updateAt"></div>
-					<div class="td right-align action">
-						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">edit</i>
-						</a>
-						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">delete</i>
-						</a>
-					</div>
-				</div>
-			</template>
-			
-			<template x-for="(role, idx) in filterRoles" :key="idx">
-				<div class="table-row">
-					<div class="td" x-text="idx+1"></div>
-					<div class="td" x-text="role.roleName"></div>
-					<div class="td">
-						<span>
-							<i class="green-text fill" x-show="role.isActive">check_circle</i>
-							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
-							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
-						</span>
-					</div>
-					<div class="td" x-text="role.updateAt"></div>
-					<div class="td right-align action">
-						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">edit</i>
-						</a>
-						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
-							<i class="small">delete</i>
-						</a>
-					</div>
-				</div>
-			</template>
-			
-			<template x-for="(role, idx) in filterRoles" :key="idx">
-				<div class="table-row">
+				<div class="table-row grid-row">
 					<div class="td" x-text="idx+1"></div>
 					<div class="td" x-text="role.roleName"></div>
 					<div class="td">

@@ -19,12 +19,23 @@ body {
 	header.top-nav {
 		position: sticky;
 		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 33;
+		z-index: 11;
 		border-bottom: 1px solid rgba(0 0 0 / .20);
 	}
 }	
+
+/******************** Profile ********************/
+/* .field>:is(i,img,svg,progress.circle,a) */
+#profileEdit {
+	.dialog-body .field > i:has(.checkbox) {
+		pointer-events: auto;
+	}
+	/*layout直接用button會有問題*/
+	.dialog-body .field > i.btn-icon {
+		pointer-events: auto;
+	}
+}
+	
 	
 /* Common field padding */
 #searchPanel {

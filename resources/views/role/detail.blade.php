@@ -10,8 +10,8 @@
 @endpush
 
 @section('content')
-<main x-data="roleData(@js($viewModel->responseDetail()))" class="app responsive">
-	<form :action="response.formAction" method="post" novalidate @submit.prevent="validate()" class="content-wrapper scroll">
+<main x-data="roleData(@js($viewModel->responseDetail()))" class="responsive">
+	<form :action="response.formAction" method="post" novalidate @submit.prevent="validate()" class="content-wrapper">
 		<input type="hidden" name="id" :value="formData.id" x-model="formData.id">
 		<input type="hidden" name="groupId" :value="formData.groupId" x-model="formData.groupId">
 		<input type="hidden" name="updateAt" :value="formData.updateAt" x-model="formData.updateAt">

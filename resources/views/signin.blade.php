@@ -7,66 +7,58 @@
 
 @section('content')
 
-<main class="signin responsive">
-	<div x-data="login(@js($viewModel->responseData()))" class="content-wrapper">
-		<form :action="formData.formAction" method="post" class="grid" novalidate @submit.prevent="validate()" >
-			@csrf
-			
-			<div class="s12 head-logo">
-				<img src="{{ asset('images/logo.svg') }}" />
-				<span class="title" x-show="!showForgotPassword">Sign in to IT Portal</span>
-				<span class="title" x-show="showForgotPassword">Forgot Password</span>
+<main x-data="login(@js($viewModel->responseData()))" class="responsive">
+	<form :action="formData.formAction" method="post" class="grid" novalidate @submit.prevent="validate()" >
+		@csrf
+		
+		<div class="s12 form-head">
+			<img src="{{ asset('images/logo.svg') }}" />
+			<span class="title" x-show="!showForgotPassword">Sign in to IT Portal</span>
+			<span class="title" x-show="showForgotPassword">Forgot Password</span>
+		</div>
+		
+		<div class="s12 form-content">
+			<div class="field label border" :class="Helper.hasError(errors, 'account')">
+				<input x-model="formData.account" type="text" name="account" maxlength="20" @input="errors.delete('account')">
+				<label>帳號</label>
 			</div>
 			
-			<div class="s12 m12 form-content">
-				<!--div class="head">
-					<img src="{{ asset('images/logo.svg') }}" />
-					<h6 x-show="!showForgotPassword">登入至 IT Portal</h6>
-					<h6 x-show="showForgotPassword">忘了吃銀杏嗎？</h6>
-				</div-->
-				
-				<div class="field label border" :class="Helper.hasError(errors, 'account')">
-					<input x-model="formData.account" type="text" name="account" maxlength="20" @input="errors.delete('account')">
-					<label>帳號</label>
-				</div>
-				
-				
-				<div x-show="!showForgotPassword" class="field label border" :class="Helper.hasError(errors, 'password')">
-					<input x-model="formData.password" type="password" name="password" maxlength="20" @input="errors.delete('password')">
-					<label>密碼</label>
-				</div>
-				
-				<p x-show="showForgotPassword" class="red-text">系統會發送密碼設定連結至此帳號所屬信箱，<br/>請由該連結進入密碼重設頁面</p>
-				
-				<div class="field label border captcha">
-					<input type="text" name="captcha" maxlength="10">
-					<label>Captcha</label>
-				</div>
-				
-				<nav class="group split">
-					<button x-show="!showForgotPassword" type="submit" class="left-round max">
-						<span>登入</span>
-					</button>
-					<button x-show="showForgotPassword" type="submit" class="green left-round max">
-						<span>送出</span>
-					</button>
-					<button type="button" class="red right-round square" @click="reset()">
-						<i>close</i>
-					</button>
-				</nav>
-				
-				<nav>
-					<button type="button" class="pink-text transparent max" @click="showForgotPassword = !showForgotPassword">
-						<i x-show="!showForgotPassword">password_2</i>
-						<span x-show="!showForgotPassword">忘記密碼?</span>
-						
-						<i x-show="showForgotPassword">password_2_off</i>
-						<span x-show="showForgotPassword">返回</span>
-					</button>
-				</nav>
+			
+			<div x-show="!showForgotPassword" class="field label border" :class="Helper.hasError(errors, 'password')">
+				<input x-model="formData.password" type="password" name="password" maxlength="20" @input="errors.delete('password')">
+				<label>密碼</label>
 			</div>
 			
-		</form>
-	</div>	
+			<p x-show="showForgotPassword" class="red-text">系統會發送密碼設定連結至此帳號所屬信箱，<br/>請由該連結進入密碼重設頁面</p>
+			
+			<div class="field label border captcha">
+				<input type="text" name="captcha" maxlength="10">
+				<label>Captcha</label>
+			</div>
+			
+			<nav class="group split">
+				<button x-show="!showForgotPassword" type="submit" class="left-round max">
+					<span>登入</span>
+				</button>
+				<button x-show="showForgotPassword" type="submit" class="green left-round max">
+					<span>送出</span>
+				</button>
+				<button type="button" class="red right-round square" @click="reset()">
+					<i>close</i>
+				</button>
+			</nav>
+			
+			<nav>
+				<button type="button" class="pink-text transparent max" @click="showForgotPassword = !showForgotPassword">
+					<i x-show="!showForgotPassword">password_2</i>
+					<span x-show="!showForgotPassword">忘記密碼?</span>
+					
+					<i x-show="showForgotPassword">password_2_off</i>
+					<span x-show="showForgotPassword">返回</span>
+				</button>
+			</nav>
+		</div>
+		
+	</form>
 </main>	
 @endsection

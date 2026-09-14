@@ -45,12 +45,6 @@ class UserViewModel extends Fluent
 	 */
 	private function _setOptions()
 	{
-		#20260703:區域權限改為POS|訂貨各自獨立
-		$this->set('options.functions', AppManager::getMenu());
-		#$this->set('options.areas', Area::mapWithKeys());
-		$this->set('options.salesAreas', Area::options()); #POS
-		$this->set('options.purchaseAreas', Area::options()); #nOrder
-		$this->set('options.opCenters', OpCenter::options());
 		$this->set('options.supervisorGroupId',RoleGroup::SUPERVISOR->value); 
 	}
 	
@@ -75,9 +69,8 @@ class UserViewModel extends Fluent
 	 * @return: void
 	 */
 	public function keepFormData($id = 0, $account = '',  $password = '',
-						$displayName = '', $department = '', $email = '', $description = '', $isActive = TRUE, 
-						$permission = [], $area = [],  
-						$updateAt = '', $hasSetPassword = FALSE)
+						$displayName = '', $department = '', $email = '', $isActive = TRUE, 
+						$roleId = 0, $updateAt = '')
     {
 		#info
 		$this->set('formData.id', $id);
@@ -86,19 +79,9 @@ class UserViewModel extends Fluent
 		$this->set('formData.displayName', $displayName);
 		$this->set('formData.department', $department);
 		$this->set('formData.email', $email);
-		$this->set('formData.description', $description);
 		$this->set('formData.isActive', $isActive);
-		
-		#permission
-		$this->set('formData.permission', $permission);
-		
-		#default全部營運中心
-		$this->set('formData.area.opCenter', data_get($area, 'opCenter', []));
-		$this->set('formData.area.sales', data_get($area, 'sales', []));
-		$this->set('formData.area.purchase', data_get($area, 'purchase', []));
-		
+		$this->set('formData.roleId', $roleId);
 		$this->set('formData.updateAt', $updateAt);
-		$this->set('formData.hasSetPassword', $hasSetPassword);
 	}
 	
 	
@@ -125,14 +108,6 @@ class UserViewModel extends Fluent
 		$response['response']['backRoute']		= route($this->backRoute);
 		$response['response']['formAction'] 	= $this->getFormAction($this->action);
 		$response['response']['actionLabel']	= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
-		
-		return $response;
-	}
-	
-	public function detailData()
-	{	
-		
-		
 		
 		return $response;
 	}

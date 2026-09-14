@@ -21,21 +21,23 @@ button, a {
 .grid-table {
 	font-size: .875rem;
 	
-	.table-row {
+	.grid-row {
 		display: grid;
 		align-items: center;
-		border-bottom: 1px solid #90a4ae;
+		/* border-bottom: 1px solid #90a4ae; */
 		box-shadow: var(--elevate1);
-		
-		&:hover {
-			
-		}
 	}
 	
 	.table-head {
 		background-color: #eee;
 		font-weight: bold;
-		border-bottom: 1px solid #37474f;
+		/* border-bottom: 1px solid #37474f; */
+	}
+	
+	.table-row {
+		&:hover {
+			background-color: #e1f5fe;
+		}
 	}
 	
 	.th, .td {

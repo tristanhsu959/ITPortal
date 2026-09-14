@@ -11,7 +11,7 @@
 
 @section('content')
 <!-- Content -->
-<main x-data="userList(@js($viewModel->responseList()))" class="app responsive">
+<main x-data="userList(@js($viewModel->responseList()))" class="responsive">
 	<header class="page-nav">
 		<nav>
 			<a :href="response.createRoute" class="button square green"><i>add</i></a>

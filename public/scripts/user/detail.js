@@ -1,20 +1,14 @@
 /* Role Create JS */
 
 document.addEventListener('alpine:init', () => {
-	Alpine.data('userForm', (response, data) => ({
-		response: response,
-		formData: {...data.formData},
-		options: data.options,
-		formAction: data.formAction,
-		actionLabel: data.actionLabel,
+	Alpine.data('userData', (viewData) => ({
+		response: {...viewData.response},
+		formData: {...viewData.formData},
+		options: {...viewData.options},
 		errors: new Set(),
-		activeTab: '',
 		showPassword: false,
 		
-		init() {
-			const tabKey = Object.keys(this.options.functions)[0];
-			this.activeTab = tabKey;
-		},
+		init() {},
 		
 		validate() {
 			this.errors.clear();
