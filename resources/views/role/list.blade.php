@@ -13,7 +13,7 @@
 <main x-data="roleList(@js($viewModel->responseList()))" class="app responsive">
 	<header class="page-nav">
 		<nav>
-			<a :href="response.createRoute" class="button circle green"><i>add</i></a>
+			<a :href="response.createRoute" class="button square green"><i>add</i></a>
 			
 			<nav x-show="response.hasResult" class="group connected filter">
 				<div class="field label border prefix filter-dark small">
@@ -34,7 +34,7 @@
 		</article>
 	</section>
 	
-	<form x-show="response.status === true && response.hasResult" action="" method="post" x-ref="roleListForm" class="content-wrapper padding-top">
+	<form x-show="response.status === true && response.hasResult" action="" method="post" x-ref="roleListForm" class="content-wrapper">
 		@csrf
 		
 		<div class="grid-table">
@@ -48,6 +48,75 @@
 			</div>
 			
 			<!-- row -->
+			<template x-for="(role, idx) in filterRoles" :key="idx">
+				<div class="table-row">
+					<div class="td" x-text="idx+1"></div>
+					<div class="td" x-text="role.roleName"></div>
+					<div class="td">
+						<span>
+							<i class="green-text fill" x-show="role.isActive">check_circle</i>
+							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
+							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
+						</span>
+					</div>
+					<div class="td" x-text="role.updateAt"></div>
+					<div class="td right-align action">
+						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">edit</i>
+						</a>
+						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">delete</i>
+						</a>
+					</div>
+				</div>
+			</template>
+			
+			<template x-for="(role, idx) in filterRoles" :key="idx">
+				<div class="table-row">
+					<div class="td" x-text="idx+1"></div>
+					<div class="td" x-text="role.roleName"></div>
+					<div class="td">
+						<span>
+							<i class="green-text fill" x-show="role.isActive">check_circle</i>
+							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
+							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
+						</span>
+					</div>
+					<div class="td" x-text="role.updateAt"></div>
+					<div class="td right-align action">
+						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">edit</i>
+						</a>
+						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">delete</i>
+						</a>
+					</div>
+				</div>
+			</template>
+			
+			<template x-for="(role, idx) in filterRoles" :key="idx">
+				<div class="table-row">
+					<div class="td" x-text="idx+1"></div>
+					<div class="td" x-text="role.roleName"></div>
+					<div class="td">
+						<span>
+							<i class="green-text fill" x-show="role.isActive">check_circle</i>
+							<i class="red-text fill" x-show="! role.isActive">x_circle</i>
+							<span class="tooltip right" x-text="role.isActive ? '啟用':'停用'"></span>
+						</span>
+					</div>
+					<div class="td" x-text="role.updateAt"></div>
+					<div class="td right-align action">
+						<a :href="response.updateRoute.replace('_ID', role.roleId)" class="button square small small-elevate orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">edit</i>
+						</a>
+						<a :href="response.deleteRoute.replace('_ID', role.roleId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange" :disabled="role.roleGroupId == response.supervisorGroupId">
+							<i class="small">delete</i>
+						</a>
+					</div>
+				</div>
+			</template>
+			
 			<template x-for="(role, idx) in filterRoles" :key="idx">
 				<div class="table-row">
 					<div class="td" x-text="idx+1"></div>

@@ -9,15 +9,11 @@ document.addEventListener('alpine:init', () => {
 		}
 	});
 	
-    Alpine.data('userList', (response, list) => ({
-		response: response,
-		list: {...list},
+    Alpine.data('userList', (viewData) => ({
+		response: {...viewData.response},
+		list: {...viewData.data},
 		
 		init(){},
-		
-		confirmDelete(url) {
-			Alpine.store('dialog').show('確定要刪除此帳號?', true, () => this.deleteUser(url));
-		},
 		
 		get filterUsers() {
 			const searchKeyword = Alpine.store('userFilter').filter.toLowerCase();
@@ -31,6 +27,10 @@ document.addEventListener('alpine:init', () => {
 			);
 			
 			return result;
+		},
+		
+		confirmDelete(url) {
+			Alpine.store('dialog').show('確定要刪除此帳號?', true, () => this.deleteUser(url));
 		},
 		
 		deleteUser(url) {

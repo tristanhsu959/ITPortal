@@ -79,20 +79,6 @@ class RoleViewModel extends Fluent
 		};
 	}
 	
-	/* 判別列表Role是否可編或可刪
-	 * @params: 
-	 * @return: boolean
-	 */
-	public function canUpdateThisRole($roleGroup)
-	{
-		return (RoleGroup::SUPERVISOR->value == $roleGroup) ? FALSE : TRUE; #super visor can not edit
-	}
-	
-	public function canDeleteThisRole($roleGroup)
-	{
-		return (RoleGroup::SUPERVISOR->value == $roleGroup) ? FALSE : TRUE; #super visor can not edit
-	}
-	
 	/* Output js */
 	/*因與統計不同, 不使用trait response*/
 	public function responseList()

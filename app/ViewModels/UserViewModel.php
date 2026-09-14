@@ -102,56 +102,37 @@ class UserViewModel extends Fluent
 	}
 	
 	
-	/* User Data End */
-	
-	/* 判別列表Role是否可編或可刪
-	 * @params: 
-	 * @return: boolean
-	 */
-	public function canUpdateThisUser($thisRoleGroup)
-	{
-		return ! ($thisRoleGroup == RoleGroup::SUPERVISOR->value);
-	}
-	
-	public function canDeleteThisUser($thisRoleGroup)
-	{
-		return ! ($thisRoleGroup == RoleGroup::SUPERVISOR->value);
-	}
-	
 	/* Output js */
 	/*因與統計不同, 不使用trait response*/
-	public function listResponseData()
+	public function responseList()
 	{
-		$response['status'] 		= $this->status();
-		$response['hasResult'] 		= ! empty($this->list);
+		$response['data'] = $this->list;
+		
+		$response['response']['status'] 		= $this->status();
+		$response['response']['hasResult'] 		= ! empty($this->list);
+		$response['response']['createRoute']	= route('user.create');
+		$response['response']['updateRoute']	= route('user.update', ['id' => '_ID']);
+		$response['response']['deleteRoute']	= route('user.delete', ['id' => '_ID']);
 		
 		return $response;
 	}
 	
-	public function listData()
+	public function responseDetail()
 	{
-		$response['data'] 				= $this->list;
-		$response['supervisorGroupId']	= RoleGroup::SUPERVISOR->value;
-		$response['createRoute']	= route('user.create');
-		$response['updateRoute']	= route('user.update', ['id' => '_ID']);
-		$response['deleteRoute']	= route('user.delete', ['id' => '_ID']);
+		$response = $this->only('formData', 'options');
 		
-		return $response;
-	}
-	
-	public function detailResponseData()
-	{
-		$response['status'] 		= $this->status();
-		$response['backRoute']		= route($this->backRoute);
+		$response['response']['status'] 		= $this->status();
+		$response['response']['backRoute']		= route($this->backRoute);
+		$response['response']['formAction'] 	= $this->getFormAction($this->action);
+		$response['response']['actionLabel']	= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
 		
 		return $response;
 	}
 	
 	public function detailData()
-	{
-		$response = $this->only('formData', 'options');
-		$response['formAction'] = $this->getFormAction($this->action);
-		$response['actionLabel']= ($this->action == FormAction::CREATE) ? '新增' : '儲存';
+	{	
+		
+		
 		
 		return $response;
 	}

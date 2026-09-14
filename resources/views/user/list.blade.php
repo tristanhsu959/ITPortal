@@ -11,23 +11,31 @@
 
 @section('content')
 <!-- Content -->
-<div x-data="userList(@js($viewModel->listResponseData()), @js($viewModel->listData()))" class="content-wrapper">
+<main x-data="userList(@js($viewModel->responseList()))" class="app responsive">
 	<header class="page-nav">
 		<nav>
-			<a :href="list.createRoute" class="btn-create button circle"><i>add</i></a>
+			<a :href="response.createRoute" class="button square green"><i>add</i></a>
 			
-			<nav x-show="response.hasResult" class="no-space filter">
-				<div class="field label border prefix field-filter-dark small">
+			<nav x-show="response.hasResult" class="group connected filter">
+				<div class="field label border prefix filter-dark small">
 					<i>filter_alt</i>
 					<input type="text" x-model="$store.userFilter.filter">
 					<label>篩選</label>
 				</div>
-				<button class="right-round" @click="$store.userFilter.reset()"><i>backspace</i></button>
+				<button class="square" @click="$store.userFilter.reset()"><i>backspace</i></button>
 			</nav>
 		</nav>
 	</header>
 	
-	<form x-show="response.status" action="" method="post" x-ref="userListForm">
+	<section x-show="response.status === true && !response.hasResult" class="content-wrapper">
+		<article class="error-container border">
+			<div class="row">
+				<i>info</i><div class="max">尚無設定</div>
+			</div>
+		</article>
+	</section>
+	
+	<form x-show="response.status === true && response.hasResult" action="" method="post" x-ref="userListForm" class="content-wrapper padding-top">
 		@csrf
 		<section class="user-list container">
 			<article x-show="list.data.length == 0" class="error-container border">
@@ -78,6 +86,6 @@
 		</section>
 	</form>
 
-</div>
+</main>
 <!-- Content -->
 @endsection

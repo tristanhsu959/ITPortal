@@ -24,20 +24,24 @@ class UserRepository extends Repository
 	 */
 	public function getList()
 	{
-		$db = $this->connectSalesDashboard('user as a');
+		$db = $this->connectItPortal('user as u');
 			
-		$result = $db->select('a.userId', 'a.userAccount', 'a.userPassword', 'a.userDisplayName', 'a.department')
-			->addSelect('a.email', 'b.roleGroup', 'a.isActive', 'a.updateAt', 'l.updateAt as accessTime')
-			->leftJoin('role as b', 'b.roleUserId', '=', 'a.userId')
-			->leftJoin('access_log as l', 'l.userId', '=', 'a.userId')
+		$result = $db->join('user_role as ur', 'ur.userId', '=', 'u.userId')
+			->join('role as r', 'r.roleId', '=', 'ur.roleId')
+			->leftJoin('access_log as l', 'l.userId', '=', 'u.userId')
+			->where('r.roleGroupId', '=', RoleGroup::USER_DEFINED->value)
+			->select('u.userId', 'u.userAccount', 'u.userDisplayName')
+			->addSelect('u.email', 'u.isActive', 'u.updateAt')
+			->addSelect('r.roleName', 'r.isActive as roleIsActive')
+			->addSelect('l.updateAt as accessTime')
 			->get()
 			->toArray();
 		
-		$result = Arr::map($result, function ($item, string $key) {
+		/* $result = Arr::map($result, function ($item, string $key) {
 			$item['rolePermission']	= empty($item['rolePermission']) ? [] : json_decode($item['rolePermission'], TRUE);
 			$item['roleArea'] 		= empty($item['roleArea']) ? [] : json_decode($item['roleArea'], TRUE);
 			return $item;
-		});
+		}); */
 			
 		return $result;
 	}

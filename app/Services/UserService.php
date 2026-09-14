@@ -29,12 +29,12 @@ class UserService
 		{
 			$list = $this->_repository->getList();
 			
-			$list = collect($list)->map(function($item, $key){
+			/* $list = collect($list)->map(function($item, $key){
 				$item['hasSysPassword'] = empty($item['userPassword']) ? FALSE : TRUE;
 				unset($item['userPassword']);
 				
 				return $item;
-			})->toArray();
+			})->toArray() */;
 			
 			return ResponseLib::initialize($list)->success();
 		}
