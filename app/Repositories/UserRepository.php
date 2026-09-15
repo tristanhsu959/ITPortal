@@ -16,6 +16,31 @@ class UserRepository extends Repository
 		
 	}
 	
+	/* Get role list
+	 * @params: 
+	 * @return: array
+	 */
+	public function getActiveRoleList()
+	{
+		$db = $this->connectItPortal('role');
+			
+		$result = $db
+			->select('roleId', 'roleName', 'rolePermission')
+			->where('isActive', '=', TRUE)
+			->where('roleGroupId', '=', RoleGroup::USER_DEFINED->value)
+			->get();
+		
+		#處理Json type,若用each須傳&$row
+		$result->transform(function($row) {
+			$decoded = json_decode($row['rolePermission'], true);
+			$row['rolePermission'] = $decoded ?? [];
+			
+			return $row;
+		})->toArray();
+		
+		return $result;
+	}
+	
 	/* Get user list by query conditions
 	 * @params: string
 	 * @params: string
@@ -30,19 +55,12 @@ class UserRepository extends Repository
 			->join('role as r', 'r.roleId', '=', 'ur.roleId')
 			->leftJoin('access_log as l', 'l.userId', '=', 'u.userId')
 			->where('r.roleGroupId', '=', RoleGroup::USER_DEFINED->value)
-			->select('u.userId', 'u.userAccount', 'u.userDisplayName')
-			->addSelect('u.email', 'u.isActive', 'u.updateAt')
-			->addSelect('r.roleName', 'r.isActive as roleIsActive')
+			->select('u.userId', 'u.userAccount', 'u.displayName', 'u.department', 'u.email', 'u.isActive')
+			->addSelect('r.roleName', 'r.isActive as isRoleActive')
 			->addSelect('l.updateAt as accessTime')
 			->get()
 			->toArray();
 		
-		/* $result = Arr::map($result, function ($item, string $key) {
-			$item['rolePermission']	= empty($item['rolePermission']) ? [] : json_decode($item['rolePermission'], TRUE);
-			$item['roleArea'] 		= empty($item['roleArea']) ? [] : json_decode($item['roleArea'], TRUE);
-			return $item;
-		}); */
-			
 		return $result;
 	}
 	
@@ -52,7 +70,7 @@ class UserRepository extends Repository
 	 */
 	public function getIdByAccount($account, $exceptId)
 	{
-		$db = $this->connectSalesDashboard('user');
+		$db = $this->connectItPortal('user');
 			
 		$result = $db->select('userId')
 					->where('userAccount', '=', $account)
@@ -71,16 +89,16 @@ class UserRepository extends Repository
 	 * @params: int
 	 * @return: boolean
 	 */
-	public function insert($account, $password, $displayName, $department, $email, $description, $isActive, $roleGroupId, $permission, $area)
+	public function insert($account, $password, $displayName, $department, $email, $isActive, $roleId)
 	{
-		$db = $this->connectSalesDashboard();
+		$db = $this->connectItPortal();
 		$db->beginTransaction();
 		
 		try 
 		{
-			$insertId = $this->_insertUser($account, $password, $displayName, $department, $email, $isActive);
+			$insertId = $this->_insertUser($db, $account, $password, $displayName, $department, $email, $isActive);
 			
-			$this->_insertRole($insertId, $roleGroupId, $permission, $area, $description);
+			$this->_insertUserRole($db, $insertId, $roleId);
 			
 			$db->commit();
 
@@ -103,18 +121,18 @@ class UserRepository extends Repository
 	 * @params: boolean
 	 * @return: boolean
 	 */
-	private function _insertUser($account, $password, $displayName, $department, $email, $isActive)
+	private function _insertUser($db, $account, $password, $displayName, $department, $email, $isActive)
 	{
 		$data['userAccount']	= $account;
 		$data['userPassword'] 	= $password;
-		$data['userDisplayName']= $displayName;
+		$data['displayName']	= $displayName;
 		$data['department']		= $department;
 		$data['email']			= $email;
 		$data['isActive']		= $isActive;
 		$data['createAt'] 		= now()->format('Y-m-d H:i:s');
 		$data['updateAt'] 		= $data['createAt'];
 		
-		$db = $this->connectSalesDashboard();
+		#$db = $this->connectItPortal();
 		$insertId = $db->table('user')
 			->insertGetId($data);
 		
@@ -129,16 +147,13 @@ class UserRepository extends Repository
 	 * @params: boolean
 	 * @return: boolean
 	 */
-	private function _insertRole($userId, $roleGroupId, $permission, $area, $description)
+	private function _insertUserRole($db, $userId, $roleId)
 	{
-		$data['roleUserId']		= $userId;
-		$data['roleGroup'] 		= $roleGroupId;
-		$data['rolePermission']	= json_encode($permission);
-		$data['roleArea']		= json_encode($area);
-		$data['description'] 	= $description;
+		$data['userId']		= $userId;
+		$data['roleId'] 	= $roleId;
 		
-		$db = $this->connectSalesDashboard();
-		$insertId = $db->table('role')
+		#$db = $this->connectItPortal();
+		$insertId = $db->table('user_role')
 			->insert($data);
 		
 		return TRUE;
@@ -150,18 +165,16 @@ class UserRepository extends Repository
 	 */
 	public function getById($id)
 	{
-		$db = $this->connectSalesDashboard('user as a');
+		$db = $this->connectItPortal('user as u');
 		
-		$result = $db->select('a.userId', 'a.userAccount', 'a.userPassword', 'a.userDisplayName', 'a.department')
-				->addSelect('a.email', 'a.isActive', 'a.updateAt')
-				->addSelect('b.roleGroup', 'b.rolePermission', 'b.roleArea', 'b.description')
-				->leftJoin('role as b', 'b.roleUserId', '=', 'a.userId')
-				->where('userId', '=', $id)
+		$result = $db->join('user_role as ur', 'ur.userId', '=', 'u.userId')
+				->join('role as r', 'r.roleId', '=', 'ur.roleId')
+				->where('u.userId', '=', $id)
+				->select('u.userId', 'u.userAccount', 'u.displayName', 'u.department')
+				->addSelect('u.email', 'u.isActive', 'u.updateAt')
+				->addSelect('r.roleId', 'r.isActive as isRoleActive')
 				->first();
 		
-		$result['rolePermission']	= empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
-		$result['roleArea'] 		= empty($result['roleArea']) ? [] : json_decode($result['roleArea'], TRUE);
-	
 		return $result;
 	}
 	
@@ -172,16 +185,16 @@ class UserRepository extends Repository
 	 * @params: int
 	 * @return: boolean
 	 */
-	public function update($id, $account, $password, $displayName, $department, $email, $description, $isActive, $permission, $area)
+	public function update($id, $account, $password, $displayName, $department, $email, $isActive, $roleId)
 	{
-		$db = $this->connectSalesDashboard();
+		$db = $this->connectItPortal();
 		$db->beginTransaction();
 		
 		try 
 		{
-			$this->_updateUser($id, $account, $password, $displayName, $department, $email, $isActive);
+			$this->_updateUser($db, $id, $account, $password, $displayName, $department, $email, $isActive);
 			
-			$this->_updateRole($id, $permission, $area, $description);
+			$this->_updateUserRole($db, $id, $roleId);
 			
 			$db->commit();
 
@@ -205,20 +218,18 @@ class UserRepository extends Repository
 	 * @params: boolean
 	 * @return: boolean
 	 */
-	private function _updateUser($id, $account, $password, $displayName, $department, $email, $isActive)
+	private function _updateUser($db, $id, $account, $password, $displayName, $department, $email, $isActive)
 	{
 		$data['userAccount']	= $account;
 		
 		if (! empty($password))
 			$data['userPassword'] 	= $password;
 		
-		$data['userDisplayName']= $displayName;
+		$data['displayName']	= $displayName;
 		$data['department']		= $department;
 		$data['email']			= $email;
 		$data['isActive']		= $isActive;
 		$data['updateAt'] 		= now()->format('Y-m-d H:i:s');
-		
-		$db = $this->connectSalesDashboard();
 		
 		$db->table('user')
 			->where('userId', '=', $id)
@@ -235,16 +246,12 @@ class UserRepository extends Repository
 	 * @params: boolean
 	 * @return: boolean
 	 */
-	private function _updateRole($userId, $permission, $area, $description)
+	private function _updateUserRole($db, $userId, $roleId)
 	{
-		$data['rolePermission']	= json_encode($permission);
-		$data['roleArea']		= json_encode($area);
-		$data['description']	= $description;
+		$data['roleId']	= $roleId;
 		
-		$db = $this->connectSalesDashboard();
-		
-		$db->table('role')
-			 ->where('roleUserId', '=', $userId)
+		$db->table('user_role')
+			 ->where('userId', '=', $userId)
 			 ->update($data);
 		
 		return TRUE;
@@ -256,7 +263,7 @@ class UserRepository extends Repository
 	 */
 	public function remove($userId)
 	{
-		$db = $this->connectSalesDashboard();
+		$db = $this->connectItPortal();
 		$db->beginTransaction();
 		
 		try 
@@ -265,8 +272,8 @@ class UserRepository extends Repository
 				->where('userId', '=', $userId)
 				->delete();
 			
-			$db->table('role')
-				->where('roleUserId', '=', $userId)
+			$db->table('user_role')
+				->where('userId', '=', $userId)
 				->delete();
 				
 			$db->commit();

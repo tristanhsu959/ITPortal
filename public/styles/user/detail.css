@@ -1,21 +1,17 @@
 /* list */
 section.user-data {
-	.grid {
-		.password-hint div {
-			display: flex;
-			align-items: center;
-			min-block-size: 3rem;
+	.field > i.btn-icon {
+		pointer-events: auto;
+		z-index: 6
+			
+		button {
+			background-color: transparent;
+			color: #000;
 		}
 		
-		.field > i.btn-icon {
-			pointer-events: auto;
-			
-			button {
-				background-color: transparent;
-				color: #000;
-			}
+		&:hover {
+			cursor: pointer;
 		}
 	}
-	
 }
 

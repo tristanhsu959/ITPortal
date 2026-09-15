@@ -37,53 +37,56 @@
 	
 	<form x-show="response.status === true && response.hasResult" action="" method="post" x-ref="userListForm" class="content-wrapper padding-top">
 		@csrf
-		<section class="user-list container">
-			<article x-show="list.data.length == 0" class="error-container border">
-				<div class="row">
-					<i>info</i><div class="max">查無符合資料</div>
+		
+		<div class="grid-table">
+			<!-- head -->
+			<div class="table-head grid-row">
+				<div class="th">#</div>
+				<div class="th">帳號</div>
+				<div class="th">顯示名稱</div>
+				<div class="th">權限身份</div>
+				<div class="th">部門</div>
+				<div class="th">EMail</div>
+				<div class="th">狀態</div>
+				<div class="th">登入時間</div>
+				<div class="th right-align">操作</div>
+			</div>
+			
+			<!-- row -->
+			<template x-for="(user, idx) in filterUsers" :key="idx">
+				<div class="table-row grid-row">
+					<div class="td" x-text="idx+1"></div>
+					<div class="td" x-text="user.userAccount"></div>
+					<div class="td" x-text="user.displayName"></div>
+					<div class="td">
+						<span x-text="user.roleName"></span>
+						<span>
+							<i class="green-text" x-show="user.isRoleActive">check_circle</i>
+							<i class="red-text" x-show="! user.isRoleActive">x_circle</i>
+							<span class="tooltip right" x-text="user.isRoleActive ? '啟用':'停用'"></span>
+						</span>
+					</div>
+					<div class="td" x-text="user.department"></div>
+					<div class="td" x-text="user.email"></div>
+					<div class="td">
+						<span>
+							<i class="green-text fill large" x-show="user.isActive">check_circle</i>
+							<i class="red-text fill large" x-show="! user.isActive">x_circle</i>
+							<span class="tooltip right" x-text="user.isActive ? '啟用':'停用'"></span>
+						</span>
+					</div>
+					<div class="td" x-text="user.accessTime"></div>
+					<div class="td right-align action">
+						<a :href="response.updateRoute.replace('_ID', user.userId)" class="button square small small-elevate orange">
+							<i class="small">edit</i>
+						</a>
+						<a :href="response.deleteRoute.replace('_ID', user.userId)" @click.prevent="confirmDelete($el.href)" class="button square small small-elevate deep-orange">
+							<i class="small">delete</i>
+						</a>
+					</div>
 				</div>
-			</article>
-			
-			<table x-show="list.data.length > 0" class="stripes border odd-cyan">
-				<thead>
-					<tr>
-						<th class="min">#</th>
-						<th>帳號</th>
-						<th>顯示名稱</th>
-						<th>部門</th>
-						<th>EMail</th>
-						<th>狀態</th>
-						<th>最後登入時間</th>
-						<th class="right-align">操作</th>
-					</tr>
-				</thead>
-				<tbody>
-				<template x-for="(user, idx) in filterUsers" :key="idx">
-					<tr>
-						<td x-text="idx+1"></td>
-						<td><span x-text="user.userAccount"></span><i class="green-text" x-show="user.hasSysPassword">passkey</i></td>
-						<td x-text="user.userDisplayName"></td>
-						<td x-text="user.department"></td>
-						<td x-text="user.email"></td>
-						<td>
-							<i class="green-text" x-show="user.isActive">check_circle</i>
-							<i class="red-text" x-show="! user.isActive">x_circle</i>
-						</td>
-						<td class="min" x-text="user.accessTime"></td>
-						<td class="right-align action">
-							<a :href="list.updateRoute.replace('_ID', user.userId)" class="btn-edit button circle small" :disabled="user.roleGroup == list.supervisorGroupId">
-								<i class="small">edit</i>
-							</a>
-							<a @click.prevent="confirmDelete($el.href)" :href="list.deleteRoute.replace('_ID', user.userId)" class="btn-delete button circle small" :disabled="user.roleGroup == list.supervisorGroupId">
-								<i class="small">delete</i>
-							</a>
-						</td>
-					</tr>
-				</template>
-				</tbody>
-			</table>
-			
-		</section>
+			</template>
+		</div>
 	</form>
 
 </main>

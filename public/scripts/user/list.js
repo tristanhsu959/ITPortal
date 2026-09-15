@@ -13,16 +13,19 @@ document.addEventListener('alpine:init', () => {
 		response: {...viewData.response},
 		list: {...viewData.data},
 		
-		init(){},
+		init(){
+			console.log(this.list);
+		},
 		
 		get filterUsers() {
 			const searchKeyword = Alpine.store('userFilter').filter.toLowerCase();
-			const list = Object.values(this.list.data);
+			const list = Object.values(this.list);
 			
 			const result = list.filter(user => 
 				String(user.userAccount || '').toLowerCase().includes(searchKeyword) ||
-				String(user.userDisplayName || '').toLowerCase().includes(searchKeyword) ||
+				String(user.displayName || '').toLowerCase().includes(searchKeyword) ||
 				String(user.department || '').toLowerCase().includes(searchKeyword) ||
+				String(user.email || '').toLowerCase().includes(searchKeyword) ||
 				String(user.isActive ?? 0).toLowerCase().includes(String(searchKeyword).toLowerCase())
 			);
 			

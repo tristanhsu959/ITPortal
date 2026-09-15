@@ -19,6 +19,25 @@ class UserService
 	{
 	}
 	
+	/* 取身份清單(Get active)
+	 * @params: 
+	 * @return: array
+	 */
+	public function getActiveRoleList()
+	{
+		try
+		{
+			$list = $this->_repository->getActiveRoleList();
+			
+			return $list;
+		}
+		catch(Exception $e)
+		{
+			Log::channel('appServiceLog')->error($e->getMessage(), [ __class__, __function__, __line__]);
+			return [];
+		}
+	}
+	
 	/* 取帳號清單(Get ALL)
 	 * @params: 
 	 * @return: array
@@ -28,13 +47,6 @@ class UserService
 		try
 		{
 			$list = $this->_repository->getList();
-			
-			/* $list = collect($list)->map(function($item, $key){
-				$item['hasSysPassword'] = empty($item['userPassword']) ? FALSE : TRUE;
-				unset($item['userPassword']);
-				
-				return $item;
-			})->toArray() */;
 			
 			return ResponseLib::initialize($list)->success();
 		}
@@ -51,8 +63,7 @@ class UserService
 	 * @params: int
 	 * @return: array
 	 */
-	public function createUser($account, $password, $displayName, $department, $email, $description, $isActive, 
-								$permission, $areaPermission)
+	public function createUser($account, $password, $displayName, $department, $email, $isActive, $roleId)
 	{
 		try
 		{
@@ -63,14 +74,8 @@ class UserService
 			#2.Hash password
 			$password = Hash::make($password);
 			
-			#3. Convert area permission
-			$areaPermission['opCenter'] = data_get($areaPermission, 'opCenter', []);
-			$areaPermission['sales'] 	= array_map('intval', data_get($areaPermission, 'sales', []));
-			$areaPermission['purchase'] = array_map('intval', data_get($areaPermission, 'purchase', []));
-			
-			#4. Create user
-			$this->_repository->insert($account, $password, $displayName, $department, $email, $description, $isActive, 
-										RoleGroup::USER->value, $permission, $areaPermission);
+			#3. Create user
+			$this->_repository->insert($account, $password, $displayName, $department, $email, $isActive, $roleId);
 		
 			return ResponseLib::initialize()->success();
 		}
@@ -127,8 +132,7 @@ class UserService
 	 * @params: int
 	 * @return: array
 	 */
-	public function updateUser($id, $account, $password, $displayName, $department, $email, $description, $isActive, 
-								$permission, $areaPermission)
+	public function updateUser($id, $account, $password, $displayName, $department, $email, $isActive, $roleId)
 	{
 		try
 		{
@@ -140,14 +144,8 @@ class UserService
 			if (! empty($password))
 				$password = Hash::make($password);
 			
-			#3. Convert area permission
-			$areaPermission['opCenter'] = data_get($areaPermission, 'opCenter', []);
-			$areaPermission['sales'] 	= array_map('intval', data_get($areaPermission, 'sales', []));
-			$areaPermission['purchase'] = array_map('intval', data_get($areaPermission, 'purchase', []));
-			
 			#4. Update user
-			$this->_repository->update($id, $account, $password, $displayName, $department, $email, $description, $isActive, 
-										$permission, $areaPermission);
+			$this->_repository->update($id, $account, $password, $displayName, $department, $email, $isActive, $roleId);
 			
 			return ResponseLib::initialize()->success();
 		}
@@ -167,6 +165,7 @@ class UserService
 		try
 		{
 			$this->_repository->remove($id);
+			
 			return ResponseLib::initialize()->success();
 		}
 		catch(Exception $e)

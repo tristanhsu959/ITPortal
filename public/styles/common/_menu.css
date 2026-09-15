@@ -6,6 +6,7 @@ nav.menu {
 	
 	position: sticky;
 	top: 0;
+	width: auto;
 	height: 100vh;
 	background-color: var(--menu-bg);
 	margin: 0;
@@ -13,6 +14,10 @@ nav.menu {
 	color: var(--inverse-on-surface); /* #fafafa; */
 	scrollbar-color: #37474f var(--menu-bg); /*thumb - track*/
 	scrollbar-width: thin;
+	
+	&.max {
+		width: 256px;
+	}
 	
 	header {
 		position: sticky;

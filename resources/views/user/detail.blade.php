@@ -21,18 +21,35 @@
 				<label class="large-text s12 m12" x-text="`更新時間：${formData.updateAt}`"></label>
 			</template>
 			
-			<div class="field label border s12 m3">
+			<div class="field label border s12 m2">
 				<input type="text" name="displayName" maxlength="15" x-model="formData.displayName">
 				<label>顯示名稱</label>
 			</div>
 			
-			<div class="field label border prefix s12 m3" :class="Helper.hasError(errors, 'account')">
+			<div class="field label border s12 m2">
+				<input type="text" name="department" maxlength="15" required x-model="formData.department">
+				<label>部門</label>
+			</div>
+			
+			<div class="field label border s12 m2" :class="Helper.hasError(errors, 'userRoleId')">
+				<select x-model="formData.roleId" name="roleId" @change="errors.delete('roleId')">
+					<option value="0" :selected="formData.roleId == 0">請選擇</option>
+					<template x-for="(item, idx) in options.roleList" :key="idx">
+						<option x-text="item.roleName" :value="item.roleId" :selected="formData.roleId == item.roleId"></option>
+					</template>
+				</select> 
+				<label><i class="small red-text">asterisk</i>身份</label>
+				<i>arrow_drop_down</i>
+			</div>
+			
+			<div class="s12"></div>
+			<div class="field label border prefix s12 m2" :class="Helper.hasError(errors, 'account')">
 				<i class="small red-text">asterisk</i>
 				<input type="text" name="account" maxlength="20" required x-model="formData.account" @input="errors.delete('account')">
 				<label>帳號</label>
 			</div>
 			
-			<div class="field label border prefix suffix s12 m3" :class="Helper.hasError(errors, 'password')">
+			<div class="field label border prefix suffix s12 m2" :class="Helper.hasError(errors, 'password')">
 				<i class="small red-text">asterisk</i>
 				<input :type="showPassword ? 'text':'password'" name="password" maxlength="15" required x-model="formData.password" @input="errors.delete('password')">
 				<label>密碼</label>
@@ -45,13 +62,11 @@
 				</i>
 			</div>
 			
-			<div class="field label border s12 m3">
-				<input type="text" name="department" maxlength="15" required x-model="formData.department">
-				<label>部門</label>
-			</div>
+			<div class="s12"></div>
 			
-			<div class="field label border field-purple s12 m4">
-				<input type="text" name="email" maxlength="50" required x-model="formData.email">
+			<div class="field label border prefix s12 m4" :class="Helper.hasError(errors, 'email')">
+				<i class="small red-text">asterisk</i>
+				<input type="text" name="email" maxlength="50" required x-model="formData.email" @input="errors.delete('email')">
 				<label>EMail</label>
 			</div>
 			
@@ -69,7 +84,7 @@
 		</section>
 		
 		<nav class="toolbar surface-container-high">
-			<button type="submit" class="btn-light-green small-width" x-text="response.actionLabel"></button>
+			<button type="submit" class="green small-width" x-text="response.actionLabel"></button>
 			<button type="button" class="square round transparent" @click="reset()">重置</button>
 		</nav>
 	</form>

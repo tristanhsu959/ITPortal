@@ -1,5 +1,5 @@
 /* User list */
 
-.user-list {
-	
+.grid-row {
+	grid-template-columns: 80px 2fr 2fr 2fr 2fr 3fr 80px 1fr 4fr; 
 }

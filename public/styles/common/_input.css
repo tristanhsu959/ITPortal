@@ -98,12 +98,12 @@
 }
 
 .fieldset {
-	border-color: var(--primary);
+	/* border-color: var(--primary);
 	
 	legend {
 		font-size: 14px !important;
 		color: var(--primary);
-	}
+	} */
 }
 
 .switch {

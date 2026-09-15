@@ -59,7 +59,7 @@
 										<h6 class="small"></h6>
 										<div x-text="item.name"></div>
 									</div>
-									<label class="switch field-dark-blue">
+									<label class="switch field-red">
 										<input x-model="formData.permission" type="checkbox" name="permission[]" :value="item.code">
 										<span></span>
 									</label>
@@ -73,7 +73,7 @@
 		</section>
 		
 		<nav class="toolbar surface-container-high">
-			<button type="submit" class="btn-light-green small-width" x-text="response.actionLabel"></button>
+			<button type="submit" class="green small-width" x-text="response.actionLabel"></button>
 			<button type="button" class="square round transparent" @click="reset()">重置</button>
 		</nav>
 		

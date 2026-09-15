@@ -45,7 +45,8 @@ class UserViewModel extends Fluent
 	 */
 	private function _setOptions()
 	{
-		$this->set('options.supervisorGroupId',RoleGroup::SUPERVISOR->value); 
+		$this->set('options.roleList', $this->_service->getActiveRoleList());
+		$this->set('options.supervisorGroupId', RoleGroup::SUPERVISOR->value); 
 	}
 	
 	/* Form submit action

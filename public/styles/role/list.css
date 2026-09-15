@@ -2,6 +2,6 @@
 
 .grid-row {
 	/* 定義三欄：ex 1等分 2等分 固定 100px : 由各自CSS定義 */
-	grid-template-columns: 1fr 2fr 1fr 2fr 6fr; 
+	grid-template-columns: 80px 2fr 1fr 2fr 6fr; 
 }
 

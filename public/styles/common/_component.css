@@ -1,23 +1,5 @@
 /* Component Style */
 
-button, a {
-	&.btn-light-green {
-		--primary: #8bc34a;
-		
-		&:hover {
-			--primary: hsl(88, 50%, 53%, .87);
-		}
-	}
-	
-	&.btn-blue-grey {
-		--primary: blue-grey;
-		
-		&:hover {
-			--primary: hsl(200, 19%, 18%, .15); /* #263238 */
-		}
-	}
-}
-
 .grid-table {
 	font-size: .875rem;
 	
@@ -44,8 +26,6 @@ button, a {
 		padding: .75rem;
 	}
 }
-
-
 
 /*.grid-table {
 	display: grid;
