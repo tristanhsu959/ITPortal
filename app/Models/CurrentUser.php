@@ -9,49 +9,17 @@ use Illuminate\Support\Fluent;
 
 class CurrentUser extends Fluent
 {
-	/* 20260501:之後無AD
-	[
-		"company" => "八方雲集國際股份有限公司"
-		"department" => "資訊處"
-		"title" => "經理"
-		"displayName" => "Tristan Hsu 許方毓"
-		"employeeId" => "T2025098"
-		"name" => "許方毓"
-		"mail" => "tristan.hsu@8way.com.tw"
-		"userId" => 1
-		"userAd" => "tristan.hsu"
-		"userRoleId" => 1
-		"roleGroup" => 1
-		"rolePermission" => array:7 [▶]
-		"roleArea" => array:6 [▶]
-	]
-	array:10 [▼ // app\Models\CurrentUser.php:30
-		"userId" => 1
-		"userAccount" => "tristan.hsu"
-		"userPassword" => "$2y$12$wBz9l8fTuXXeJB7QYHS2beYK2S05MV.I8kmP8PaysKQiDI5s1jH/y"
-		"userDisplayName" => "Tristan"
-		"department" => "資訊處"
-		"email" => "tristan.hsu@8way.com.tw"
-		"isActive" => 1
-		"roleGroup" => 1
-		"rolePermission" => array:22 [▶]
-		"roleArea" => array:6 [▶]
-	]
-	*/
-  
-	public function __construct($userInfo, $adInfo)
+	public function __construct($userInfo)
 	{
-		#$info = array_merge($adInfo, $userInfo);
 		$info['id'] 			= data_get($userInfo, 'userId', 0);
 		$info['account'] 		= data_get($userInfo, 'userAccount', '');
-		$info['displayName'] 	= data_get($userInfo, 'userDisplayName', '');
+		$info['displayName'] 	= data_get($userInfo, 'displayName', '');
 		$info['department'] 	= data_get($userInfo, 'department', '');
 		$info['email'] 			= data_get($userInfo, 'email', '');
 		
-		$info['roleGroup'] 		= data_get($userInfo, 'roleGroup', 0);
+		$info['roleName'] 		= data_get($userInfo, 'roleName', '');
+		$info['roleGroupId'] 	= data_get($userInfo, 'roleGroupId', 0);
 		$info['rolePermission'] = data_get($userInfo, 'rolePermission', []);
-		$info['roleArea'] 		= data_get($userInfo, 'roleArea', []);
-		$info['hasSetPassword']	= empty($userInfo['userPassword']) ? FALSE : TRUE;
 		
 		$this->fill($info);
 	}
@@ -74,7 +42,7 @@ class CurrentUser extends Fluent
 	 */
 	public function isSupervisor()
 	{
-		$roleGroup = $this->get('roleGroup', 0);
+		$roleGroup = $this->get('roleGroupId', 0);
 		
 		return ($roleGroup == RoleGroup::SUPERVISOR->value);
 	}

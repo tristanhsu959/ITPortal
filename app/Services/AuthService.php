@@ -59,8 +59,7 @@ class AuthService
 				throw new Exception('登入失敗，帳號密碼錯誤');
 			
 			#6.Validate user status
-			if (boolval($userInfo['isActive']) === FALSE)
-				throw new Exception('登入失敗，此帳號已停用');
+			$this->_validateStatus($userInfo);
 			
 			#7. Save to session
 			AppManager::saveCurrentUser($userInfo);
@@ -88,10 +87,7 @@ class AuthService
 			$userInfo = $this->_repository->getUserByAccount($account);
 			
 			if (empty($userInfo))
-			{
-				Log::channel('webSysLog')->error("驗證帳號[{$account}]註冊狀態失敗", [ __class__, __function__, __line__]);
 				return FALSE;
-			}
 			
 			Log::channel('webSysLog')->info("驗證帳號[{$account}]註冊狀態成功", [ __class__, __function__, __line__]);
 			
@@ -106,19 +102,38 @@ class AuthService
 		}
 	}
 	
+	/* 重整User Info
+	 * @params: string
+	 * @return: mixed
+	 */
 	private function _rebuildInfo($userInfo)
 	{
-		#testing
-		$userInfo['rolePermission'] = Functions::getAll();
-		$userInfo['isSupervisor'] 	= TRUE;
-			
-		/* if ($userInfo['roleGroup'] == RoleGroup::SUPERVISOR->value)
+		/* [
+			"userId" => 1
+			"userAccount" => "tristan.hsu"
+			"userPassword" => "$2y$12$XxMYJc/YVxPbuOaLA6YgSewEegXZQzO2UqAFslEgpp.Lm77.dPf.."
+			"displayName" => "Tristan"
+			"department" => "資訊處"
+			"email" => "tristan.hsu@8way.com.tw"
+			"isActive" => 1
+			"roleId" => 1
+			"roleName" => "Supervisor"
+			"roleGroupId" => 1
+			"rolePermission" => array:33 [▶]
+			"isRoleActive" => 1
+			"isSupervisor" => true
+		] */
+		
+		if ($userInfo['roleGroupId'] == RoleGroup::SUPERVISOR->value)
 		{
 			$userInfo['rolePermission'] = Functions::getAll();
 			$userInfo['isSupervisor'] 	= TRUE;
 		}
 		else
-			$userInfo['isSupervisor'] 	= FALSE; */
+			$userInfo['isSupervisor'] 	= FALSE;
+		
+		$userInfo['isActive'] 		= boolval($userInfo['isActive']);
+		$userInfo['isRoleActive'] 	= boolval($userInfo['isRoleActive']);
 		
 		return $userInfo;
 	}
@@ -143,6 +158,29 @@ class AuthService
 		
 		if ($adInfo !== FALSE)
 			return TRUE;
+		
+		return FALSE;
+	}
+	
+	/* 驗證帳號狀態
+	 * @params: array
+	 * @return: boolean
+	 */
+	private function _validateStatus($userInfo)
+	{
+		$account = $userInfo['userAccount'];
+		
+		if ($userInfo['isActive'] == FALSE)
+		{
+			Log::channel('webSysLog')->info("使用者[{$account}]帳號狀態驗證失敗(未啟用)", [ __class__, __function__, __line__]);
+			throw new Exception('使用者帳號已停用');
+		}
+		
+		if (empty($userInfo['roleId']) OR $userInfo['isRoleActive'] == FALSE)
+		{
+			Log::channel('webSysLog')->info("使用者[{$account}]帳號尚無系統功能授權", [ __class__, __function__, __line__]);
+			throw new Exception('使用者帳號無系統功能授權');
+		}
 		
 		return FALSE;
 	}

@@ -25,20 +25,22 @@ class AuthRepository extends Repository
 	{
 		try
 		{
-			$db = $this->connectItPortal('user');
+			$db = $this->connectItPortal('user as u');
 				
 			$result = $db
-					->select('userId', 'userAccount', 'userPassword')
-					->addSelect('userDisplayName', 'department', 'email', 'isActive')
-					#->addSelect('roleGroup', 'rolePermission')
-					#->leftJoin('role', 'roleUserId', '=', 'userId')
-					->where('userAccount', '=', $account)
+					->leftJoin('user_role as ur', 'ur.userId', '=', 'u.userId')
+					->leftJoin('role as r', 'r.roleId', '=', 'ur.roleId')
+					->where('u.userAccount', '=', $account)
+					->select('u.userId', 'u.userAccount', 'u.userPassword')
+					->addSelect('u.displayName', 'u.department', 'u.email', 'u.isActive')
+					->addSelect('r.roleId', 'r.roleName', 'r.roleGroupId', 'r.rolePermission', 'r.isActive as isRoleActive')
 					->get()
 					->first();
 			
-			/* if (! empty($result))
-				$result['rolePermission'] 	= empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
-			 */
+			#有取到user才轉
+			if (! empty($result))
+				$result['rolePermission'] = empty($result['rolePermission']) ? [] : json_decode($result['rolePermission'], TRUE);
+			
 			return $result;
 		}
 		catch(Exception $e)
