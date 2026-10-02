@@ -1,17 +1,19 @@
 /* list */
 section.user-data {
-	.field > i.btn-icon {
+	
+	.field i.btn-icon {
 		pointer-events: auto;
 		z-index: 6
-			
+		
 		button {
-			background-color: transparent;
-			color: #000;
+			padding: 1rem;
+			
+			i {
+				color: #666;
+				border-radius: 1rem;
+			}
 		}
 		
-		&:hover {
-			cursor: pointer;
-		}
 	}
 }
 

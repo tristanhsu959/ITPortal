@@ -55,7 +55,7 @@
 				<label>密碼</label>
 				<output class="red-text">英文+數字六個字元以上</output>
 				<i class="btn-icon">
-					<button type="button" class="large square" @click="showPassword = !showPassword">
+					<button type="button" class="large circle transparent prefix" @click="showPassword = !showPassword">
 						<i x-show="!showPassword">visibility</i>
 						<i x-show="showPassword">visibility_off</i>
 					</button>
