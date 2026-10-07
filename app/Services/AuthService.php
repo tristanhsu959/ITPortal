@@ -233,7 +233,31 @@ class AuthService
 			cn=中文名, title, ou, displayname=英+中, memof, company, department, employeeid, samaccountname, mail, mobile
 			*/
 			$result = $connection->query()->where('samaccountname', '=', $account)->first();
-			
+			#dd($result['dn']);
+			 #$lockedUsers = $connection->query()->where('lockouttime', '>=', 1)->get();
+#dd($result);
+/* foreach ($lockedUsers as $user) {
+	#dd($user);
+    echo data_get($result, 'employeeid.0', ''). " | " . data_get($user, 'displayname.0', '') . " | " . data_get($user, 'samaccountname.0', '') . "\r\n";
+}
+dd(1); */ 
+/*
+unlock語法
+$user = $connection->query()
+                           ->where('samaccountname', '=', $samaccountname)
+                           ->first();
+
+        if ($user) {
+            $userDn = $user['dn']; // 取得使用者的 DN
+
+            // 3. 準備要更新的屬性陣列，將 lockouttime 設為 0
+            $updatedAttributes = [
+                'lockouttime' => [0]
+            ];
+
+            // 4. 使用連線物件底層的 ldap 處理器執行屬性覆蓋 (mod_replace)
+            $connection->getLdapConnection()->update($userDn, $updatedAttributes);
+*/
 			#只取需要的資訊
 			$adInfo['company'] 		= data_get($result, 'company.0', '');
 			$adInfo['department'] 	= data_get($result, 'department.0', '');

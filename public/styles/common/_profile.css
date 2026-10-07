@@ -15,13 +15,14 @@
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
-			background-color: #0277bd;
+			background-color: hsl(8, 100%, 56%);/* #0277bd; */
 			border-radius: 0;
 			padding: 1rem;
 			
 			i.fill {
 				--_size: 4rem;
-				color: hsl(8, 70%, 56%);
+				color: hsl(8, 100%, 66%);
+				margin-bottom: 1rem;
 			}
 			
 			p {

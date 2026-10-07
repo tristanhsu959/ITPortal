@@ -48,7 +48,7 @@
 					
 				@yield('content')
 					
-				<!--x-profile/-->
+				<x-profile/>
 			</div>
 		</template>
 			

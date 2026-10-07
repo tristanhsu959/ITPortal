@@ -8,47 +8,18 @@
 	</header>
 	<div class="dialog-body">
 		<div class="info-head">
-			<i class="fill">person_pin</i>
+			<!--i class="fill">person_pin</i-->
+			<i class="fill">kayaking</i>
 			<!--p x-text="profile.employeeId"></p-->
 			<p x-text="profile.displayName || profile.account" class="name"></p>
 			<p x-text="profile.email"></p>
-			<button data-ui="#profileEdit" class="transparent circle orange white-text profile-edit">
+			<button data-ui="#profileEdit" class="circle blue-grey white-text small-elevate profile-edit">
 				<i>person_edit</i>
 			</button >
 		</div>
 		<div class="info-body">
-			<p>
-				<span x-text="profile.department"></span>
-				<!--span x-text="profile.title"></span-->
-			</p>
-			<div>
-				<p>
-					<span>管理區域</span>
-					<span x-text="profile.roleArea.sales.length > 0 ? '銷售':'未設定'" class="red-text"></span>
-				</p>
-				<p x-show="profile.roleArea.sales.length > 0" class="row wrap auth-area">
-					<template x-for="areaId in profile.roleArea.sales" :key="areaId">
-						<button x-show="options.area[areaId]" class="chip round small small-elevate primary white-text">
-							<span x-text="options.area[areaId]"></span>
-						</button >
-					</template>
-				</p>
-			</div>
-			
-			<div>
-				<p>
-					<span>管理區域</span>
-					<span x-text="profile.roleArea.purchase.length > 0 ? '訂貨':'未設定'" class="red-text"></span>
-				</p>
-				<p x-show="profile.roleArea.purchase.length > 0" class="row wrap auth-area">
-					<template x-for="areaId in profile.roleArea.purchase" :key="areaId">
-						<button x-show="options.area[areaId]" class="chip round small small-elevate secondary white-text">
-							<span x-text="options.area[areaId]"></span>
-						</button >
-					</template>
-				</p>
-			</div>
-			<!--p x-text="profile.company"></p-->
+			<p x-text="profile.department"></p>
+			<p x-text="profile.roleName"></p>
 		</div>
 	</div>
 	<a :href="options.signoutRoute" class="btn-logout button extend circle">
