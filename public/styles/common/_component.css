@@ -18,7 +18,8 @@
 	
 	.table-row {
 		&:hover {
-			background-color: #e1f5fe;
+			background-color: #b2ebf2;
+			box-shadow: var(--elevate3);
 		}
 	}
 	

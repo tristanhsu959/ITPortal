@@ -17,9 +17,14 @@ class CurrentUser extends Fluent
 		$info['department'] 	= data_get($userInfo, 'department', '');
 		$info['email'] 			= data_get($userInfo, 'email', '');
 		
+		$info['roleId'] 		= data_get($userInfo, 'roleId', 0);
 		$info['roleName'] 		= data_get($userInfo, 'roleName', '');
 		$info['roleGroupId'] 	= data_get($userInfo, 'roleGroupId', 0);
 		$info['rolePermission'] = data_get($userInfo, 'rolePermission', []);
+		
+		$info['isActive'] 		= data_get($userInfo, 'isActive', FALSE);
+		$info['isRoleActive'] 	= data_get($userInfo, 'isRoleActive', FALSE);
+		$info['isSupervisor'] 	= data_get($userInfo, 'isSupervisor', FALSE);
 		
 		$this->fill($info);
 	}
@@ -42,9 +47,7 @@ class CurrentUser extends Fluent
 	 */
 	public function isSupervisor()
 	{
-		$roleGroup = $this->get('roleGroupId', 0);
-		
-		return ($roleGroup == RoleGroup::SUPERVISOR->value);
+		return $this->get('isSupervisor', FALSE);
 	}
 	
 	/* Auth permission of function by current user
