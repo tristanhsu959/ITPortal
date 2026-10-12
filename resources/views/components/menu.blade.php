@@ -1,6 +1,6 @@
 <!-- Menu component -->
 
-<nav x-data="{menus:@js($menus), currentPath:@js($currentPath)}" class="menu left l m scroll" :class="$store.menu.active ? 'max':''">
+<nav x-data="{menus:@js($menus), currentPath:@js($currentPath)}" class="menu left l m scroll" :class="{'max':$store.menu.active}">
 	<header>
 		<img src="{{ asset('images/bf_logo.png') }}" />
 		<span x-show="$store.menu.active">IT Portal</span>
@@ -12,4 +12,5 @@
 			<span x-text="item.name"></span>
 		</a>
 	</template>
+
 </nav>
