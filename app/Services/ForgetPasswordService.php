@@ -7,8 +7,6 @@ use App\Repositories\ForgetPasswordRepository;
 use App\Libraries\ResponseLib;
 use App\Enums\Functions;
 use App\Enums\RoleGroup;
-use App\Enums\OpCenter;
-use App\Enums\Area;
 use App\Mail\ForgetPassword;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;

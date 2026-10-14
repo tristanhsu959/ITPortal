@@ -9,23 +9,23 @@ return [
 	#Group (Enable List)
 	MenuGroup::TVMenu->value => [
 		[
-			'name' 		=> Functions::TV_MEDIAS->label(), 
-			'code'		=> Functions::TV_MEDIAS->value,
+			'name' 		=> Functions::TV_MEDIA->label(), 
+			'code'		=> Functions::TV_MEDIA->value,
 			'style' 	=> ['icon' => 'animated_images', 'color' => 'orange-text'],
 			'url' 		=> 'medias',
 		],
-		[
-			'name' 		=> Functions::TV_MENUS->label(), 
-			'code'		=> Functions::TV_MENUS->value,
+		/* [
+			'name' 		=> Functions::TV_MENU->label(), 
+			'code'		=> Functions::TV_MENU->value,
 			'style' 	=> ['icon' => 'menu_book_2', 'color' => 'orange-text'],
-			'url' 		=> 'medias',
+			'url' 		=> 'menus',
 		],
 		[
-			'name' 		=> Functions::TV_STORE_MENUS->label(), 
-			'code'		=> Functions::TV_STORE_MENUS->value,
+			'name' 		=> Functions::TV_STORE_MENU->label(), 
+			'code'		=> Functions::TV_STORE_MENU->value,
 			'style' 	=> ['icon' => 'live_tv', 'color' => 'orange-text'],
-			'url' 		=> 'medias',
-		],
+			'url' 		=> 'store_menus',
+		], */
 	],
 	
 	MenuGroup::MANAGE->value => [

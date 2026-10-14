@@ -11,7 +11,7 @@ enum MenuGroup : int
     {
         return match ($this) 
 		{
-			self::TVMenu		=> 'TV Menu',
+			self::TVMenu		=> '電視菜單',
 			self::MANAGE 		=> '系統管理',
         };
     }

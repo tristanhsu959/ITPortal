@@ -11,9 +11,9 @@ enum Functions : string
 	case ROLE 						= 'role'; 
 		
 	#TV Menu	
-	case TV_MEDIAS 					= 'tv:medias';
-	case TV_MENUS					= 'tv:menus';
-	case TV_STORE_MENUS				= 'tv:store_menus'; 
+	case TV_MEDIA 					= 'tv:media';
+	case TV_MENU					= 'tv:menu';
+	case TV_STORE_MENU				= 'tv:store_menu'; 
 			
 	public function label() : string
     {
@@ -25,9 +25,9 @@ enum Functions : string
 			self::ROLE 				=> '身份管理',
 				
 			#TV Menu	
-			self::TV_MEDIAS 		=> 'TV媒體庫',
-			self::TV_MENUS			=> 'TV菜單',
-			self::TV_STORE_MENUS	=> 'TV門市菜單',
+			self::TV_MEDIA 			=> 'TV媒體庫',
+			self::TV_MENU			=> 'TV菜單',
+			self::TV_STORE_MENU		=> 'TV門市菜單',
         };
     }
 	
