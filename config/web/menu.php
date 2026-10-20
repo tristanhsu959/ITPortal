@@ -6,15 +6,36 @@ use Illuminate\Support\Str;
 
 #Menu Config (key與route要相同)
 return [
-	#Group (Enable List)
-	MenuGroup::TVMenu->value => [
+	MenuGroup::ORDER->value => [
 		[
-			'name' 		=> Functions::TV_MEDIA->label(), 
-			'code'		=> Functions::TV_MEDIA->value,
-			'style' 	=> ['icon' => 'animated_images', 'color' => 'orange-text'],
-			'url' 		=> 'medias',
+			'name' 		=> Functions::ORDER_POS->label(), 
+			'code'		=> Functions::ORDER_POS->value,
+			'style' 	=> ['icon' => 'restaurant', 'color' => 'orange-text'],
+			'url' 		=> 'order.pos',
 		],
-		/* [
+		[
+			'name' 		=> Functions::ORDER_PURCHASE->label(), 
+			'code'		=> Functions::ORDER_PURCHASE->value,
+			'style' 	=> ['icon' => 'local_shipping', 'color' => 'orange-text'],
+			'url' 		=> 'order.purchase',
+		],
+		[
+			'name' 		=> Functions::ORDER_EZORDER->label(), 
+			'code'		=> Functions::ORDER_EZORDER->value,
+			'style' 	=> ['icon' => 'qr_code', 'color' => 'orange-text'],
+			'url' 		=> 'order.ezorder',
+		],
+	],
+	
+	#Group (Enable List)
+	/* MenuGroup::AUTH->value => [
+		[
+			'name' 		=> Functions::AUTH_METHOD->label(), 
+			'code'		=> Functions::AUTH_METHOD->value,
+			'style' 	=> ['icon' => 'verified', 'color' => 'orange-text'],
+			'url' 		=> 'auth_method',
+		],
+		[
 			'name' 		=> Functions::TV_MENU->label(), 
 			'code'		=> Functions::TV_MENU->value,
 			'style' 	=> ['icon' => 'menu_book_2', 'color' => 'orange-text'],
@@ -25,8 +46,8 @@ return [
 			'code'		=> Functions::TV_STORE_MENU->value,
 			'style' 	=> ['icon' => 'live_tv', 'color' => 'orange-text'],
 			'url' 		=> 'store_menus',
-		], */
-	],
+		],
+	], */
 	
 	MenuGroup::MANAGE->value => [
 		[

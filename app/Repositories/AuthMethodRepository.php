@@ -2,13 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Enums\RoleGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use Exception;
 
-class MediaRepository extends Repository
+class AuthMethodRepository extends Repository
 {
 	
 	public function __construct()

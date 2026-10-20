@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\MediaService;
-use App\ViewModels\MediaViewModel;
+use App\Services\AuthMethodService;
+use App\ViewModels\AuthMethodViewModel;
 use App\Enums\FormAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
-class MediaController extends Controller
+class AuthMethodController extends Controller
 {
 	
-	public function __construct(protected MediaService $_service, protected MediaViewModel $_viewModel)
+	public function __construct(protected AuthMethodService $_service, protected AuthMethodViewModel $_viewModel)
 	{
 	}
 	
@@ -24,18 +24,9 @@ class MediaController extends Controller
 	public function list(Request $request)
 	{
 		$this->_viewModel->initialize();
+		$this->_viewModel->success();
 		
-		$response = $this->_service->getList();
-		
-		if ($response->status === FALSE)
-			$this->_viewModel->fail($response->msg);
-		else
-		{
-			$this->_viewModel->success();
-			$this->_viewModel->list = $response->data;
-		}
-		
-		return view('tv_media/list')->with('viewModel', $this->_viewModel);
+		return view('auth_method/list')->with('viewModel', $this->_viewModel);
 	}
 	
 	/* 新增Form

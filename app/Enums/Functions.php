@@ -6,14 +6,15 @@ use Illuminate\Support\Str;
 
 enum Functions : string
 {
-	case HOME						= 'home';
-	case USER						= 'user';
-	case ROLE 						= 'role'; 
-		
-	#TV Menu	
-	case TV_MEDIA 					= 'tv:media';
-	case TV_MENU					= 'tv:menu';
-	case TV_STORE_MENU				= 'tv:store_menu'; 
+	case HOME				= 'home';
+	case USER				= 'user';
+	case ROLE 				= 'role'; 
+	
+	case ORDER_POS			= 'order:pos';
+	case ORDER_PURCHASE		= 'order:purchase';
+	case ORDER_EZORDER		= 'order:ezorder';
+	
+	#case AUTH_METHOD		= 'auth:method';
 			
 	public function label() : string
     {
@@ -23,11 +24,13 @@ enum Functions : string
 			self::HOME				=> '首頁',
 			self::USER				=> '帳號管理',
 			self::ROLE 				=> '身份管理',
-				
-			#TV Menu	
-			self::TV_MEDIA 			=> 'TV媒體庫',
-			self::TV_MENU			=> 'TV菜單',
-			self::TV_STORE_MENU		=> 'TV門市菜單',
+			
+			self::ORDER_POS			=> 'POS訂單查詢',
+			self::ORDER_PURCHASE	=> '訂貨訂單查詢',
+			self::ORDER_EZORDER		=> '八方點訂單查詢',
+	
+			#Auth account by multi methods	
+			#self::AUTH_METHOD 		=> '驗證模式',
         };
     }
 	

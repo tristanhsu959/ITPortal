@@ -5,7 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\MediaController;
+
+use App\Http\Controllers\OrderPosController;
 
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\AccessPermissionMiddleware;
@@ -41,26 +42,15 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 	Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update.post');
 	
 	
-	/***** TV Menu *****/
-	Route::middleware([AccessPermissionMiddleware::class . Str::start(Functions::TV_MEDIA->value, ':')])->group(function(){
-		Route::get('media', [MediaController::class, 'list'])->name('medias');
-		Route::get('media/list', [MediaController::class, 'list'])->name('media.list');
-		Route::get('media/create', [MediaController::class, 'showCreate'])->name('media.create');
-		Route::post('media/create', [MediaController::class, 'create'])->name('media.create.post');
-		Route::get('media/update/{id}', [MediaController::class, 'showUpdate'])->name('media.update');
-		Route::post('media/update', [MediaController::class, 'update'])->name('media.update.post');
-		Route::post('media/delete/{id}', [MediaController::class, 'delete'])->name('media.delete');
+	/***** Order search *****/
+	Route::middleware([AccessPermissionMiddleware::class . Str::start(Functions::ORDER_POS->value, ':')])->group(function(){
+		Route::get('order/pos', [OrderPosController::class, 'showSearch'])->name('order.pos');
+		Route::get('order/pos/search', [OrderPosController::class, 'showSearch'])->name('order.pos.search');
+		Route::post('order/pos/search', [OrderPosController::class, 'search'])->name('order.pos.search.post');
+		
+		Route::get('order/purchase', [OrderPosController::class, 'list'])->name('order.purchase');
+		Route::get('order/ezorder', [OrderPosController::class, 'list'])->name('order.ezorder');
 	});
-	
-	/* Route::middleware([AccessPermissionMiddleware::class . Str::start(Functions::TV_MEDIAS->value, ':')])->group(function(){
-		Route::get('medias', [ProductController::class, 'list'])->name('medias');
-		Route::get('medias/list', [ProductController::class, 'list'])->name('medias.list');
-		Route::get('medias/create', [ProductController::class, 'showCreate'])->name('medias.create');
-		Route::post('medias/create', [ProductController::class, 'create'])->name('medias.create.post');
-		Route::get('medias/update/{id}', [ProductController::class, 'showUpdate'])->name('medias.update');
-		Route::post('medias/update', [ProductController::class, 'update'])->name('medias.update.post');
-		Route::post('medias/delete/{id}', [ProductController::class, 'delete'])->name('medias.delete');
-	}); */
 	
 	/***** 權限管理 *****/
 	Route::middleware([AccessPermissionMiddleware::class . Str::start(Functions::USER->value, ':')])->group(function(){

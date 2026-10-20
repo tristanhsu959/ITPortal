@@ -10,15 +10,15 @@ use App\ViewModels\Attributes\attrActionBar;
 use App\ViewModels\Attributes\attrAllowAction;
 use Illuminate\Support\Fluent;
 
-class MediaViewModel extends Fluent
+class AuthMethodViewModel extends Fluent
 {
 	use attrStatus, attrActionBar, attrAllowAction;
 	
 	public function __construct()
 	{
-		$this->function		= Functions::TV_MEDIA;
+		$this->function		= Functions::AUTH_METHOD;
 		$this->action 		= FormAction::LIST; 
-		$this->backRoute 	= 'medias';
+		$this->backRoute 	= '';
 		$this->success();
 	}
 	
@@ -56,8 +56,8 @@ class MediaViewModel extends Fluent
     {
 		return match($formAction)
 		{
-			FormAction::CREATE => route('media.create.post'),
-			FormAction::UPDATE => route('media.update.post'),
+			/* FormAction::CREATE => route('media.create.post'),
+			FormAction::UPDATE => route('media.update.post'), */
 		};
 	}
 	
@@ -89,9 +89,9 @@ class MediaViewModel extends Fluent
 		
 		$response['response']['status'] 		= $this->status();
 		$response['response']['hasResult'] 		= ! empty($this->list);
-		$response['response']['createRoute']	= route('media.create');
+		/* $response['response']['createRoute']	= route('media.create');
 		$response['response']['updateRoute']	= route('media.update', ['id' => '_ID']);
-		$response['response']['deleteRoute']	= route('media.delete', ['id' => '_ID']);
+		$response['response']['deleteRoute']	= route('media.delete', ['id' => '_ID']); */
 		
 		return $response;
 	}
